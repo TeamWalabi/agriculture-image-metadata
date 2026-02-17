@@ -1,13 +1,19 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sosa:   <http://www.w3.org/ns/sosa/> .
 @prefix schema: <https://schema.org/> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 
+@base <https://example.org/agriculture-image-metadata/application-profile/> .
+@prefix aim: <https://example.org/agriculture-image-metadata/terms/> .
+
 # Placeholder starter profile (to be refined).
 # This file is meant to reflect the concepts/fields defined in `metadata-profile.xlsx`.
 
-<> a schema:CreativeWork ;
+<https://example.org/agriculture-image-metadata/application-profile> a owl:Ontology, schema:CreativeWork ;
   dcterms:title "Agriculture Image Metadata – Application Profile" ;
   dcterms:description "Linked Data–based application profile for describing agricultural images, observations, and context." ;
   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
@@ -17,5 +23,66 @@
 # Core modeling idea (illustrative):
 # - Image capture as an activity/event (prov:Activity) producing an Image (schema:ImageObject).
 # - Observations modeled with SOSA/SSN (sosa:Observation) linked to feature-of-interest (plant/plot/object).
+
+#####################################################################
+# Minimal OWL skeleton (so WebProtégé shows something useful)
+#
+# NOTE:
+# - These are starter terms for editing in WebProtégé.
+# - Replace the `aim:` namespace with your canonical namespace when known.
+#####################################################################
+
+aim:AgriculturalImage a owl:Class ;
+  rdfs:label "Agricultural image"@en ;
+  rdfs:subClassOf schema:ImageObject .
+
+aim:ImageCaptureEvent a owl:Class ;
+  rdfs:label "Image capture event"@en ;
+  rdfs:subClassOf prov:Activity .
+
+aim:Context a owl:Class ;
+  rdfs:label "Context"@en .
+
+aim:Equipment a owl:Class ;
+  rdfs:label "Equipment"@en .
+
+aim:Location a owl:Class ;
+  rdfs:label "Location"@en ;
+  rdfs:subClassOf schema:Place .
+
+aim:FeatureOfInterest a owl:Class ;
+  rdfs:label "Feature of interest"@en ;
+  rdfs:subClassOf sosa:FeatureOfInterest .
+
+# Properties (keep them minimal; align with existing vocabs where possible)
+
+aim:generatedImage a owl:ObjectProperty ;
+  rdfs:label "generated image"@en ;
+  rdfs:domain aim:ImageCaptureEvent ;
+  rdfs:range aim:AgriculturalImage ;
+  rdfs:subPropertyOf prov:generated .
+
+aim:hasLocation a owl:ObjectProperty ;
+  rdfs:label "has location"@en ;
+  rdfs:domain aim:ImageCaptureEvent ;
+  rdfs:range aim:Location .
+
+aim:usedEquipment a owl:ObjectProperty ;
+  rdfs:label "used equipment"@en ;
+  rdfs:domain aim:ImageCaptureEvent ;
+  rdfs:range aim:Equipment ;
+  rdfs:subPropertyOf prov:used .
+
+aim:observedFeature a owl:ObjectProperty ;
+  rdfs:label "observed feature"@en ;
+  rdfs:domain sosa:Observation ;
+  rdfs:range aim:FeatureOfInterest ;
+  rdfs:subPropertyOf sosa:hasFeatureOfInterest .
+
+aim:captureTime a owl:DatatypeProperty ;
+  rdfs:label "capture time"@en ;
+  rdfs:domain aim:ImageCaptureEvent ;
+  rdfs:range xsd:dateTime ;
+  rdfs:subPropertyOf prov:endedAtTime .
 
 
