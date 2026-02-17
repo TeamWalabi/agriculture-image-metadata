@@ -1,0 +1,857 @@
+{
+    "$defs": {
+        "CameraMetadata": {
+            "description": "Metadata model for camera/sensor-related information.",
+            "properties": {
+                "cameraName": {
+                    "description": "Simple identifier for the camera",
+                    "example": "0010",
+                    "title": "Cameraname",
+                    "type": "string"
+                },
+                "cameraID": {
+                    "@id": "http://ns.adobe.com/exif/1.0/SerialNumber",
+                    "@tag": "Exif.Image.SerialNumber",
+                    "description": "Unique ID/serial number of the camera",
+                    "example": "4110035082",
+                    "title": "Cameraid",
+                    "type": "string"
+                },
+                "cameraModel": {
+                    "@id": "http://ns.adobe.com/exif/1.0/Model",
+                    "@owl": "exif:model\n\ta owl:DatatypeProperty ;\n\trdfs:domain ex:Camera ;\n\trdfs:range xsd:string .",
+                    "@tag": "Exif.Image.Model",
+                    "description": "Manufactur and camera type",
+                    "example": "IDS GV-5280FA-C-HQ Rev 1.2",
+                    "title": "Cameramodel",
+                    "type": "string"
+                },
+                "cameraLensModel": {
+                    "@id": "http://ns.adobe.com/exif/1.0/LensModel",
+                    "@owl": "exif:PixelXDimension\n\ta owl:DatatypeProperty ;\n\trdfs:domain ex:Camera ;\n\trdfs:range xsd:integer .",
+                    "@tag": "Exif.Image.LensModel",
+                    "description": "Model name/number of the lens",
+                    "example": "IDS 6mm 1:2.8 C2/3",
+                    "title": "Cameralensmodel",
+                    "type": "string"
+                },
+                "maxPixelX": {
+                    "@id": "http://ns.adobe.com/exif/1.0/PixelXDimension",
+                    "@tag": "Exif.Image.PixelXDimension",
+                    "description": "Maximum number of pixels of sensor in X (horizontal) direction, NOT actual image size (downscaling/binning)",
+                    "example": 2464,
+                    "title": "Maxpixelx",
+                    "type": "integer"
+                },
+                "maxPixelY": {
+                    "@id": "http://ns.adobe.com/exif/1.0/PixelYDimension",
+                    "@tag": "Exif.Image.PixelYDimension",
+                    "description": "Maximum number of pixels of sensor in Y (vertical) direction,NOT actual image size (downscaling/binning)",
+                    "example": 2056,
+                    "title": "Maxpixely",
+                    "type": "integer"
+                },
+                "pixelSize": {
+                    "@id": "http://qudt.org/vocab/quantitykind/Length",
+                    "@owl": "ex:pixelSize\n\ta owl:DatatypeProperty ;\n\trdfs:domain ex:Camera ;\n\trdfs:range xsd:decimal ;\n\tqudt:unit unit:MicroM .",
+                    "description": "Pixel size of sensor in [um]",
+                    "example": 3.45,
+                    "title": "Pixelsize",
+                    "type": "number",
+                    "unit": "http://qudt.org/vocab/unit/MicroM"
+                },
+                "focalLength": {
+                    "@id": "http://ns.adobe.com/exif/1.0/FocalLength",
+                    "@tag": "Exif.Photo.FocalLength",
+                    "description": "Focal length of the lens in [mm]",
+                    "example": 6.0,
+                    "title": "Focallength",
+                    "type": "number",
+                    "unit": "http://qudt.org/vocab/unit/MilliM"
+                },
+                "subjectDistance": {
+                    "@id": "http://ns.adobe.com/exif/1.0/SubjectDistance",
+                    "@tag": "Exif.Image.SubjectDistance",
+                    "description": "Distance from camera to subject in meters [m]",
+                    "example": 400.0,
+                    "title": "Subjectdistance",
+                    "type": "number",
+                    "unit": "https://qudt.org/vocab/unit/M"
+                },
+                "spectralBand": {
+                    "$ref": "#/$defs/SpectralBand",
+                    "@tag": "ex.spectralBand",
+                    "default": "rgb",
+                    "description": "Spectral band captured by the camera (e.g., RGB, BGR, NIR, Thermal)",
+                    "example": "RGB"
+                },
+                "cameraBox": {
+                    "@tag": "Exif.Image.SubjectDistance",
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Is the product shielded with a camera box [True, False]",
+                    "example": true,
+                    "title": "Camerabox"
+                },
+                "lightSource": {
+                    "@tag": "Exif.Image.LightSource",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/LightSource"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Indicates the Lightsource in agreement with EXIF standaard",
+                    "example": "FLASH"
+                },
+                "lightModel": {
+                    "@tag": "ex.lightModel",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "If additional light is used, indicate model",
+                    "example": "Luxalight LF-24-5700K-24.2X16-PU",
+                    "title": "Lightmodel"
+                },
+                "intrinsics": {
+                    "@id": "https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html",
+                    "anyOf": [
+                        {
+                            "items": {
+                                "items": {
+                                    "type": "number"
+                                },
+                                "type": "array"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "3x3 camera Matrix K=[[fx, s, cx],[0, fy, cy],[0,0,1]],corresponding with images recorded NOT MaxPixelX",
+                    "title": "Intrinsics"
+                },
+                "distortionModel": {
+                    "@id": "https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Distortion model used. OPENCV uses dist_coeffs =[k1,k2,p1,p2,k3,k4,k5,k6],with k4 , k5, k6 optional. K123 = radial distortion, p12 tangetial distortion, k456 higher order radial distortion coefficicients for complex distortion",
+                    "title": "Distortionmodel"
+                },
+                "distortionCoefficients": {
+                    "@id": "https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html",
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Distortion coefficients corresponding to the distortion model,opencv: 4 to 8 coefficients[k1, k2, p1, p2, k3, k4, k5, k6]",
+                    "title": "Distortioncoefficients"
+                }
+            },
+            "required": [
+                "cameraName",
+                "cameraID",
+                "cameraModel",
+                "cameraLensModel",
+                "maxPixelX",
+                "maxPixelY",
+                "pixelSize",
+                "focalLength",
+                "subjectDistance"
+            ],
+            "title": "CameraMetadata",
+            "type": "object"
+        },
+        "DatasetMetadata": {
+            "description": "Metadata model for vision based datasets in agriculture.",
+            "properties": {
+                "title": {
+                    "@id": "http://purl.org/dc/terms/title",
+                    "description": "Name of the dataset",
+                    "example": "Cucumber phenotyping dataset",
+                    "title": "Title",
+                    "type": "string"
+                },
+                "ID": {
+                    "@tag": "ex.id",
+                    "default": "12f0829a-08c9-4a8d-9442-a6ccbc5820fa",
+                    "description": "unique ID of the dataset",
+                    "example": "7265f151-2ffe-4ab5-a3b7-47ec39ca8c40",
+                    "title": "Id",
+                    "type": "string"
+                },
+                "description": {
+                    "@id": "http://purl.org/dc/terms/description",
+                    "description": "General description of the dataset",
+                    "example": "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower.",
+                    "title": "Description",
+                    "type": "string"
+                },
+                "accessURL": {
+                    "@id": "http://www.w3.org/ns/dcat#accessURL",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "URL where the dataset can be found",
+                    "example": "https://example.org/datasets/cucumber-phenotyping",
+                    "title": "Accessurl"
+                },
+                "version": {
+                    "@id": "http://www.w3.org/ns/dcat#version",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Version number of the dataset",
+                    "example": "1",
+                    "title": "Version"
+                },
+                "issued": {
+                    "@id": "http://purl.org/dc/terms/issued",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Date this dataset version was created or uploaded",
+                    "example": "20251014T093000Z",
+                    "title": "Issued"
+                },
+                "modified": {
+                    "@id": "http://purl.org/dc/terms/modified",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Date this dataset version was last modified YYYYMMDDTHHMMSSZ",
+                    "example": "20251014T093000Z",
+                    "title": "Modified"
+                },
+                "startDate": {
+                    "@id": "http://www.w3.org/ns/dcat#startDate",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Earliest date or timepoint in the dataset YYYYMMDDTHHMMSSZ",
+                    "example": "20251014T093000Z",
+                    "title": "Startdate"
+                },
+                "endDate": {
+                    "@id": "http://www.w3.org/ns/dcat#endDate",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Latest date or timepoint in the dataset",
+                    "example": "20251014T093000Z",
+                    "title": "Enddate"
+                },
+                "identifier": {
+                    "@id": "http://purl.org/dc/terms/identifier",
+                    "description": "Unique identifier of the dataset, preferably in the format projectnumber_datasetname",
+                    "example": "3742355900_agros2_komkommer",
+                    "title": "Identifier",
+                    "type": "string"
+                },
+                "creator": {
+                    "@id": "http://purl.org/dc/terms/creator",
+                    "description": "The creator maintains the dataset and is the contact person",
+                    "example": "Bart van Marrewijk",
+                    "title": "Creator",
+                    "type": "string"
+                },
+                "contributor": {
+                    "@id": "http://purl.org/dc/terms/contributor",
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Contributors to the dataset",
+                    "example": "Toon Tielen",
+                    "title": "Contributor"
+                },
+                "license": {
+                    "@id": "http://purl.org/dc/terms/license",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Type of license (see https://creativecommons.org/share-your-work/cclicenses/)",
+                    "example": "CC BY-NC-SA",
+                    "title": "License"
+                },
+                "numberOfImages": {
+                    "@id": "ex:numberOfImages",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Total number of images in the dataset (auto-filled)",
+                    "example": 15000,
+                    "title": "Numberofimages"
+                },
+                "numberOfAnnotatedImages": {
+                    "@id": "ex:numberOfAnnotatedImages",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Total number of annotated images (auto-filled)",
+                    "example": 12500,
+                    "title": "Numberofannotatedimages"
+                }
+            },
+            "required": [
+                "title",
+                "description",
+                "identifier",
+                "creator"
+            ],
+            "title": "DatasetMetadata",
+            "type": "object"
+        },
+        "FieldMetadata": {
+            "description": "Metadata model for agricultural field information.\nAttributes:\n    fieldID: Unique identifier for the field.\n    plots: Optional list of plot metadata or single plot metadata within the field.",
+            "properties": {
+                "fieldName": {
+                    "@tag": "ex:fieldName",
+                    "description": "Name of the field",
+                    "example": "field_001",
+                    "title": "Fieldname",
+                    "type": "string"
+                },
+                "fieldID": {
+                    "@tag": "ex:fieldID",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Unique identifier for the field based on field + uuid",
+                    "example": "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb",
+                    "title": "Fieldid"
+                },
+                "plots": {
+                    "@tag": "ex:plots",
+                    "anyOf": [
+                        {
+                            "items": {},
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "List of plots in the field",
+                    "example": [
+                        {
+                            "bbox": [
+                                "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"
+                            ],
+                            "crops": [
+                                {
+                                    "cropCultivar": "Hi Power",
+                                    "cropGrowthStageMax": 65,
+                                    "cropGrowthStageMin": 60,
+                                    "cropHandling": "crop observation",
+                                    "cropName": "cucumber"
+                                }
+                            ],
+                            "externalConditions": "LED",
+                            "plotID": "plot123_448aadb7-b07d-498d-9301-2240533d849a",
+                            "plotName": "plot123",
+                            "soilType": "",
+                            "surfaceCover": [
+                                "SHELLS",
+                                "STRAW"
+                            ],
+                            "weatherConditions": "SUNNY",
+                            "weeds": [
+                                {
+                                    "cropName": "dandelion"
+                                }
+                            ]
+                        }
+                    ],
+                    "title": "Plots"
+                }
+            },
+            "required": [
+                "fieldName"
+            ],
+            "title": "FieldMetadata",
+            "type": "object"
+        },
+        "ImageMetadata": {
+            "description": "Basic metadata for every image captured",
+            "properties": {
+                "imageName": {
+                    "@tag": "ex:imageName",
+                    "description": "Name of the image, follow the format: timestamp_camid_trigger_channel.png",
+                    "example": "20251014T093010Z857_camid9_trigger1000_rgb.png",
+                    "title": "Imagename",
+                    "type": "string"
+                },
+                "imageID": {
+                    "@tag": "ex:imageID",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Unique identifier for the image based on image + uuid",
+                    "example": "20251014T093010Z857_camid9_trigger1000_rgb.png_0acbbe89-3058-4f62-a731-3fd3b42cfa04",
+                    "title": "Imageid"
+                },
+                "imageTimestamp": {
+                    "@tag": "ex:imageTimestamp",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "format": "date-time",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "ISO-8601 timestamp of image (YYYYMMDDTHHMMSSZmilliseconds 20250917T134658Z)",
+                    "example": "20251014T093010Z857",
+                    "title": "Imagetimestamp"
+                },
+                "cameraID": {
+                    "@tag": "ex:cameraID",
+                    "description": "Identifier of the camera that captured the image",
+                    "example": "4110035082",
+                    "title": "Cameraid",
+                    "type": "string"
+                },
+                "fieldID": {
+                    "@tag": "ex:fieldID",
+                    "description": "Identifier of the field where the image was captured",
+                    "example": "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb",
+                    "title": "Fieldid",
+                    "type": "string"
+                },
+                "plotID": {
+                    "@tag": "ex:plotID",
+                    "description": "Identifier of the plot where the image was captured",
+                    "example": "plot123_448aadb7-b07d-498d-9301-2240533d849a",
+                    "title": "Plotid",
+                    "type": "string"
+                },
+                "machineID": {
+                    "@tag": "ex:machineID",
+                    "description": "Identifier of the machine/platform that captured the image",
+                    "example": "demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3",
+                    "title": "Machineid",
+                    "type": "string"
+                },
+                "exposureTime": {
+                    "@tag": "Exif.Image.ExposureTime",
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Exposure time in seconds (Exif is also seconds)",
+                    "example": 0.01,
+                    "title": "Exposuretime",
+                    "unit": "https://qudt.org/vocab/unit/SEC"
+                },
+                "imageNumber": {
+                    "@tag": "Exif.Image.ImageNumber",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Image number, Exif.Image.ImageNumber",
+                    "example": 1000,
+                    "title": "Imagenumber"
+                },
+                "imageXYZ": {
+                    "@tag": "ex:imageXYZ",
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Camera location XYZ coordinates in meters relative to base",
+                    "example": [
+                        0.0,
+                        0.0,
+                        2.5
+                    ],
+                    "title": "Imagexyz",
+                    "unit": "https://qudt.org/vocab/unit/M"
+                },
+                "imageQuaternionXYZW": {
+                    "@tag": "ex:imageQuaternionXYZW",
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Camera orientation as quaternion [x, y, z, w], relative to base assumes OPENCV camera coord. system",
+                    "example": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "title": "Imagequaternionxyzw"
+                },
+                "imageGNSS": {
+                    "@tag": "ex:imageGNSS",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of camera position",
+                    "title": "Imagegnss"
+                },
+                "baseXYZ": {
+                    "@tag": "ex:baseXYZ",
+                    "description": "Machine base location XYZ coordinates in meters (global reference frame)",
+                    "example": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "items": {
+                        "type": "number"
+                    },
+                    "title": "Basexyz",
+                    "type": "array",
+                    "unit": "https://qudt.org/vocab/unit/M"
+                },
+                "baseQuaternionXYZW": {
+                    "@tag": "ex:baseQuaternionXYZW",
+                    "description": "Machine base orientation as quaternion [x, y, z, w]  (global reference frame)",
+                    "example": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "items": {
+                        "type": "number"
+                    },
+                    "title": "Basequaternionxyzw",
+                    "type": "array"
+                },
+                "baseGNSS": {
+                    "@tag": "ex:baseGNSS",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of machine base position",
+                    "title": "Basegnss"
+                }
+            },
+            "required": [
+                "imageName",
+                "imageTimestamp",
+                "cameraID",
+                "fieldID",
+                "plotID",
+                "machineID",
+                "baseXYZ",
+                "baseQuaternionXYZW"
+            ],
+            "title": "ImageMetadata",
+            "type": "object"
+        },
+        "LightSource": {
+            "description": "Light source types based on EXIF specification.\nhttps://exiftool.org/TagNames/EXIF.html#LightSource",
+            "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                255
+            ],
+            "title": "LightSource",
+            "type": "integer"
+        },
+        "MachineMetadata": {
+            "description": "Metadata model for machine/platform information.\nAttributes:\n    machineID: Unique identifier or name of the machine/platform.\n    sensors: Optional list of camera sensors mounted on the machine/platform.",
+            "properties": {
+                "machineName": {
+                    "@tag": "ex:machineName",
+                    "description": "Name of the machine/platform",
+                    "example": "demo_platform1",
+                    "title": "Machinename",
+                    "type": "string"
+                },
+                "machineID": {
+                    "@tag": "ex:machineId",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Unique identifier for the machine/platform based on machineName + uuid",
+                    "example": "demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3",
+                    "title": "Machineid"
+                },
+                "sensors": {
+                    "@tag": "ex:sensors",
+                    "default": null,
+                    "description": "List of sensors/cameras mounted on the machine/platform",
+                    "example": [
+                        {
+                            "cameraBox": true,
+                            "cameraID": "4110035082",
+                            "cameraLensModel": "IDS 6mm 1:2.8 C2/3",
+                            "cameraModel": "IDS GV-5280FA-C-HQ Rev 1.2",
+                            "cameraName": "0010",
+                            "distortionCoefficients": [],
+                            "distortionModel": "",
+                            "focalLength": 6.0,
+                            "intrinsics": [],
+                            "lightModel": "Luxalight LF-24-5700K-24.2X16-PU",
+                            "lightSource": "FLASH",
+                            "maxPixelX": 2464,
+                            "maxPixelY": 2056,
+                            "pixelSize": 3.45,
+                            "spectralBand": "RGB",
+                            "subjectDistance": 400.0
+                        }
+                    ],
+                    "items": {
+                        "$ref": "#/$defs/CameraMetadata"
+                    },
+                    "title": "Sensors",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "machineName"
+            ],
+            "title": "MachineMetadata",
+            "type": "object"
+        },
+        "SpectralBand": {
+            "description": "Spectral band captured by the camera.",
+            "enum": [
+                "rgb",
+                "nir",
+                "mono",
+                "thermal",
+                "multispectral",
+                "depth"
+            ],
+            "title": "SpectralBand",
+            "type": "string"
+        }
+    },
+    "description": "A data model representing a complete dataset package with associated metadata.\nContains dataset information, field, machine specifications, and optional image metadata.",
+    "properties": {
+        "dataset": {
+            "$ref": "#/$defs/DatasetMetadata"
+        },
+        "fields": {
+            "items": {
+                "$ref": "#/$defs/FieldMetadata"
+            },
+            "title": "Fields",
+            "type": "array"
+        },
+        "machines": {
+            "items": {
+                "$ref": "#/$defs/MachineMetadata"
+            },
+            "title": "Machines",
+            "type": "array"
+        },
+        "images": {
+            "anyOf": [
+                {
+                    "items": {
+                        "$ref": "#/$defs/ImageMetadata"
+                    },
+                    "type": "array"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Images"
+        }
+    },
+    "required": [
+        "dataset",
+        "fields",
+        "machines"
+    ],
+    "title": "DatasetPackage",
+    "type": "object"
+}
