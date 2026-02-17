@@ -1,0 +1,18 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# Minimal local extension layer.
+# Only add terms here when no suitable term exists in an external ontology.
+
+<https://example.org/agri-image-extension> a owl:Ontology ;
+  dcterms:title "Agriculture Image Metadata – Minimal Extension" ;
+  dcterms:description "Local extension terms needed for agricultural image metadata when external ontologies do not suffice." ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:created "2026-02-17"^^xsd:date .
+
+# TODO: Replace the example namespace/IRI with the project’s canonical namespace.
+# TODO: Add only project-specific terms that cannot be mapped to existing vocabularies.
+
+
