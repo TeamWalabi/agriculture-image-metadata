@@ -1,0 +1,681 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix unit: <https://qudt.org/vocab/unit/> .
+@prefix exif: <https://exiftool.org/TagNames/EXIF.html#> .
+@prefix agimage: <https://w3id.org/agri-image/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+agimage:CameraShape a sh:NodeShape ;
+    sh:targetClass agimage:Camera ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Simple identifier for the camera" ;
+        sh:example "10" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:SerialNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Unique ID/serial number of the camera" ;
+        sh:example "4110035082" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:Model ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Manufacture and camera type" ;
+        sh:example "IDS GV-5280FA-C-HQ Rev 1.2" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:LensModel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Model name/number of the lens" ;
+        sh:example "IDS 6mm 1:2.8 C2/3" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:PixelXDimension ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Maximum number of pixels of sensor in X (horizontal) direction, NOT actual image size (downscaling/binning)" ;
+        sh:example "2464" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:PixelYDimension ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Maximum number of pixels of sensor in Y (vertical) direction,NOT actual image size (downscaling/binning)" ;
+        sh:example "2056" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:pixelSize ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Physical size of one pixel on a sensor, in micrometers" ;
+        sh:example "3.45" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:FocalLength ;
+        sh:datatype xsd:float ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Focal length of the lens in [mm]" ;
+        sh:example "6" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:SubjectDistance ;
+        sh:datatype xsd:float ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Distance from camera to subject in meters [m]" ;
+        sh:example "400" ;
+    ] ;
+
+    sh:property [
+        sh:path <http://sweetontology.net/propOrdinal/SpectralBand> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Spectral band captured by the camera (e.g., RGB, BGR, NIR, Thermal)" ;
+        sh:example "rgb" ;
+        sh:in ( "rgb" "nir" "mono" "thermal" "multispectral" "depth" ) ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:cameraBox ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Is the product shielded with a camera box [True, False]" ;
+        sh:example "True" ;
+        sh:in ( "True" "False" ) ;
+    ] ;
+
+    sh:property [
+        sh:path exif:LightSource ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Indicates the Lightsource in agreement with EXIF standaard" ;
+        sh:example "FLASH" ;
+        sh:in ( "FLASH" "DAYLIGHT" "..." ) ;
+    ] ;
+
+    sh:property [
+        sh:path exif:Model ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "If additional light is used, indicate model" ;
+        sh:example "Luxalight LF-24-5700K-24.2X16-PU" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:intrinsics ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "3x3 camera Matrix K=[[fx, s, cx],[0, fy, cy],[0,0,1]],corresponding with images recorded NOT MaxPixelX" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:distortionModel ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Distortion model used. OPENCV uses dist_coeffs =[k1,k2,p1,p2,k3,k4,k5,k6],with k4 , k5, k6 optional. K123 = radial distortion, p12 tangetial distortion, k456 higher order radial distortion coefficicients for complex distortion" ;
+        sh:example "BROWN_CONRADY; [0.0,0.0,0.0,0.0,0.0]" ;
+    ] ;
+
+    .
+
+agimage:CropShape a sh:NodeShape ;
+    sh:targetClass agimage:Crop ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Name of the crop, please search in following database: https://gd.eppo.int/" ;
+        sh:example "cucumber" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://gd.eppo.int/taxon/> ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Code of the crop (e.g. EPPO code from https://gd.eppo.int/taxon/)" ;
+        sh:example "CUMSA" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:cropCultivar ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Variety of the crop; Have a look at and download the list https://ec.europa.eu/food/plant-variety-portal/#. Cucuber example has Hi power variety" ;
+        sh:example "Hi power" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:cropHandling ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Activity related to the dataset. Choose from predefined crop operations based on AgroconnectCL291 level1" ;
+        sh:example "CropHandling.CROP_OBSERVATION" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://opendata.inrae.fr/ppd-def#GrowthStage> ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "BBCH minimum growth stage of the main crop (0-100)" ;
+        sh:example "60" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://opendata.inrae.fr/ppd-def#GrowthStage> ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "BBCH maximum growth stage of the main crop (0-100)" ;
+        sh:example "65" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:cropTimingType ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:description "Crop timing event (e.g., planting, harvesting, flowering, etc.)" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779> ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Timing of event" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    .
+
+agimage:DatasetShape a sh:NodeShape ;
+    sh:targetClass dcat:Dataset ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Name of the dataset" ;
+        sh:example "Cucumber phenotyping dataset" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "unique ID of the dataset" ;
+        sh:example "7265f151-2ffe-4ab5-a3b7-47ec39ca8c40" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "General description of the dataset" ;
+        sh:example "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower." ;
+    ] ;
+
+    sh:property [
+        sh:path dcat:accessURL ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "URL where the dataset can be found" ;
+        sh:example "https://example.org/datasets/cucumber-phenotyping" ;
+    ] ;
+
+    sh:property [
+        sh:path dcat:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Version number of the dataset" ;
+        sh:example "True" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:issued ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Date this dataset version was created or uploaded" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:modified ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    sh:property [
+        sh:path dcat:startDate ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Earliest date or timepoint in the dataset YYYYMMDDTHHMMSSZ" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    sh:property [
+        sh:path dcat:endDate ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Latest date or timepoint in the dataset" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Unique identifier of the dataset, preferably in the format projectnumber_datasetname" ;
+        sh:example "3742355900_agros2_komkommer" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:creator ;
+        sh:class foaf:Agent ;
+        sh:minCount 1 ;
+        sh:description "The creator maintains the dataset and is the contact person" ;
+        sh:example "https://example.org/agent/bart-van-marrewijk" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:contributor ;
+        sh:class foaf:Agent ;
+        sh:minCount 0 ;
+        sh:description "Contributors to the dataset" ;
+        sh:example "https://example.org/agent/bart-van-marrewijk" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:license ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Type of license (see https://creativecommons.org/share-your-work/cclicenses/)" ;
+        sh:example "CC BY-NC-SA" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:numberOfImages ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Total number of images in the dataset (auto-filled)" ;
+        sh:example "15000" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:numerOfAnnotatedImages ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Total number of annotated images (auto-filled)" ;
+        sh:example "12500" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:hasField ;
+        sh:class agimage:Plot ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:hasPlatform ;
+        sh:class agimage:Platform ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:hasImage ;
+        sh:class agimage:Image ;
+        sh:minCount 0 ;
+        sh:description "Images belonging to dataset" ;
+    ] ;
+
+    .
+
+agimage:FieldShape a sh:NodeShape ;
+    sh:targetClass agimage:Field ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Name of the field" ;
+        sh:example "field_001" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Unique identifier for the field based on field + uuid" ;
+        sh:example "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://www.w3.org/ns/dcat#bbox> ;
+        sh:datatype rdf:List ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Field polygon as WKT literal (dcterms:Location)" ;
+        sh:example "['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:hasplot ;
+        sh:class agimage:Plot ;
+        sh:minCount 0 ;
+        sh:description "List of plots in the field" ;
+    ] ;
+
+    .
+
+agimage:ImageShape a sh:NodeShape ;
+    sh:targetClass agimage:Image ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Name of the image, follow the format: timestamp_camid_trigger_channel.png" ;
+        sh:example "20251014T093010Z857_camid9_trigger1000_rgb.png" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Unique identifier for the image based on image + uuid" ;
+        sh:example "20251014T093010Z857_camid9_trigger1000_rgb.png_0acbbe89-3058-4f62-a731-3fd3b42cfa04" ;
+    ] ;
+
+    sh:property [
+        sh:path <http://www.w3.org/TR/xmlschema11-2/#dateTime> ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "ISO-8601 timestamp of image (YYYYMMDDTHHMMSSZmilliseconds 20250917T134658Z)" ;
+        sh:example "2025-10-14T09:30:10.857Z" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Identifier of the camera that captured the image" ;
+        sh:example "4110035082" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Identifier of the field where the image was captured" ;
+        sh:example "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Identifier of the plot where the image was captured" ;
+        sh:example "plot123_448aadb7-b07d-498d-9301-2240533d849a" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Identifier of the machine/platform that captured the image" ;
+        sh:example "demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:ExposureTime ;
+        sh:datatype xsd:float ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Exposure time in seconds (Exif is also seconds)" ;
+        sh:example "0.01" ;
+    ] ;
+
+    sh:property [
+        sh:path exif:ImageNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Image number, Exif.Image.ImageNumber" ;
+        sh:example "1000" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:Location ;
+        sh:datatype rdf:List ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Camera location XYZ coordinates in meters relative to platform base" ;
+        sh:example "[0.0, 0.0, 2.5]" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://dbpedia.org/page/Quaternion> ;
+        sh:datatype rdf:List ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Camera orientation as quaternion [x, y, z, w], relative to base assumes OPENCV camera coord. system" ;
+        sh:example "[0.0, 0.0, 0.0, 1.0]" ;
+    ] ;
+
+    sh:property [
+        sh:path <http://dbpedia.org/resource/NMEA_0183> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of camera position" ;
+        sh:example "$GPGGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,1.2,18.893,M,-25.669,M,2.0 0031*4F" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:Location ;
+        sh:datatype rdf:List ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Platform base location XYZ coordinates in meters (global reference frame)" ;
+        sh:example "[0.0, 0.0, 0.0]" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://dbpedia.org/page/Quaternion> ;
+        sh:datatype rdf:List ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Machine base orientation as quaternion [x, y, z, w]  (global reference frame)" ;
+        sh:example "[0.0, 0.0, 0.0, 1.0]" ;
+    ] ;
+
+    sh:property [
+        sh:path <http://dbpedia.org/resource/NMEA_0183> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of machine base position" ;
+        sh:example "$GPGGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,1.2,18.893,M,-25.669,M,2.0 0031*4F" ;
+    ] ;
+
+    .
+
+agimage:PlatformShape a sh:NodeShape ;
+    sh:targetClass sosa:Platform ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Name of the Platform/platform" ;
+        sh:example "demo_platform1" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Unique identifier for the Platform/platform based on PlatformName + uuid" ;
+        sh:example "demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:hasSensor ;
+        sh:class agimage:Sensor ;
+        sh:minCount 0 ;
+        sh:description "List of sensors/cameras mounted on the Platform/platform" ;
+    ] ;
+
+    .
+
+agimage:SensorShape a sh:NodeShape ;
+    sh:targetClass sosa:Sensor ;
+
+    sh:property [
+        sh:path agimage:hasCamera ;
+        sh:class agimage:Camera ;
+        sh:minCount 0 ;
+    ] ;
+
+    .
+
+agimage:PlotShape a sh:NodeShape ;
+    sh:targetClass agimage:Plot ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Plot or greenhouse identifier" ;
+        sh:example "plot123" ;
+    ] ;
+
+    sh:property [
+        sh:path dct:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Unique identifier for the maplot based on plot + uuid" ;
+        sh:example "plot123_448aadb7-b07d-498d-9301-2240533d849a" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://www.w3.org/ns/dcat#bbox> ;
+        sh:datatype rdf:List ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description "Plot polygon as WKT literal (dcterms:Location)" ;
+        sh:example "['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:crop ;
+        sh:class agimage:Crop ;
+        sh:minCount 1 ;
+        sh:description "List of crops planted in the plot" ;
+    ] ;
+
+    sh:property [
+        sh:path agimage:weed ;
+        sh:class agimage:Crop ;
+        sh:minCount 0 ;
+        sh:description "List of weeds present in the plot" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://aims.fao.org/aos/agrovoc/c_7156.html> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Soil type in the image" ;
+        sh:example "clay" ;
+    ] ;
+
+    sh:property [
+        sh:path <https://dbpedia.org/page/Weather> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "General description of the weather conditions" ;
+        sh:example "SUNNY" ;
+    ] ;
+
+    sh:property [
+        sh:path <http://purl.obolibrary.org/obo/ENVO_00010504> ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "Non-crop surface cover visible in the images" ;
+        sh:example "SHELLS" ;
+    ] ;
+
+    .

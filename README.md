@@ -6,6 +6,11 @@ This repository provides an **application profile** and supporting resources for
 
 The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema that leverages existing ontologies and codelists, while adding only minimal project‑specific extensions where necessary.
 
+## Canonical namespace & hosting
+
+- **Namespace**: `https://w3id.org/agri-image/`
+- **Ontology**: `ontology/ontology.ttl` will be hosted at `https://w3id.org/agri-image`
+
 ## Objectives
 
 - **Define consistent metadata** for agricultural image datasets.
@@ -19,19 +24,21 @@ The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema th
 
 ```text
 application-profile/
-  metadata-profile.xlsx
-  metadata-profile.ttl
+  application_profile.xlsx
+  generate_shacl_ontology.py
+  shapes.ttl
+
+ontology/
+  ontology.ttl
 
 ontology-extension/
   agriculture-image-extension.ttl
 
 examples/
-  example-image-metadata.jsonld
-  example-image-metadata.ttl
+  (examples to be added)
 
 docs/
-  explanation.md
-  vocabulary-links.md
+  (documentation to be added)
 
 LICENSE
 ```
@@ -63,11 +70,11 @@ See the `examples/` folder for JSON-LD and Turtle examples that show how an imag
 
 ## How to use
 
-- Reuse the fields from the **application profile**.
+- Reuse the fields from the **application profile** (`application-profile/`).
 - Represent metadata using **JSON-LD** or **RDF Turtle**.
 - Refer to **external ontologies** wherever possible.
-- Use terms from the **local extension** only if no external concept fits.
-- Validate data using **SHACL** or the provided examples.
+- Use terms from the **local extension** (`ontology-extension/`) only if no external concept fits.
+- Validate data using **SHACL** (see `application-profile/shapes.ttl`).
 
 ## License
 

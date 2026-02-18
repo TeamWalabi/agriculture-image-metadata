@@ -1,0 +1,653 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix unit: <https://qudt.org/vocab/unit/> .
+@prefix exif: <https://exiftool.org/TagNames/EXIF.html#> .
+@prefix agimage: <https://w3id.org/agri-image/> .
+
+<https://w3id.org/agri-image/> a owl:Ontology .
+
+
+agimage:Camera a owl:Class ;
+    rdfs:label "Camera" ;
+    .
+
+agimage:Crop a owl:Class ;
+    rdfs:label "Crop" ;
+    .
+
+agimage:Field a owl:Class ;
+    rdfs:label "Field" ;
+    .
+
+agimage:Image a owl:Class ;
+    rdfs:label "Image" ;
+    .
+
+agimage:Plot a owl:Class ;
+    rdfs:label "Plot" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "cameraName" ;
+    rdfs:comment "Simple identifier for the camera" ;
+    rdfs:comment "Example: 10" ;
+    .
+
+exif:SerialNumber a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "cameraID" ;
+    rdfs:comment "Unique ID/serial number of the camera" ;
+    rdfs:comment "Example: 4110035082" ;
+    .
+
+exif:Model a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "cameraModel" ;
+    rdfs:comment "Manufacture and camera type" ;
+    rdfs:comment "Example: IDS GV-5280FA-C-HQ Rev 1.2" ;
+    .
+
+exif:LensModel a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "cameraLensModel" ;
+    rdfs:comment "Model name/number of the lens" ;
+    rdfs:comment "Example: IDS 6mm 1:2.8 C2/3" ;
+    .
+
+exif:PixelXDimension a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:integer ;
+    rdfs:label "maxPixelX" ;
+    rdfs:comment "Maximum number of pixels of sensor in X (horizontal) direction, NOT actual image size (downscaling/binning)" ;
+    rdfs:comment "Example: 2464" ;
+    .
+
+exif:PixelYDimension a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:integer ;
+    rdfs:label "maxPixelY" ;
+    rdfs:comment "Maximum number of pixels of sensor in Y (vertical) direction,NOT actual image size (downscaling/binning)" ;
+    rdfs:comment "Example: 2056" ;
+    .
+
+agimage:pixelSize a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "pixelSize" ;
+    rdfs:comment "Physical size of one pixel on a sensor, in micrometers" ;
+    rdfs:comment "Example: 3.45" ;
+    .
+
+exif:FocalLength a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:float ;
+    rdfs:label "focalLength" ;
+    rdfs:comment "Focal length of the lens in [mm]" ;
+    rdfs:comment "Example: 6" ;
+    .
+
+exif:SubjectDistance a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:float ;
+    rdfs:label "subjectDistance" ;
+    rdfs:comment "Distance from camera to subject in meters [m]" ;
+    rdfs:comment "Example: 400" ;
+    .
+
+<http://sweetontology.net/propOrdinal/SpectralBand> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "spectralBand" ;
+    rdfs:comment "Spectral band captured by the camera (e.g., RGB, BGR, NIR, Thermal)" ;
+    rdfs:comment "Example: rgb" ;
+    .
+
+agimage:spectralBandScheme a skos:ConceptScheme ;
+    skos:prefLabel "spectralBand controlled vocabulary" .
+
+agimage:spectralBand_rgb a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "rgb" .
+
+agimage:spectralBand_nir a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "nir" .
+
+agimage:spectralBand_mono a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "mono" .
+
+agimage:spectralBand_thermal a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "thermal" .
+
+agimage:spectralBand_multispectral a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "multispectral" .
+
+agimage:spectralBand_depth a skos:Concept ;
+    skos:inScheme agimage:spectralBandScheme ;
+    skos:prefLabel "depth" .
+
+agimage:cameraBox a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "cameraBox" ;
+    rdfs:comment "Is the product shielded with a camera box [True, False]" ;
+    rdfs:comment "Example: True" ;
+    .
+
+agimage:cameraBoxScheme a skos:ConceptScheme ;
+    skos:prefLabel "cameraBox controlled vocabulary" .
+
+agimage:cameraBox_True a skos:Concept ;
+    skos:inScheme agimage:cameraBoxScheme ;
+    skos:prefLabel "True" .
+
+agimage:cameraBox_False a skos:Concept ;
+    skos:inScheme agimage:cameraBoxScheme ;
+    skos:prefLabel "False" .
+
+exif:LightSource a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "lightSource" ;
+    rdfs:comment "Indicates the Lightsource in agreement with EXIF standaard" ;
+    rdfs:comment "Example: FLASH" ;
+    .
+
+agimage:lightSourceScheme a skos:ConceptScheme ;
+    skos:prefLabel "lightSource controlled vocabulary" .
+
+agimage:lightSource_FLASH a skos:Concept ;
+    skos:inScheme agimage:lightSourceScheme ;
+    skos:prefLabel "FLASH" .
+
+agimage:lightSource_DAYLIGHT a skos:Concept ;
+    skos:inScheme agimage:lightSourceScheme ;
+    skos:prefLabel "DAYLIGHT" .
+
+agimage:lightSource_... a skos:Concept ;
+    skos:inScheme agimage:lightSourceScheme ;
+    skos:prefLabel "..." .
+
+exif:Model a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "lightModel" ;
+    rdfs:comment "If additional light is used, indicate model" ;
+    rdfs:comment "Example: Luxalight LF-24-5700K-24.2X16-PU" ;
+    .
+
+agimage:intrinsics a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "intrinsics" ;
+    rdfs:comment "3x3 camera Matrix K=[[fx, s, cx],[0, fy, cy],[0,0,1]],corresponding with images recorded NOT MaxPixelX" ;
+    .
+
+agimage:distortionModel a owl:DatatypeProperty ;
+    rdfs:domain agimage:Camera ;
+    rdfs:range xsd:string ;
+    rdfs:label "distortionModel" ;
+    rdfs:comment "Distortion model used. OPENCV uses dist_coeffs =[k1,k2,p1,p2,k3,k4,k5,k6],with k4 , k5, k6 optional. K123 = radial distortion, p12 tangetial distortion, k456 higher order radial distortion coefficicients for complex distortion" ;
+    rdfs:comment "Example: BROWN_CONRADY; [0.0,0.0,0.0,0.0,0.0]
+" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:string ;
+    rdfs:label "cropName" ;
+    rdfs:comment "Name of the crop, please search in following database: https://gd.eppo.int/" ;
+    rdfs:comment "Example: cucumber" ;
+    .
+
+<https://gd.eppo.int/taxon/> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:string ;
+    rdfs:label "cropCode" ;
+    rdfs:comment "Code of the crop (e.g. EPPO code from https://gd.eppo.int/taxon/)" ;
+    rdfs:comment "Example: CUMSA" ;
+    .
+
+agimage:cropCultivar a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:string ;
+    rdfs:label "cropCultivar" ;
+    rdfs:comment "Variety of the crop; Have a look at and download the list https://ec.europa.eu/food/plant-variety-portal/#. Cucuber example has Hi power variety" ;
+    rdfs:comment "Example: Hi power" ;
+    .
+
+agimage:cropHandling a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:string ;
+    rdfs:label "cropHandling" ;
+    rdfs:comment "Activity related to the dataset. Choose from predefined crop operations based on AgroconnectCL291 level1" ;
+    rdfs:comment "Example: CropHandling.CROP_OBSERVATION" ;
+    .
+
+<https://opendata.inrae.fr/ppd-def#GrowthStage> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:integer ;
+    rdfs:label "cropGrowthStageMin" ;
+    rdfs:comment "BBCH minimum growth stage of the main crop (0-100)" ;
+    rdfs:comment "Example: 60" ;
+    .
+
+<https://opendata.inrae.fr/ppd-def#GrowthStage> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:integer ;
+    rdfs:label "cropGrowthStageMax" ;
+    rdfs:comment "BBCH maximum growth stage of the main crop (0-100)" ;
+    rdfs:comment "Example: 65" ;
+    .
+
+agimage:cropTimingType a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:string ;
+    rdfs:label "cropTimingType" ;
+    rdfs:comment "Crop timing event (e.g., planting, harvesting, flowering, etc.)" ;
+    .
+
+<https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Crop ;
+    rdfs:range xsd:datetime ;
+    rdfs:label "cropTimingDate" ;
+    rdfs:comment "Timing of event" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "title" ;
+    rdfs:comment "Name of the dataset" ;
+    rdfs:comment "Example: Cucumber phenotyping dataset" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "ID" ;
+    rdfs:comment "unique ID of the dataset" ;
+    rdfs:comment "Example: 7265f151-2ffe-4ab5-a3b7-47ec39ca8c40" ;
+    .
+
+dct:description a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" ;
+    rdfs:comment "General description of the dataset" ;
+    rdfs:comment "Example: This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower." ;
+    .
+
+dcat:accessURL a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "accessURL" ;
+    rdfs:comment "URL where the dataset can be found" ;
+    rdfs:comment "Example: https://example.org/datasets/cucumber-phenotyping" ;
+    .
+
+dcat:version a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "version" ;
+    rdfs:comment "Version number of the dataset" ;
+    rdfs:comment "Example: True" ;
+    .
+
+dct:issued a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:datetime ;
+    rdfs:label "issued" ;
+    rdfs:comment "Date this dataset version was created or uploaded" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dct:modified a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:datetime ;
+    rdfs:label "modified" ;
+    rdfs:comment "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dcat:startDate a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:datetime ;
+    rdfs:label "startDate" ;
+    rdfs:comment "Earliest date or timepoint in the dataset YYYYMMDDTHHMMSSZ" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dcat:endDate a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:datetime ;
+    rdfs:label "endDate" ;
+    rdfs:comment "Latest date or timepoint in the dataset" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "identifier" ;
+    rdfs:comment "Unique identifier of the dataset, preferably in the format projectnumber_datasetname" ;
+    rdfs:comment "Example: 3742355900_agros2_komkommer" ;
+    .
+
+dct:creator a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range foaf:Agent ;
+    rdfs:label "creator" ;
+    rdfs:comment "The creator maintains the dataset and is the contact person" ;
+    rdfs:comment "Example: https://example.org/agent/bart-van-marrewijk" ;
+    .
+
+dct:contributor a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range foaf:Agent ;
+    rdfs:label "contributor" ;
+    rdfs:comment "Contributors to the dataset" ;
+    rdfs:comment "Example: https://example.org/agent/bart-van-marrewijk" ;
+    .
+
+dct:license a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:string ;
+    rdfs:label "license" ;
+    rdfs:comment "Type of license (see https://creativecommons.org/share-your-work/cclicenses/)" ;
+    rdfs:comment "Example: CC BY-NC-SA" ;
+    .
+
+agimage:numberOfImages a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:integer ;
+    rdfs:label "numberOfImages" ;
+    rdfs:comment "Total number of images in the dataset (auto-filled)" ;
+    rdfs:comment "Example: 15000" ;
+    .
+
+agimage:numerOfAnnotatedImages a owl:DatatypeProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range xsd:integer ;
+    rdfs:label "numberOfAnnotatedImages" ;
+    rdfs:comment "Total number of annotated images (auto-filled)" ;
+    rdfs:comment "Example: 12500" ;
+    .
+
+agimage:hasField a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range agimage:Plot ;
+    rdfs:label "hasField" ;
+    .
+
+agimage:hasPlatform a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range agimage:Platform ;
+    rdfs:label "hasPlatform" ;
+    .
+
+agimage:hasImage a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range agimage:Image ;
+    rdfs:label "hasImage" ;
+    rdfs:comment "Images belonging to dataset" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain agimage:Field ;
+    rdfs:range xsd:string ;
+    rdfs:label "fieldName" ;
+    rdfs:comment "Name of the field" ;
+    rdfs:comment "Example: field_001" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Field ;
+    rdfs:range xsd:string ;
+    rdfs:label "fieldID" ;
+    rdfs:comment "Unique identifier for the field based on field + uuid" ;
+    rdfs:comment "Example: field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb" ;
+    .
+
+<https://www.w3.org/ns/dcat#bbox> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Field ;
+    rdfs:range rdf:List ;
+    rdfs:label "bbox" ;
+    rdfs:comment "Field polygon as WKT literal (dcterms:Location)" ;
+    rdfs:comment "Example: ['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+    .
+
+agimage:hasplot a owl:ObjectProperty ;
+    rdfs:domain agimage:Field ;
+    rdfs:range agimage:Plot ;
+    rdfs:label "hasPlot" ;
+    rdfs:comment "List of plots in the field" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "imageName" ;
+    rdfs:comment "Name of the image, follow the format: timestamp_camid_trigger_channel.png" ;
+    rdfs:comment "Example: 20251014T093010Z857_camid9_trigger1000_rgb.png" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "imageID" ;
+    rdfs:comment "Unique identifier for the image based on image + uuid" ;
+    rdfs:comment "Example: 20251014T093010Z857_camid9_trigger1000_rgb.png_0acbbe89-3058-4f62-a731-3fd3b42cfa04" ;
+    .
+
+<http://www.w3.org/TR/xmlschema11-2/#dateTime> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "imageTimestamp" ;
+    rdfs:comment "ISO-8601 timestamp of image (YYYYMMDDTHHMMSSZmilliseconds 20250917T134658Z)" ;
+    rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "cameraID" ;
+    rdfs:comment "Identifier of the camera that captured the image" ;
+    rdfs:comment "Example: 4110035082" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "fieldID" ;
+    rdfs:comment "Identifier of the field where the image was captured" ;
+    rdfs:comment "Example: field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "plotID" ;
+    rdfs:comment "Identifier of the plot where the image was captured" ;
+    rdfs:comment "Example: plot123_448aadb7-b07d-498d-9301-2240533d849a" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "machineID" ;
+    rdfs:comment "Identifier of the machine/platform that captured the image" ;
+    rdfs:comment "Example: demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3" ;
+    .
+
+exif:ExposureTime a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:float ;
+    rdfs:label "exposureTime" ;
+    rdfs:comment "Exposure time in seconds (Exif is also seconds)" ;
+    rdfs:comment "Example: 0.01" ;
+    .
+
+exif:ImageNumber a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:integer ;
+    rdfs:label "imageNumber" ;
+    rdfs:comment "Image number, Exif.Image.ImageNumber" ;
+    rdfs:comment "Example: 1000" ;
+    .
+
+dct:Location a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range rdf:List ;
+    rdfs:label "imageXYZ" ;
+    rdfs:comment "Camera location XYZ coordinates in meters relative to platform base" ;
+    rdfs:comment "Example: [0.0, 0.0, 2.5]" ;
+    .
+
+<https://dbpedia.org/page/Quaternion> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range rdf:List ;
+    rdfs:label "imageQuaternionXYZW" ;
+    rdfs:comment "Camera orientation as quaternion [x, y, z, w], relative to base assumes OPENCV camera coord. system" ;
+    rdfs:comment "Example: [0.0, 0.0, 0.0, 1.0]" ;
+    .
+
+<http://dbpedia.org/resource/NMEA_0183> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "imageGNSS" ;
+    rdfs:comment "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of camera position" ;
+    rdfs:comment "Example: $GPGGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,1.2,18.893,M,-25.669,M,2.0 0031*4F" ;
+    .
+
+dct:Location a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range rdf:List ;
+    rdfs:label "baseXYZ" ;
+    rdfs:comment "Platform base location XYZ coordinates in meters (global reference frame)" ;
+    rdfs:comment "Example: [0.0, 0.0, 0.0]" ;
+    .
+
+<https://dbpedia.org/page/Quaternion> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range rdf:List ;
+    rdfs:label "baseQuaternionXYZW" ;
+    rdfs:comment "Machine base orientation as quaternion [x, y, z, w]  (global reference frame)" ;
+    rdfs:comment "Example: [0.0, 0.0, 0.0, 1.0]" ;
+    .
+
+<http://dbpedia.org/resource/NMEA_0183> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Image ;
+    rdfs:range xsd:string ;
+    rdfs:label "baseGNSS" ;
+    rdfs:comment "NMEA string (e.g., NMEA-GGA/GSV, NMEA-2000) of machine base position" ;
+    rdfs:comment "Example: $GPGGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,1.2,18.893,M,-25.669,M,2.0 0031*4F" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain sosa:Platform ;
+    rdfs:range xsd:string ;
+    rdfs:label "platformName" ;
+    rdfs:comment "Name of the Platform/platform" ;
+    rdfs:comment "Example: demo_platform1" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain sosa:Platform ;
+    rdfs:range xsd:string ;
+    rdfs:label "platformID" ;
+    rdfs:comment "Unique identifier for the Platform/platform based on PlatformName + uuid" ;
+    rdfs:comment "Example: demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3" ;
+    .
+
+agimage:hasSensor a owl:ObjectProperty ;
+    rdfs:domain sosa:Platform ;
+    rdfs:range agimage:Sensor ;
+    rdfs:label "hasSensor" ;
+    rdfs:comment "List of sensors/cameras mounted on the Platform/platform" ;
+    .
+
+agimage:hasCamera a owl:ObjectProperty ;
+    rdfs:domain sosa:Sensor ;
+    rdfs:range agimage:Camera ;
+    rdfs:label "hasCamera" ;
+    .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range xsd:string ;
+    rdfs:label "plotName" ;
+    rdfs:comment "Plot or greenhouse identifier" ;
+    rdfs:comment "Example: plot123" ;
+    .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range xsd:string ;
+    rdfs:label "plotID" ;
+    rdfs:comment "Unique identifier for the maplot based on plot + uuid" ;
+    rdfs:comment "Example: plot123_448aadb7-b07d-498d-9301-2240533d849a" ;
+    .
+
+<https://www.w3.org/ns/dcat#bbox> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range rdf:List ;
+    rdfs:label "bbox" ;
+    rdfs:comment "Plot polygon as WKT literal (dcterms:Location)" ;
+    rdfs:comment "Example: ['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+    .
+
+agimage:crop a owl:ObjectProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range agimage:Crop ;
+    rdfs:label "crop" ;
+    rdfs:comment "List of crops planted in the plot" ;
+    .
+
+agimage:weed a owl:ObjectProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range agimage:Crop ;
+    rdfs:label "weed" ;
+    rdfs:comment "List of weeds present in the plot" ;
+    .
+
+<https://aims.fao.org/aos/agrovoc/c_7156.html> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range xsd:string ;
+    rdfs:label "soilType" ;
+    rdfs:comment "Soil type in the image" ;
+    rdfs:comment "Example: clay" ;
+    .
+
+<https://dbpedia.org/page/Weather> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range xsd:string ;
+    rdfs:label "weatherConditions" ;
+    rdfs:comment "General description of the weather conditions" ;
+    rdfs:comment "Example: SUNNY" ;
+    .
+
+<http://purl.obolibrary.org/obo/ENVO_00010504> a owl:DatatypeProperty ;
+    rdfs:domain agimage:Plot ;
+    rdfs:range xsd:string ;
+    rdfs:label "surfaceLayer" ;
+    rdfs:comment "Non-crop surface cover visible in the images" ;
+    rdfs:comment "Example: SHELLS" ;
+    .
