@@ -368,7 +368,7 @@ agimage:DatasetShape a sh:NodeShape ;
 
     sh:property [
         sh:path agimage:hasField ;
-        sh:class agimage:Plot ;
+        sh:class agimage:Field ;
         sh:minCount 1 ;
     ] ;
 
@@ -410,11 +410,11 @@ agimage:FieldShape a sh:NodeShape ;
 
     sh:property [
         sh:path <https://www.w3.org/ns/dcat#bbox> ;
-        sh:datatype rdf:List ;
+        sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description "Field polygon as WKT literal (dcterms:Location)" ;
-        sh:example "['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+        sh:example "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))'" ;
     ] ;
 
     sh:property [
@@ -630,11 +630,11 @@ agimage:PlotShape a sh:NodeShape ;
 
     sh:property [
         sh:path <https://www.w3.org/ns/dcat#bbox> ;
-        sh:datatype rdf:List ;
+        sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description "Plot polygon as WKT literal (dcterms:Location)" ;
-        sh:example "['POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))']" ;
+        sh:example "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))'" ;
     ] ;
 
     sh:property [
@@ -673,7 +673,6 @@ agimage:PlotShape a sh:NodeShape ;
         sh:path <http://purl.obolibrary.org/obo/ENVO_00010504> ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
         sh:description "Non-crop surface cover visible in the images" ;
         sh:example "SHELLS" ;
     ] ;
