@@ -221,7 +221,7 @@ agimage:CropShape a sh:NodeShape ;
 
     sh:property [
         sh:path <https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779> ;
-        sh:datatype xsd:datetime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Timing of event" ;
@@ -280,7 +280,7 @@ agimage:DatasetShape a sh:NodeShape ;
 
     sh:property [
         sh:path dct:issued ;
-        sh:datatype xsd:datetime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Date this dataset version was created or uploaded" ;
@@ -289,7 +289,7 @@ agimage:DatasetShape a sh:NodeShape ;
 
     sh:property [
         sh:path dct:modified ;
-        sh:datatype xsd:datetime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
@@ -298,7 +298,7 @@ agimage:DatasetShape a sh:NodeShape ;
 
     sh:property [
         sh:path dcat:startDate ;
-        sh:datatype xsd:datetime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Earliest date or timepoint in the dataset YYYYMMDDTHHMMSSZ" ;
@@ -307,7 +307,7 @@ agimage:DatasetShape a sh:NodeShape ;
 
     sh:property [
         sh:path dcat:endDate ;
-        sh:datatype xsd:datetime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Latest date or timepoint in the dataset" ;

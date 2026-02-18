@@ -212,7 +212,7 @@ agimage:cropTimingType a owl:DatatypeProperty ;
 
 <https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779> a owl:DatatypeProperty ;
     rdfs:domain agimage:Crop ;
-    rdfs:range xsd:datetime ;
+    rdfs:range xsd:dateTime ;
     rdfs:label "cropTimingDate" ;
     rdfs:comment "Timing of event" ;
     rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
@@ -260,7 +260,7 @@ dcat:version a owl:DatatypeProperty ;
 
 dct:issued a owl:DatatypeProperty ;
     rdfs:domain dcat:Dataset ;
-    rdfs:range xsd:datetime ;
+    rdfs:range xsd:dateTime ;
     rdfs:label "issued" ;
     rdfs:comment "Date this dataset version was created or uploaded" ;
     rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
@@ -268,7 +268,7 @@ dct:issued a owl:DatatypeProperty ;
 
 dct:modified a owl:DatatypeProperty ;
     rdfs:domain dcat:Dataset ;
-    rdfs:range xsd:datetime ;
+    rdfs:range xsd:dateTime ;
     rdfs:label "modified" ;
     rdfs:comment "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
     rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
@@ -276,7 +276,7 @@ dct:modified a owl:DatatypeProperty ;
 
 dcat:startDate a owl:DatatypeProperty ;
     rdfs:domain dcat:Dataset ;
-    rdfs:range xsd:datetime ;
+    rdfs:range xsd:dateTime ;
     rdfs:label "startDate" ;
     rdfs:comment "Earliest date or timepoint in the dataset YYYYMMDDTHHMMSSZ" ;
     rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
@@ -284,7 +284,7 @@ dcat:startDate a owl:DatatypeProperty ;
 
 dcat:endDate a owl:DatatypeProperty ;
     rdfs:domain dcat:Dataset ;
-    rdfs:range xsd:datetime ;
+    rdfs:range xsd:dateTime ;
     rdfs:label "endDate" ;
     rdfs:comment "Latest date or timepoint in the dataset" ;
     rdfs:comment "Example: 2025-10-14T09:30:10.857Z" ;
