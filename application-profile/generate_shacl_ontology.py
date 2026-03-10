@@ -38,7 +38,7 @@ import pandas as pd
 # -------------------------------
 def parse_args():
     p = argparse.ArgumentParser(description="Normalize Excel (in-memory) and generate Ontology + SHACL.")
-    p.add_argument("--input", "-i", default="application_profile.xlsx", help="Excel file in current dir")
+    p.add_argument("--input", "-i", default="application_profile.csv", help="Excel file in current dir")
     p.add_argument("--onto", "-o", default="ontology.ttl", help="Output ontology TTL")
     p.add_argument("--shacl", "-s", default="shapes.ttl", help="Output SHACL TTL")
     p.add_argument("--base-ns", default="https://w3id.org/agri-image/", help="Base namespace for your terms")
@@ -205,10 +205,10 @@ def parse_allowed_values(s):
 # EXCEL NORMALISATION
 # -------------------------------
 def load_and_normalize_excel(path: str, base_prefix: str, base_ns: str, pmap: dict) -> pd.DataFrame:
-    df = pd.read_excel(path, engine="openpyxl")
+    df = pd.read_csv(path)
 
     # Bulk string replace: 'agri-images' -> 'agri-image' in all string cells
-    df = df.applymap(lambda v: normalize_uri(v) if isinstance(v, str) else v)
+    df = df.map(lambda v: normalize_uri(v) if isinstance(v, str) else v)
 
     # Normalize 'datatype' column (class-like for object properties, datatypes for datatype props)
     if "datatype" in df.columns:
@@ -224,7 +224,7 @@ def load_and_normalize_excel(path: str, base_prefix: str, base_ns: str, pmap: di
                 return normalize_class_like(val, base_prefix, pmap)
 
             # For datatype properties, keep xsd/rdf/rdfs* compact; otherwise compact or leave
-            if val.startswith(("xsd:", "rdf:", "rdfs:")):
+            if val.startswith(("xsd:", "rdf:", "rdfs:", "sh:")):
                 return val
             return compact_curie(val, pmap)
 
