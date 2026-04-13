@@ -152,10 +152,10 @@ class PlotStateMetadata(RDFModel):
 
     soilType: Optional[SoilType] = Field(
         None,
-        description="Soil type based on USDA soil conditions",
+        description="Soil type based Soil Texture Triangle" \
+        "https://serc.carleton.edu/details/images/343276.html",
         json_schema_extra={
-            "example": "clay",  # "loam", TODO add USDA soil conditions
-            "@tag": "ex:soilType",
+            "example": SoilType.CLAY.name,  
             "uri": "https://aims.fao.org/aos/agrovoc/c_7156.html",
         },
     )
@@ -182,7 +182,7 @@ class PlotStateMetadata(RDFModel):
 
     surfaceLayer: Optional[list[SurfaceLayer]] = Field(
         None,
-        description="Non-crop surface cover visible in the images",
+        description="Non-crop surface cover visible in the images, for example shells, straw",
         json_schema_extra={
             "example": [SurfaceLayer.SHELLS.name, SurfaceLayer.STRAW.name],
             "@tag": "ex:surfaceLayer",

@@ -24,7 +24,8 @@ class PlatformMetadata(RDFModel):
     https://www.w3.org/TR/vocab-ssn/#SOSAPlatform
     """
 
-    rdf_type: str = "agimage:Platform"
+    # rdf_type: str = "agimage:Platform"
+    rdf_type: str = "sosa:Platform"
 
     # ---------------------
     # Image-specific fields
@@ -52,10 +53,11 @@ class PlatformMetadata(RDFModel):
 
     hasSensor: SensorMetadata | list[SensorMetadata] = Field(
         None,
-        description="List of sensors mounted on the Platform/platform",
+        description="List of sensors hosted on the platform",
         json_schema_extra={
             "example": [extract(SensorMetadata)],
-            "uri": AGIMAGE + "hasSensor",
+            "uri": "http://www.w3.org/ns/sosa/hosts",  # was AGIMAGE + "hasSensor"
+            # "parent_uri": "http://www.w3.org/ns/sosa/hosts",
             "cardinalityMax": "*",
         },
     )

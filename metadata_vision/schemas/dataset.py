@@ -123,14 +123,6 @@ class DatasetMetadata(RDFModel):
         },
     )
 
-    # @field_validator("issued", "modified", "startDate", "endDate", mode="before")
-    # @classmethod
-    # def convert_datetime_to_string(cls, v):
-    #     """Datetime to string"""
-    #     if isinstance(v, datetime.datetime):
-    #         return v.strftime("%Y-%m-%dT%H:%M:%SZ")
-    #     return v
-
     # ---------------------
     # Identification & people
     # ---------------------
@@ -145,14 +137,6 @@ class DatasetMetadata(RDFModel):
         },
     )
 
-    # creator: str = Field(
-    #     ...,
-    #     description="The creator maintains the dataset and is the contact person",
-    #     json_schema_extra={
-    #         "example": "Bart van Marrewijk",
-    #         "uri": "http://purl.org/dc/terms/creator",
-    #     },
-    # )
     creator: AgentMetadata = Field(
         ...,
         json_schema_extra={

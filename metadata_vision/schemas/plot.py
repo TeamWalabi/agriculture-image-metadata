@@ -27,7 +27,7 @@ class PlotMetadata(RDFModel):
     # ---------------------
     plotName: str = Field(
         ...,
-        description="Plot or greenhouse identifier",
+        description="Plot or Greenhouse identifier",
         json_schema_extra={
             "example": "plot123",
             "@tag": "ex:plotName",
@@ -63,7 +63,8 @@ class PlotMetadata(RDFModel):
     )
     hasPlotState: PlotStateMetadata | list[PlotStateMetadata] = Field(
         ...,
-        description="Defining the state of the plot, so crops/weed growth stage environmental conditions at certain time",
+        description="Defining the state of the plot, so crops/weed growth stage," \
+        "environmental conditions at certain timestamp",
         json_schema_extra={
             "example": [
                 "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"

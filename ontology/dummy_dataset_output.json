@@ -2,7 +2,7 @@
   "dataset": {
     "rdf_type": "dcat:Dataset",
     "title": "Cucumber phenotyping dataset",
-    "ID": "f78a922d-a65c-4250-b393-1d4acb3d2589",
+    "ID": "b77e6115-aa0a-4e81-9adb-cbf202740c75",
     "description": "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower.",
     "accessURL": "https://example.org/datasets/cucumber-phenotyping",
     "version": "1.0",
@@ -117,12 +117,12 @@
       }
     ],
     "hasPlatform": {
-      "rdf_type": "agimage:Platform",
+      "rdf_type": "sosa:Platform",
       "platformName": "demo_platform1",
       "platformID": "demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035",
       "hasSensor": [
         {
-          "rdf_type": "agimage:Sensor",
+          "rdf_type": "sosa:Sensor",
           "hasCamera": [
             {
               "rdf_type": "agimage:Camera",
@@ -150,7 +150,7 @@
       "rdf_type": "agimage:Image",
       "imageName": "20251014T093010Z857_camid9_trigger1000_rgb.png",
       "imagePath": null,
-      "imageID": "20251014T093010Z857_camid9_trigger1000_rgb.png_ef07725a-f466-486e-bfe8-976c6744c651",
+      "imageID": "20251014T093010Z857_camid9_trigger1000_rgb.png_ab35fb92-7729-4327-a8fd-c05bd0a0f5ea",
       "imageTimestamp": "2025-10-14T09:30:10.857Z",
       "cameraID": "4110035082",
       "fieldID": "field_001_d35cce35-513d-4902-b392-1657c0d8a64d",

@@ -65,59 +65,13 @@ class FieldMetadata(RDFModel):
         description="List of plots in the field",
         json_schema_extra={
             "example": extract(PlotMetadata),
-            "@tag": "ex:plots",
             "uri": AGIMAGE + "hasPlot",
         },
     )
-    # Field	hasPlot	https://w3id.org/agri-image/hasplot	object	agimage:plot	0	*	List of plots in the field
 
-    # @field_validator("plot", mode="before")
-    # @classmethod
-    # def normalize_fields_to_list(cls, v):
-    #     """Ensure it is always a list."""
-    #     if isinstance(v, list):
-    #         return v
-    #     return [v]
 
     @model_validator(mode="after")
     def set_id(self):
         if self.fieldID is None:
             self.fieldID = f"{self.fieldName}_{uuid.uuid4()}"
         return self
-
-
-# if __name__ == "__main__":
-#     import json
-
-#     print(json.dumps(PlotMetadata.model_json_schema(), indent=4))
-
-#     # Create an example instance
-#     example = PlotMetadata(
-#         plotName="plot123",
-#         bbox="POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
-#         crops=[
-#             CropMetadata(
-#                 cropName="cucumber",
-#                 cropCultivar="Hi Power",
-#                 cropHandling=CropHandling.CROP_OBSERVATION,
-#                 cropGrowthStageMin=60,
-#                 cropGrowthStageMax=65,
-#             )
-#         ],
-#         weeds=[
-#             CropMetadata(
-#                 cropName="dandelion",
-#                 cropCultivar=None,
-#                 cropHandling=None,
-#                 cropGrowthStageMin=None,
-#                 cropGrowthStageMax=None,
-#             )
-#         ],
-#         soil_type="clay loam",
-#         weather_conditions=WeatherConditions.SUNNY,
-#         external_conditions=ExternalConditions.LED,
-#         surface_cover=[SurfaceLayer.LOOSE_LEAVES, SurfaceLayer.WHITE_CANVAS],
-#     )
-
-#     print("\nExample instance:")
-#     print(example.model_dump_json(indent=2))

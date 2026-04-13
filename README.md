@@ -1,8 +1,8 @@
 # Agriculture Image Metadata
 
-A Linked Data–based metadata model for agricultural image data.
+A Linked Data–based metadata model for agricultural image data powered by [Vision+Robotics](https://visionrobotics.eu/>)
 
-This repository provides an **ontology** for image dataset in agricultural domains (greenhouse, open field, arable crops, horticulture, phenotyping).
+This repository provides an **ontology** and python package for image dataset in agricultural domains (greenhouse, open field, arable crops, horticulture, phenotyping).
 
 The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema that leverages existing ontologies and codelists, while adding only minimal project‑specific extensions where necessary.
 
@@ -61,7 +61,7 @@ Data is collected by a machine/platform
 
 ## Install for deployment
 ```python
-pip install .
+pip install metadata_vision@git+https://github.com/TeamWalabi/agriculture-image-metadata.git
 ```
 
 ## Folder structure for deployment
