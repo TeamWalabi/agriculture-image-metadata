@@ -47,7 +47,7 @@ from metadata_vision.data import (
 
 
 if __name__=="__main__":
-    output_dir = Path(__file__).parent / "ontology"
+    output_dir = Path(__file__).parent.parent / "ontology"
     output_dir.mkdir(exist_ok=True)
 
     # -----------------------

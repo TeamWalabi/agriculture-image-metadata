@@ -2,13 +2,13 @@
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix ns1: <https://exiftool.org/TagNames/EXIF.html#> .
+@prefix ns1: <https://dbpedia.org/page/> .
 @prefix ns2: <http://www.w3.org/TR/xmlschema11-2/#> .
-@prefix ns3: <https://dbpedia.org/page/> .
-@prefix ns4: <https://opendata.inrae.fr/ppd-def#> .
-@prefix ns5: <https://agrovoc.fao.org/browse/agrovoc/en/page/> .
-@prefix ns6: <http://sweetontology.net/propOrdinal/> .
-@prefix ns7: <http://purl.obolibrary.org/obo/> .
+@prefix ns3: <https://opendata.inrae.fr/ppd-def#> .
+@prefix ns4: <https://exiftool.org/TagNames/EXIF.html#> .
+@prefix ns5: <http://purl.obolibrary.org/obo/> .
+@prefix ns6: <https://agrovoc.fao.org/browse/agrovoc/en/page/> .
+@prefix ns7: <http://sweetontology.net/propOrdinal/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -21,7 +21,7 @@
     rdfs:domain agimage:Image ;
     rdfs:range xsd:string .
 
-ns7:ENVO_00010504 a owl:DatatypeProperty ;
+ns5:ENVO_00010504 a owl:DatatypeProperty ;
     rdfs:label "surfaceLayer" ;
     rdfs:comment "Non-crop surface cover visible in the images" ;
     rdfs:domain agimage:PlotState ;
@@ -84,7 +84,7 @@ dcterms:title a owl:DatatypeProperty ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-ns6:SpectralBand a owl:DatatypeProperty ;
+ns7:SpectralBand a owl:DatatypeProperty ;
     rdfs:label "spectralBand" ;
     rdfs:comment "Spectral band captured by the camera (e.g., RGB, BGR, NIR, Thermal)" ;
     rdfs:domain agimage:Camera ;
@@ -100,11 +100,11 @@ ns2:dateTime a owl:DatatypeProperty ;
     rdfs:range xsd:string .
 
 dcat:3742355900_agros2_komkommer a dcat:Dataset ;
-    dcterms:contributor foaf:a1d527d5-86dc-4af9-ba1e-576736d14d45 ;
-    dcterms:creator foaf:09370a9b-7194-4e4e-a48b-615f11a4ada5 ;
+    dcterms:contributor foaf:bc99f65d-5bb9-423f-a86c-ac9115e2a6ea ;
+    dcterms:creator foaf:f568692b-54b8-467f-b319-196f9267fcde ;
     dcterms:description "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower." ;
-    dcterms:identifier "3742355900_agros2_komkommer",
-        "4157c2df-0f69-444f-94f9-c734a741007a" ;
+    dcterms:identifier "0242839d-a70f-4ebe-97b2-c752618bc7d5",
+        "3742355900_agros2_komkommer" ;
     dcterms:issued "2025-10-14 09:30:00" ;
     dcterms:license "CC BY-NC-SA" ;
     dcterms:modified "2025-10-14 09:30:00" ;
@@ -115,7 +115,7 @@ dcat:3742355900_agros2_komkommer a dcat:Dataset ;
     dcat:version "1.0" ;
     agimage:hasField agimage:field_001_d35cce35-513d-4902-b392-1657c0d8a64d,
         agimage:field_002_362f6026-28a0-4bc0-b8b5-a3ef9c81ca7e ;
-    agimage:hasImage agimage:20251014T093010Z857_camid9_trigger1000_rgb.png_d30f311f-765e-404c-a822-ba4f7043fa2e ;
+    agimage:hasImage agimage:20251014T093010Z857_camid9_trigger1000_rgb.png_ae7a12ad-4477-4aab-b5da-e01f8c6cb092 ;
     agimage:hasPlatform agimage:demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035 ;
     agimage:numberOfAnnotatedImages 12500 ;
     agimage:numberOfImages 15000 .
@@ -149,7 +149,7 @@ foaf:name a owl:DatatypeProperty ;
     rdfs:domain agimage:Agent ;
     rdfs:range xsd:string .
 
-ns5:c_7779 a owl:DatatypeProperty,
+ns6:c_7779 a owl:DatatypeProperty,
         owl:ObjectProperty ;
     rdfs:label "cropTiming",
         "type" ;
@@ -166,74 +166,74 @@ ns5:c_7779 a owl:DatatypeProperty,
     rdfs:domain agimage:PlotState ;
     rdfs:range xsd:string .
 
-ns3:Quaternion a owl:DatatypeProperty ;
+ns1:Quaternion a owl:DatatypeProperty ;
     rdfs:label "imageQuaternionXYZW" ;
     rdfs:comment "Camera orientation as quaternion [x, y, z, w], relative to base assumes OPENCV camera coord. system" ;
     rdfs:domain agimage:Image ;
     rdfs:range xsd:string .
 
-ns3:Weather a owl:DatatypeProperty ;
+ns1:Weather a owl:DatatypeProperty ;
     rdfs:label "weatherConditions" ;
     rdfs:comment "General description of the weather conditions" ;
     rdfs:domain agimage:PlotState ;
     rdfs:range xsd:string .
 
-ns1:ExposureTime a owl:DatatypeProperty ;
+ns4:ExposureTime a owl:DatatypeProperty ;
     rdfs:label "exposureTime" ;
     rdfs:comment "Exposure time in seconds (Exif is also seconds)" ;
     rdfs:domain agimage:Image ;
     rdfs:range xsd:double .
 
-ns1:FocalLength a owl:DatatypeProperty ;
+ns4:FocalLength a owl:DatatypeProperty ;
     rdfs:label "focalLength" ;
     rdfs:comment "Focal length of the lens in [mm]" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:double .
 
-ns1:ImageNumber a owl:DatatypeProperty ;
+ns4:ImageNumber a owl:DatatypeProperty ;
     rdfs:label "imageNumber" ;
     rdfs:comment "Image number, Exif.Image.ImageNumber" ;
     rdfs:domain agimage:Image ;
     rdfs:range xsd:integer .
 
-ns1:LensModel a owl:DatatypeProperty ;
+ns4:LensModel a owl:DatatypeProperty ;
     rdfs:label "cameraLensModel" ;
     rdfs:comment "Model name/number of the lens" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:string .
 
-ns1:LightSource a owl:DatatypeProperty ;
+ns4:LightSource a owl:DatatypeProperty ;
     rdfs:label "lightSource" ;
     rdfs:comment "Indicates the Lightsource in agreement with EXIF standaard" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:string .
 
-ns1:Model a owl:DatatypeProperty ;
+ns4:Model a owl:DatatypeProperty ;
     rdfs:label "cameraModel" ;
     rdfs:comment "Manufacture and camera type" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:string .
 
-ns1:PixelXDimension a owl:DatatypeProperty ;
+ns4:PixelXDimension a owl:DatatypeProperty ;
     rdfs:label "maxPixelX" ;
     rdfs:comment "Maximum number of pixels of sensor in X (horizontal) direction, NOT actual image size (downscaling/binning)" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:integer .
 
-ns1:PixelYDimension a owl:DatatypeProperty ;
+ns4:PixelYDimension a owl:DatatypeProperty ;
     rdfs:label "maxPixelY" ;
     rdfs:comment "Maximum number of pixels of sensor in Y (vertical) direction,NOT actual image size (downscaling/binning)" ;
     rdfs:domain agimage:Camera ;
     rdfs:range xsd:integer .
 
-ns1:SerialNumber a owl:DatatypeProperty ;
+ns4:SerialNumber a owl:DatatypeProperty ;
     rdfs:label "cameraID" ;
     rdfs:comment "Unique ID/serial number of the camera" ;
     rdfs:domain agimage:Camera,
         agimage:Image ;
     rdfs:range xsd:string .
 
-ns1:SubjectDistance a owl:DatatypeProperty ;
+ns4:SubjectDistance a owl:DatatypeProperty ;
     rdfs:label "subjectDistance" ;
     rdfs:comment "Distance from camera to subject in meters [m]" ;
     rdfs:domain agimage:Camera ;
@@ -245,7 +245,7 @@ ns1:SubjectDistance a owl:DatatypeProperty ;
     rdfs:domain agimage:Crop ;
     rdfs:range xsd:string .
 
-ns4:GrowthStage a owl:DatatypeProperty ;
+ns3:GrowthStage a owl:DatatypeProperty ;
     rdfs:label "cropGrowthStageMax",
         "cropGrowthStageMin" ;
     rdfs:comment "BBCH maximum growth stage of the main crop (0-100)",
@@ -486,95 +486,95 @@ agimage:weed a owl:ObjectProperty ;
     rdfs:domain agimage:PlotState ;
     rdfs:range agimage:Crop .
 
-foaf:09370a9b-7194-4e4e-a48b-615f11a4ada5 a foaf:Agent ;
-    foaf:name "Jane Doe" .
-
-foaf:a1d527d5-86dc-4af9-ba1e-576736d14d45 a foaf:Agent ;
+foaf:bc99f65d-5bb9-423f-a86c-ac9115e2a6ea a foaf:Agent ;
     foaf:name "John Doe" .
 
-agimage:20251014T093010Z857_camid9_trigger1000_rgb.png_d30f311f-765e-404c-a822-ba4f7043fa2e a agimage:Image ;
+foaf:f568692b-54b8-467f-b319-196f9267fcde a foaf:Agent ;
+    foaf:name "Jane Doe" .
+
+agimage:0f1e6910-3c16-4afd-9d0c-f5366c00bd69 a agimage:PlotState ;
+    ns5:ENVO_00010504 "loose leaves",
+        "white canvas" ;
+    ns1:Weather "sunny" ;
+    agimage:crop agimage:eacfc79f-212e-4b95-bbc0-ffb980a4ab67 ;
+    agimage:stateID "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035" ;
+    agimage:stateNae "plot123_state_1" ;
+    agimage:validFrom "2026-08-18 00:00:00" ;
+    agimage:validTo "2026-08-20 00:00:00" .
+
+agimage:20251014T093010Z857_camid9_trigger1000_rgb.png_ae7a12ad-4477-4aab-b5da-e01f8c6cb092 a agimage:Image ;
     dcterms:Location 0e+00,
         1e+00,
         2e+00,
         2.5e+00 ;
     ns2:dateTime "2025-10-14 09:30:10.857000" ;
-    ns3:Quaternion 0e+00,
+    ns1:Quaternion 0e+00,
         1e+00 ;
-    ns1:ImageNumber 1000 ;
-    ns1:SerialNumber "4110035082" ;
+    ns4:ImageNumber 1000 ;
+    ns4:SerialNumber "4110035082" ;
     agimage:fieldID "field_001_d35cce35-513d-4902-b392-1657c0d8a64d" ;
-    agimage:imageID "20251014T093010Z857_camid9_trigger1000_rgb.png_d30f311f-765e-404c-a822-ba4f7043fa2e" ;
+    agimage:imageID "20251014T093010Z857_camid9_trigger1000_rgb.png_ae7a12ad-4477-4aab-b5da-e01f8c6cb092" ;
     agimage:imageName "20251014T093010Z857_camid9_trigger1000_rgb.png" ;
     agimage:platformID "demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035" ;
     agimage:platformOrientation 0e+00,
         1e+00 ;
     agimage:plotID "plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035" .
 
-agimage:271cc21c-e73e-499b-9865-0dc8791c81b4 a agimage:Sensor ;
+agimage:23701718-07f0-4506-ba72-8e5bd7bb4df8 a agimage:Sensor ;
     agimage:hasCamera agimage:4110035082 .
 
-agimage:27712841-073c-42fd-adfd-58f6d13b370c a agimage:Crop ;
-    ns5:c_7779 agimage:2e3f2fb8-f1eb-4d9e-a2d6-a26544d61ed1 ;
-    <https://gd.eppo.int/taxon/> "CUMSA" ;
-    ns4:GrowthStage 65,
-        85 ;
-    agimage:cropCultivar "Hi Power" ;
-    agimage:cropHandling "Crop observation" ;
-    agimage:cropName "cucumber" .
-
-agimage:2e3f2fb8-f1eb-4d9e-a2d6-a26544d61ed1 a agimage:CropTiming ;
-    ns2:dateTime "2026-01-10 00:00:00" ;
-    ns5:c_7779 "planting_date" .
+agimage:327fc210-4d14-41cc-9c0d-0b5ed28e8bc8 a agimage:PlotState ;
+    ns5:ENVO_00010504 "loose leaves",
+        "white canvas" ;
+    ns1:Weather "sunny" ;
+    agimage:crop agimage:621727c5-3556-4a30-ab2d-a76bf252813f ;
+    agimage:stateID "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035" ;
+    agimage:stateNae "plot123_state_1" ;
+    agimage:validFrom "2026-08-18 00:00:00" ;
+    agimage:validTo "2026-08-20 00:00:00" .
 
 agimage:4110035082 a agimage:Camera ;
-    ns6:SpectralBand "rgb" ;
-    ns1:FocalLength 6e+00 ;
-    ns1:LensModel "IDS 6mm 1:2.8 C2/3" ;
-    ns1:Model "IDS GV-5280FA-C-HQ Rev 1.2" ;
-    ns1:PixelXDimension 2464 ;
-    ns1:PixelYDimension 2056 ;
-    ns1:SerialNumber "4110035082" ;
-    ns1:SubjectDistance 4e+02 ;
+    ns7:SpectralBand "rgb" ;
+    ns4:FocalLength 6e+00 ;
+    ns4:LensModel "IDS 6mm 1:2.8 C2/3" ;
+    ns4:Model "IDS GV-5280FA-C-HQ Rev 1.2" ;
+    ns4:PixelXDimension 2464 ;
+    ns4:PixelYDimension 2056 ;
+    ns4:SerialNumber "4110035082" ;
+    ns4:SubjectDistance 4e+02 ;
     agimage:cameraName "camid050" ;
     agimage:pixelSize 4.39e+00 .
 
-agimage:46e2431b-5f6a-4a40-a6ca-36c24a788a38 a agimage:PlotState ;
-    ns7:ENVO_00010504 "loose leaves",
-        "white canvas" ;
-    ns3:Weather "sunny" ;
-    agimage:crop agimage:628686e7-4578-4781-bae1-6321e9ed6223 ;
-    agimage:stateID "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035" ;
-    agimage:stateNae "plot123_state_1" ;
-    agimage:validFrom "2026-08-18 00:00:00" ;
-    agimage:validTo "2026-08-20 00:00:00" .
-
-agimage:628686e7-4578-4781-bae1-6321e9ed6223 a agimage:Crop ;
-    ns5:c_7779 agimage:9420149c-e644-40dd-b324-1f461becd0e9 ;
+agimage:621727c5-3556-4a30-ab2d-a76bf252813f a agimage:Crop ;
+    ns6:c_7779 agimage:ac33b034-4aaa-4941-ac68-431b9ec16b6f ;
     <https://gd.eppo.int/taxon/> "CUMSA" ;
-    ns4:GrowthStage 65,
+    ns3:GrowthStage 65,
         85 ;
     agimage:cropCultivar "Hi Power" ;
     agimage:cropHandling "Crop observation" ;
     agimage:cropName "cucumber" .
 
-agimage:9420149c-e644-40dd-b324-1f461becd0e9 a agimage:CropTiming ;
+agimage:74edea02-db9a-48ca-836b-5d15d6de3582 a agimage:CropTiming ;
     ns2:dateTime "2026-01-10 00:00:00" ;
-    ns5:c_7779 "planting_date" .
+    ns6:c_7779 "planting_date" .
+
+agimage:ac33b034-4aaa-4941-ac68-431b9ec16b6f a agimage:CropTiming ;
+    ns2:dateTime "2026-01-10 00:00:00" ;
+    ns6:c_7779 "planting_date" .
 
 agimage:demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035 a agimage:Platform ;
-    agimage:hasSensor agimage:271cc21c-e73e-499b-9865-0dc8791c81b4 ;
+    agimage:hasSensor agimage:23701718-07f0-4506-ba72-8e5bd7bb4df8 ;
     agimage:platformID "demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035" ;
     agimage:platformName "demo_platform1" .
 
-agimage:e4787cf0-b01e-4a5c-9ec4-b883d6e7a875 a agimage:PlotState ;
-    ns7:ENVO_00010504 "loose leaves",
-        "white canvas" ;
-    ns3:Weather "sunny" ;
-    agimage:crop agimage:27712841-073c-42fd-adfd-58f6d13b370c ;
-    agimage:stateID "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035" ;
-    agimage:stateNae "plot123_state_1" ;
-    agimage:validFrom "2026-08-18 00:00:00" ;
-    agimage:validTo "2026-08-20 00:00:00" .
+agimage:eacfc79f-212e-4b95-bbc0-ffb980a4ab67 a agimage:Crop ;
+    ns6:c_7779 agimage:74edea02-db9a-48ca-836b-5d15d6de3582 ;
+    <https://gd.eppo.int/taxon/> "CUMSA" ;
+    ns3:GrowthStage 65,
+        85 ;
+    agimage:cropCultivar "Hi Power" ;
+    agimage:cropHandling "Crop observation" ;
+    agimage:cropName "cucumber" .
 
 agimage:field_001_d35cce35-513d-4902-b392-1657c0d8a64d a agimage:Field ;
     agimage:fieldBbox "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))" ;
@@ -589,8 +589,8 @@ agimage:field_002_362f6026-28a0-4bc0-b8b5-a3ef9c81ca7e a agimage:Field ;
     agimage:hasPlot agimage:plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035 .
 
 agimage:plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035 a agimage:Plot ;
-    agimage:hasPlotState agimage:46e2431b-5f6a-4a40-a6ca-36c24a788a38,
-        agimage:e4787cf0-b01e-4a5c-9ec4-b883d6e7a875 ;
+    agimage:hasPlotState agimage:0f1e6910-3c16-4afd-9d0c-f5366c00bd69,
+        agimage:327fc210-4d14-41cc-9c0d-0b5ed28e8bc8 ;
     agimage:plotBbox "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))" ;
     agimage:plotID "plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035" ;
     agimage:plotName "plot123" .
