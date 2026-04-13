@@ -1,4 +1,3 @@
-
 """
 Sample to create your own custom_dataset yaml file
 """
@@ -9,15 +8,18 @@ from ruamel.yaml import YAML
 from metadata_vision.schemas.images import ImageMetadata
 from metadata_vision.schemas.field import FieldMetadata
 from metadata_vision.schemas.plot import PlotMetadata
-from metadata_vision.schemas.plotstate import PlotStateMetadata, WeatherConditions, SurfaceLayer, SoilType
+from metadata_vision.schemas.plotstate import (
+    PlotStateMetadata,
+    WeatherConditions,
+    SurfaceLayer,
+    SoilType,
+)
 from metadata_vision.schemas.camera import CameraMetadata, SpectralBand
 from metadata_vision.schemas.crop import CropMetadata, CropHandling
 from metadata_vision.schemas.platform import PlatformMetadata, SensorMetadata
 from metadata_vision.schemas.agent import AgentMetadata
 from metadata_vision.schemas.dataset import DatasetMetadata
 from metadata_vision.utils.dataset_loading import load_dataset
-
-
 
 
 # Create camera
@@ -35,15 +37,10 @@ dummy_camera = CameraMetadata(
 )
 
 # Create sensor with camera
-dummy_sensor = SensorMetadata(
-    hasCamera=dummy_camera
-)
+dummy_sensor = SensorMetadata(hasCamera=dummy_camera)
 
 # Create platform with sensor
-dummy_platform = PlatformMetadata(
-    platformName="demo_platform_1",
-    hasSensor=dummy_sensor
-)
+dummy_platform = PlatformMetadata(platformName="demo_platform_1", hasSensor=dummy_sensor)
 
 # Create crop
 dummy_crop = CropMetadata(
@@ -57,9 +54,9 @@ dummy_crop = CropMetadata(
 )
 plotName = "plot123"
 dummy_plotstate = PlotStateMetadata(
-    stateName=plotName+"_state_1",
-    validFrom=datetime.datetime(2026,8,18),
-    validTo=datetime.datetime(2026,8,20),
+    stateName=plotName + "_state_1",
+    validFrom=datetime.datetime(2026, 8, 18),
+    validTo=datetime.datetime(2026, 8, 20),
     hasCrop=[dummy_crop],
     hasWeed=None,
     soilType=SoilType.CLAY,
@@ -71,20 +68,20 @@ dummy_plotstate = PlotStateMetadata(
 dummy_plot = PlotMetadata(
     plotName=plotName,
     bbox=["POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"],
-    hasPlotState=[dummy_plotstate]
+    hasPlotState=[dummy_plotstate],
 )
 
 # Create fields
 dummy_field = FieldMetadata(
     fieldName="field_001",
     bbox="POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
-    hasPlot=dummy_plot
+    hasPlot=dummy_plot,
 )
 
 dummy_field2 = FieldMetadata(
     fieldName="field_002",
     bbox="POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
-    hasPlot=dummy_plot
+    hasPlot=dummy_plot,
 )
 
 # Create image
@@ -143,6 +140,8 @@ loaded_from_json = load_dataset("examples/your_custom_dataset.json")
 loaded_from_yaml = load_dataset("examples/your_custom_dataset.yaml")
 
 print("\nComparing loaded objects with original...")
-assert loaded_from_json.title == dummy_dataset.title
-assert loaded_from_yaml.title == dummy_dataset.title
+if loaded_from_json.title != dummy_dataset.title:
+    raise ValueError("JSON loaded dataset title does not match original")
+if loaded_from_yaml.title != dummy_dataset.title:
+    raise ValueError("YAML loaded dataset title does not match original")
 print("✓ All validations passed!")

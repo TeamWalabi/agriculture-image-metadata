@@ -1,22 +1,26 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
-import datetime
-import warnings
-from typing import Iterable, Sequence, Optional
 import datetime
 
-from rdflib import Graph, Namespace, RDF, RDFS, OWL, XSD, Literal
-from typing import get_origin, get_args
 
-
-def create_sensor_dir(root_folder, dataset_name, raw_data, field_id, plot_id, machine_id, cam_id, add_date_subfolder=False):
+def create_sensor_dir(
+    root_folder,
+    dataset_name,
+    raw_data,
+    field_id,
+    plot_id,
+    machine_id,
+    cam_id,
+    add_date_subfolder=False,
+):
     """Create directory structure for sensor data."""
     # dataset_name / raw_data / field_id / plot_id / machine_id / cam_id / YYYYMMDD
-    dir_path = Path(root_folder) / dataset_name / raw_data / field_id / plot_id / machine_id / cam_id 
+    dir_path = (
+        Path(root_folder) / dataset_name / raw_data / field_id / plot_id / machine_id / cam_id
+    )
     if add_date_subfolder:
-        date_str  = datetime.datetime.now().strftime("%Y%m%d")
+        date_str = datetime.datetime.now().strftime("%Y%m%d")
         dir_path = dir_path / date_str
     if not dir_path.exists():
         dir_path.mkdir(parents=True, exist_ok=True)
@@ -33,18 +37,35 @@ def create_all_output_dirs(root_folder, metadata, raw_data="raw_data"):
             for machine in metadata.machines:
                 for sensor in machine.sensors:
                     cam_id = sensor.camera_id
-                    dir_path = create_sensor_dir(root_folder, dataset_name, raw_data, field.field_id, plot.plot_id, machine.machine_id, cam_id)
+                    dir_path = create_sensor_dir(
+                        root_folder,
+                        dataset_name,
+                        raw_data,
+                        field.field_id,
+                        plot.plot_id,
+                        machine.machine_id,
+                        cam_id,
+                    )
                     created_dirs[(plot.plot_id, machine.machine_id, cam_id)] = dir_path
     return created_dirs
+
 
 def get_strftime(image_timestamp: datetime | str, bool_filename=False):
     "function to get convert datetime to string, use bool_file name to remove any : ."
     if isinstance(image_timestamp, datetime.datetime):
         # Format: ISO8601 with milliseconds -> YYYYMMDDTHHMMSSZmilliseconds
-        if bool_filename: ## for file names you do not want to use .
-            timestamp_str = image_timestamp.strftime("%Y%m%dT%H%M%S") + f"{image_timestamp.microsecond // 1000:03d}"+"Z"
+        if bool_filename:  ## for file names you do not want to use .
+            timestamp_str = (
+                image_timestamp.strftime("%Y%m%dT%H%M%S")
+                + f"{image_timestamp.microsecond // 1000:03d}"
+                + "Z"
+            )
         else:
-            timestamp_str = image_timestamp.strftime("%Y-%m-%dT%H:%M:%S.") + f"{image_timestamp.microsecond // 1000:03d}"+"Z"
+            timestamp_str = (
+                image_timestamp.strftime("%Y-%m-%dT%H:%M:%S.")
+                + f"{image_timestamp.microsecond // 1000:03d}"
+                + "Z"
+            )
         # timestamp_str = image_timestamp.strftime("%Y-%m-%dT%H:%M:%SZ")# + f"{image_timestamp.microsecond // 1000:03d}"+"Z"
     else:
         timestamp_str = str(image_timestamp)
@@ -71,11 +92,11 @@ def get_strptime(image_timestamp: str | datetime.datetime, from_filename=False):
             fmt = "%Y-%m-%dT%H:%M:%S.%fZ"
             return datetime.datetime.strptime(image_timestamp, fmt)
             # YYYY-MM-DD-THH:MM:SS.millisecondsZ
-            indexi = image_timestamp.index(".")
+            # indexi = image_timestamp.index(".")
 
-            base, millis = image_timestamp[:-4], image_timestamp[-4:-1]
-            return datetime.datetime.strptime(base, fmt).replace(microsecond=int(millis) * 1000)
-        except:
+            # base, millis = image_timestamp[:-4], image_timestamp[-4:-1]
+            # return datetime.datetime.strptime(base, fmt).replace(microsecond=int(millis) * 1000)
+        except Exception:
             image_timestamp = image_timestamp[::-1].zfill(19)[::-1]
             base, millis = image_timestamp[:-3], image_timestamp[-3:]
             fmt = "%Y%m%dT%H%M%SZ"
@@ -95,9 +116,10 @@ def get_image_name(image_timestamp, camid, trigger_number, channel="rgb", extens
     """Generate image name based on timestamp, camera ID, trigger number, and channel."""
     timestamp_str = get_strftime(image_timestamp)
 
-    image_name = f"{timestamp_str}_camid{camid}_trigger{trigger_number:06d}_{channel.lower()}{extension}"
+    image_name = (
+        f"{timestamp_str}_camid{camid}_trigger{trigger_number:06d}_{channel.lower()}{extension}"
+    )
     return image_name
-
 
 
 def _parse_metadata_timestamp(value: str | datetime) -> datetime:

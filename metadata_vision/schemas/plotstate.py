@@ -4,11 +4,12 @@ Pydantic models for agricultural field and plot metadata.
 Defines data structures for fields, plots crops, weather conditions,
 and surface cover types used in agricultural image datasets.
 """
+
 from typing import List, Optional
 import uuid
 from enum import Enum
 import datetime
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import Field, field_validator, model_validator
 from metadata_vision.old_code.generate_example_json import extract
 from metadata_vision.schemas.crop import CropMetadata, CropHandling
 from metadata_vision.utils.namespaces import AGIMAGE
@@ -18,6 +19,7 @@ from metadata_vision.schemas.base import RDFModel
 
 class WeatherConditions(str, Enum):
     """General description of the weather conditions."""
+
     SUNNY = "sunny"
     CLOUDY = "cloudy"
     DIFFUSE = "diffuse"
@@ -26,6 +28,7 @@ class WeatherConditions(str, Enum):
 
 class ExternalConditions(str, Enum):
     """Relevant external conditions."""
+
     SOLAR_PANELS = "solar panels"
     SHADE_COVER = "shade cover"
     LED = "LED"
@@ -45,6 +48,7 @@ class SoilType(str, Enum):
     # https://serc.carleton.edu/details/images/343276.html
     This triangly classifies soil by using percentage clay, silt and sand.
     """
+
     CLAY = "clay"
     CLAY_LOAM = "clay"
     SILT = "silt"
@@ -61,6 +65,7 @@ class SoilType(str, Enum):
 
 class SurfaceLayer(str, Enum):
     """Non-crop surface cover visible in the images."""
+
     SHELLS = "shells"
     STRAW = "straw"
     BIO_FILM = "bio film"
@@ -77,6 +82,7 @@ class PlotStateMetadata(RDFModel):
     Metadata model on plot level. Contains information about plotID location
     And related crops, weeds, soil type, weather conditions, external conditions and surface cover.
     """
+
     rdf_type: str = "agimage:PlotState"
 
     # ---------------------
@@ -85,19 +91,21 @@ class PlotStateMetadata(RDFModel):
     stateName: str = Field(
         None,
         description="Name of the state of plot, used plotName_state_1",
-        json_schema_extra={"example": "plot123_state_1",
-                        #    "@tag": "ex:plotID",
-                            "uri": AGIMAGE+"stateNae",
-                            "parent_uri": "http://purl.org/dc/terms/identifier"
+        json_schema_extra={
+            "example": "plot123_state_1",
+            #    "@tag": "ex:plotID",
+            "uri": AGIMAGE + "stateNae",
+            "parent_uri": "http://purl.org/dc/terms/identifier",
         },
     )
     stateID: Optional[str] = Field(
         None,
         description="Unique identifier for the state of the plot, used if timestamp changes",
-        json_schema_extra={"example": "plot123_state_1",
-                        #    "@tag": "ex:plotID",
-                            "uri": AGIMAGE+"stateID",
-                            "parent_uri": "http://purl.org/dc/terms/identifier"
+        json_schema_extra={
+            "example": "plot123_state_1",
+            #    "@tag": "ex:plotID",
+            "uri": AGIMAGE + "stateID",
+            "parent_uri": "http://purl.org/dc/terms/identifier",
         },
     )
     validFrom: Optional[datetime.datetime | str] = Field(
@@ -105,7 +113,7 @@ class PlotStateMetadata(RDFModel):
         description="ISO 8601 timestamp from which this plot state is valid",
         json_schema_extra={
             "example": "2024-01-15T10:30:00Z",
-            "uri": AGIMAGE+"validFrom",
+            "uri": AGIMAGE + "validFrom",
         },
     )
 
@@ -114,7 +122,7 @@ class PlotStateMetadata(RDFModel):
         description="ISO 8601 timestamp until which this plot state is valid",
         json_schema_extra={
             "example": "2024-01-16T10:30:00Z",
-            "uri": AGIMAGE+"validTo",
+            "uri": AGIMAGE + "validTo",
         },
     )
 
@@ -124,8 +132,8 @@ class PlotStateMetadata(RDFModel):
         json_schema_extra={
             "example": extract(CropMetadata),
             "@tag": "ex:crops",
-            "uri": AGIMAGE+"crop",
-            "cardinalityMax": "*"
+            "uri": AGIMAGE + "crop",
+            "cardinalityMax": "*",
         },
     )
 
@@ -133,14 +141,12 @@ class PlotStateMetadata(RDFModel):
         None,
         description="List of weeds present in the plot",
         json_schema_extra={
-            "example": {
-                    "cropName": "dandelion",
-                    "cropCode": "TAROF"},
+            "example": {"cropName": "dandelion", "cropCode": "TAROF"},
             "@tag": "ex:weeds",
-            "uri": AGIMAGE+"weed",
-            "parent_uri": AGIMAGE+"crop",
+            "uri": AGIMAGE + "weed",
+            "parent_uri": AGIMAGE + "crop",
             "datatype": "agimage:crop",
-            "cardinalityMax": "*"
+            "cardinalityMax": "*",
         },
     )
 
@@ -148,10 +154,10 @@ class PlotStateMetadata(RDFModel):
         None,
         description="Soil type based on USDA soil conditions",
         json_schema_extra={
-            "example": "clay", # "loam", TODO add USDA soil conditions
+            "example": "clay",  # "loam", TODO add USDA soil conditions
             "@tag": "ex:soilType",
-                    "uri": "https://aims.fao.org/aos/agrovoc/c_7156.html"
-                    },
+            "uri": "https://aims.fao.org/aos/agrovoc/c_7156.html",
+        },
     )
 
     ## should be derived automatically
@@ -180,7 +186,7 @@ class PlotStateMetadata(RDFModel):
         json_schema_extra={
             "example": [SurfaceLayer.SHELLS.name, SurfaceLayer.STRAW.name],
             "@tag": "ex:surfaceLayer",
-            "uri": "http://purl.obolibrary.org/obo/ENVO_00010504"
+            "uri": "http://purl.obolibrary.org/obo/ENVO_00010504",
         },
     )
 
@@ -188,17 +194,18 @@ class PlotStateMetadata(RDFModel):
     @classmethod
     def validate_image_timestamp(cls, v):
         return get_strptime(v)
-    
+
     @model_validator(mode="after")
     def set_id(self):
         if self.stateID is None:
             self.stateID = f"{self.stateName}_{uuid.uuid4()}"
         return self
 
+
 if __name__ == "__main__":
     import json
-    print(json.dumps(PlotStateMetadata.model_json_schema(), indent=4))
 
+    print(json.dumps(PlotStateMetadata.model_json_schema(), indent=4))
 
     # Create an example instance
     example = PlotStateMetadata(

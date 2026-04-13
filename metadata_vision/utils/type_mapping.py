@@ -1,15 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Any
-import datetime
-import warnings
-from datetime import datetime
-from typing import Iterable, Sequence, Optional
-import datetime
 
-from rdflib import Graph, Namespace, RDF, RDFS, OWL, XSD, Literal
+from rdflib import XSD
 from typing import get_origin, get_args
+
 
 def unwrap_type(t):
     """Handle Optional, List, Union types"""

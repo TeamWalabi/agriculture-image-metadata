@@ -8,19 +8,14 @@ plots, and images.
 
 from pydantic import Field
 import sys
+
 sys.path.append("")
 
 from metadata_vision.schemas.base import RDFModel
 from metadata_vision.utils.namespaces import FOAF
 
+
 class AgentMetadata(RDFModel):
     rdf_type: str = "foaf:Agent"
 
-    name: str = Field(
-        ...,
-        json_schema_extra={
-            "example": "Jane Doe",
-            "uri": FOAF+"name"}
-    )
-
-
+    name: str = Field(..., json_schema_extra={"example": "Jane Doe", "uri": FOAF + "name"})

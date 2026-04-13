@@ -5,13 +5,13 @@ Example script to load a set of images and apply some class based filtering
 import json
 from pathlib import Path
 from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.utils.file_system import get_strftime, get_strptime
+from metadata_vision.utils.file_system import get_strptime
 import numpy as np
 from typing import Iterable, Sequence, Optional
 import datetime
 
-import cv2
 import shutil
+
 
 class ImageMetadataIterator:
     def __init__(self, images: Sequence[ImageMetadata]):
@@ -28,14 +28,14 @@ class ImageMetadataIterator:
         img = self._images[self._index]
         self._index += 1
         return img
-    
+
     def __len__(self):
         return len(self._images)
-    
+
     def reset(self):
         self._index = 0
 
-    def filter(self, **kwargs) -> 'ImageMetadataIterator':
+    def filter(self, **kwargs) -> "ImageMetadataIterator":
         filtered = filter_image_metadata(self._images, **kwargs)
         self._images = filtered
         self._index = 0
@@ -49,7 +49,7 @@ class ImageMetadataIterator:
         if not self._images:
             return None
         return max(img.imageNumber for img in self._images)
-    
+
     def get_lowest_image_timestamp(self) -> Optional[str]:
         if not self._images:
             return None
@@ -59,7 +59,7 @@ class ImageMetadataIterator:
         if not self._images:
             return None
         return max(img.imageTimestamp for img in self._images)
-    
+
     def get_lowest_base_xyz(self, axis=0) -> Optional[list]:
         if not self._images:
             return None
@@ -69,7 +69,7 @@ class ImageMetadataIterator:
         if not self._images:
             return None
         return max(img.baseXYZ[axis] for img in self._images)
-    
+
     def get_by_trigger_number(self, image_number) -> Optional[list]:
         if not self._images:
             return None
@@ -81,41 +81,47 @@ class ImageMetadataIterator:
             return []
         return sorted(set(img.imageNumber for img in self._images))
 
-
-    def write_to_nerfstudio(self, intrinsics: dict,
-                            distortion: dict,
-                            image_dir: Path,
-                            h=4000, w=6000,
-                            output_dir: Path = Path()):
-        applied_transform = np.zeros((3,4), dtype=float)
-        applied_transform[:3,:3] = np.eye(3)
+    def write_to_nerfstudio(
+        self,
+        intrinsics: dict,
+        distortion: dict,
+        image_dir: Path,
+        h=4000,
+        w=6000,
+        output_dir: Path = Path(),
+    ):
+        applied_transform = np.zeros((3, 4), dtype=float)
+        applied_transform[:3, :3] = np.eye(3)
 
         dummy_dict = {
             "camera_model": "OPENCV",  # OPENCV_FISHEYE
-            "orientation_override": "none", 
+            "orientation_override": "none",
             "ply_file_path": None,
             "frames": [],
             # "applied_transform": applied_transform
         }
         frame_dummy_dict = {
-            "h": h, "w": w, 
-            "file_path": "images/frame_00013.jpg", 
-            "fl_x": 8040.868955733327, 
+            "h": h,
+            "w": w,
+            "file_path": "images/frame_00013.jpg",
+            "fl_x": 8040.868955733327,
             "fl_y": 8040.868955733327,
-            "cx": 2871.297397247967, 
+            "cx": 2871.297397247967,
             "cy": 1945.1464830148566,
-            "k1": 0.0312, # first radial distortion parameter, used by [OPENCV, OPENCV_FISHEYE]
-            "k2": 0.0051, # second radial distortion parameter, used by [OPENCV, OPENCV_FISHEYE]
-            "k3": 0.0006, # third radial distortion parameter, used by [OPENCV_FISHEYE]
-            "k4": 0.0001, # fourth radial distortion parameter, used by [OPENCV_FISHEYE]
-            "p1": -6.47e-5, # first tangential distortion parameter, used by [OPENCV]
-            "p2": -1.37e-7, # second tangential distortion parameter, used by [OPENCV]
-            "transform_matrix": [[0.710919248029843, -0.6504965031692165, -0.26729781545179904, -18.60046131462555], 
-                                 [0.5525689096894804, 0.7517714188488636, -0.35987127399466795, -21.85140183746417], 
-                                 [0.4350418633019832, 0.10813895304925038, 0.8938929152913959, 59.52254831852292], 
-                                 [0.0, 0.0, 0.0, 1.0]],
+            "k1": 0.0312,  # first radial distortion parameter, used by [OPENCV, OPENCV_FISHEYE]
+            "k2": 0.0051,  # second radial distortion parameter, used by [OPENCV, OPENCV_FISHEYE]
+            "k3": 0.0006,  # third radial distortion parameter, used by [OPENCV_FISHEYE]
+            "k4": 0.0001,  # fourth radial distortion parameter, used by [OPENCV_FISHEYE]
+            "p1": -6.47e-5,  # first tangential distortion parameter, used by [OPENCV]
+            "p2": -1.37e-7,  # second tangential distortion parameter, used by [OPENCV]
+            "transform_matrix": [
+                [0.710919248029843, -0.6504965031692165, -0.26729781545179904, -18.60046131462555],
+                [0.5525689096894804, 0.7517714188488636, -0.35987127399466795, -21.85140183746417],
+                [0.4350418633019832, 0.10813895304925038, 0.8938929152913959, 59.52254831852292],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
             # "mask_path": "mask/0012_0_12.png"
-         }
+        }
         frames = []
         for tmp in self._images:
             tmp_frame = frame_dummy_dict.copy()
@@ -135,25 +141,25 @@ class ImageMetadataIterator:
 
             t = np.divide(tmp.baseXYZ, 1000) + tmp.imageXYZ
             import scipy
+
             R = scipy.spatial.transform.Rotation.from_quat(tmp.imageQuaternionXYZW).as_matrix()
             tf = np.array(tmp_frame["transform_matrix"])
-            tf[:3,:3] = R
-            tf[:3,3] = t
+            tf[:3, :3] = R
+            tf[:3, 3] = t
             tmp_frame["transform_matrix"] = tf.tolist()
 
-            tmp_frame["file_path"] = "images/"+tmp.imageName
+            tmp_frame["file_path"] = "images/" + tmp.imageName
             frames.append(tmp_frame)
 
         dummy_dict["frames"] = frames
-        
+
         # nerfstudio output
-        nerf_folder  = output_dir / "images_nerfstudio"
+        nerf_folder = output_dir / "images_nerfstudio"
         if not nerf_folder.exists():
             nerf_folder.mkdir()
         images_0 = nerf_folder / "images"
         if not images_0.exists():
             images_0.mkdir()
-        
 
         images_4_folder = nerf_folder / "images_4"
         if not images_4_folder.exists():
@@ -172,14 +178,12 @@ class ImageMetadataIterator:
             json.dump(dummy_dict, f, indent=2)
 
 
-
 def filter_image_metadata(
     images: Iterable[ImageMetadata],
     *,
     camera_ids: Optional[np.ndarray[int]] = None,
     field_ids: Optional[Sequence[str]] = None,
     image_numbers: Optional[np.ndarray[int]] = None,
-
     earliest: Optional[datetime] = None,
     latest: Optional[datetime] = None,
 ) -> list[ImageMetadata]:
@@ -188,7 +192,6 @@ def filter_image_metadata(
 
     camera_set = set(camera_ids) if camera_ids else None
     field_set = set(field_ids) if field_ids else None
-
 
     def matches(img: ImageMetadata) -> bool:
         if camera_set and img.cameraID not in camera_set:
@@ -209,13 +212,16 @@ def filter_image_metadata(
     return [img for img in images if matches(img)]
 
 
-if __name__=="__main__":
-    main_folder = Path("/media/agro/PhDBart2/3742355900_agros2_komkommer/raw_data/field_001/row_01/demo_platform1/")
-    main_folder = Path("/media/agro/PhDBart2/3742355900_agros2_komkommer/raw_data/field_001/row_01/20260226_demo_platform1/")
+if __name__ == "__main__":
+    main_folder = Path(
+        "/media/agro/PhDBart2/3742355900_agros2_komkommer/raw_data/field_001/row_01/demo_platform1/"
+    )
+    main_folder = Path(
+        "/media/agro/PhDBart2/3742355900_agros2_komkommer/raw_data/field_001/row_01/20260226_demo_platform1/"
+    )
 
     list_of_paths = main_folder.rglob("*metadata.json")
     from metadata_vision.utils.dataset_loading import load_metadata
-    from metadata_vision.schemas.camera import CameraMetadata
     from metadata_vision.schemas.images import ImageMetadata
 
     mapping = {
@@ -232,9 +238,8 @@ if __name__=="__main__":
         "image_gnss": "imageGNSS",
         "base_xyz": "baseXYZ",
         "base_quaternion_xyzw": "baseQuaternionXYZW",
-        "base_gnss": "baseGNSS"
+        "base_gnss": "baseGNSS",
     }
-
 
     images_dataset = load_metadata(list_of_paths, model_class=ImageMetadata, mapping=mapping)
     obj = ImageMetadataIterator(images_dataset)

@@ -1,5 +1,4 @@
 import datetime
-import pytest
 from metadata_vision.schemas.camera import CameraMetadata, SpectralBand
 from metadata_vision.schemas.crop import CropMetadata, CropHandling
 from metadata_vision.schemas.plot import PlotMetadata
@@ -8,14 +7,6 @@ from metadata_vision.schemas.images import ImageMetadata
 from metadata_vision.schemas.platform import PlatformMetadata, SensorMetadata
 from metadata_vision.schemas.agent import AgentMetadata
 from metadata_vision.schemas.dataset import DatasetMetadata
-
-"""
-Tests for the example_data module.
-
-This module tests the create_dummy_data function and all exported dummy objects.
-"""
-
-
 from metadata_vision.data.example_data import (
     create_dummy_data,
     dummy_camera,
@@ -30,6 +21,12 @@ from metadata_vision.data.example_data import (
     dummy_contributor,
     dummy_dataset,
 )
+
+"""
+Tests for the example_data module.
+
+This module tests the create_dummy_data function and all exported dummy objects.
+"""
 
 
 class TestCreateDummyData:

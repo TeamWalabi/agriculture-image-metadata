@@ -620,4 +620,3 @@ agimage:Image a owl:Class .
 agimage:Camera a owl:Class .
 
 agimage:Dataset a owl:Class .
-

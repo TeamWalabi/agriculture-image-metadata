@@ -16,7 +16,7 @@ The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema th
 
 ```text
 ## examples
-├── examples 
+├── examples
 │   ├── custom_dataset_example.py
 │   ├── filtering_class_based.py
 │   ├── filtering_query_based.py
@@ -54,7 +54,7 @@ Data is collected by a machine/platform
     # hasPlot: PlotMetadata
     # plot.hasCrop: CropMetadata | list[CropMetadata]
     # plot.hasWeed: CropMetadata | list[CropMetadata]
-    # platform: PlatformMetadata list[PlatformMetadata] 
+    # platform: PlatformMetadata list[PlatformMetadata]
     # platform.hasSensor: list[CameraMetadata] | CameraMetadata]
     # images: ImageMetadata | list[ImageMetadata]
 ```

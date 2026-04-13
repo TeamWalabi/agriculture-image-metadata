@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 
-
-from rdflib import Graph, Namespace, RDF, RDFS, OWL, XSD, Literal
+from rdflib import Namespace
 
 
 AGIMAGE = Namespace("https://w3id.org/agri-image/")

@@ -1,11 +1,13 @@
 """
 Example for metadata for sensors like cameras
 """
+
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, ValidationInfo, field_validator
+from pydantic import Field, field_validator
 import sys
+
 sys.path.append("")
 from metadata_vision.old_code.generate_example_json import extract
 from metadata_vision.schemas.base import RDFModel
@@ -15,10 +17,12 @@ from metadata_vision.utils.namespaces import AGIMAGE, EXIF
 
 ## online
 # https://www.w3.org/2003/12/exif/
-#  
+#
+
 
 class SpectralBand(str, Enum):
     """Spectral band captured by the camera."""
+
     ## name is lower case for consistency
     RGB = "rgb"
     NIR = "nir"
@@ -34,6 +38,7 @@ class LightSource(Enum):
     """Light source types based on EXIF specification.
     https://exiftool.org/TagNames/EXIF.html#LightSource
     """
+
     UNKNOWN = 0
     DAYLIGHT = 1
     FLUORESCENT = 2
@@ -60,6 +65,7 @@ class LightSource(Enum):
 
 class DistortionModelName(str, Enum):
     """Distortion model names for camera calibration."""
+
     RADIAL = "radial"
     TANGENTIAL = "tangential"
     FISHEYE = "fisheye"
@@ -67,23 +73,24 @@ class DistortionModelName(str, Enum):
     BROWN_CONRADY = "brown_conrady"
 
 
-class DistortionModel(RDFModel):  
+class DistortionModel(RDFModel):
     """Distortion model with name and optional model string."""
+
     rdf_type: str = "agimage:distortionModel"
 
     name: DistortionModelName = Field(
         ...,
         description="Name/type of the distortion model",
-            json_schema_extra={
-                        "uri": AGIMAGE+"distortionModelName",
-                        "example": DistortionModelName.BROWN_CONRADY.name,   
-                        },
+        json_schema_extra={
+            "uri": AGIMAGE + "distortionModelName",
+            "example": DistortionModelName.BROWN_CONRADY.name,
+        },
     )
     coefficients: Optional[list[float]] = Field(
         None,
         description="list of coefficients",
         json_schema_extra={
-            "uri": AGIMAGE+"distortionModelCoefficients",
+            "uri": AGIMAGE + "distortionModelCoefficients",
             "example": [0.0, 0.0, 0.0, 0.0, 0.0],
         },
     )
@@ -93,17 +100,19 @@ class CameraMetadata(RDFModel):
     """
     Metadata model for camera/sensor-related information.
     """
+
     rdf_type: str = "agimage:Camera"
     # rdf_type: str = "sosa:Sensor"
 
     cameraName: str = Field(
         ...,
         description="Simple identifier for the camera",
-        json_schema_extra={"example": "0010",
-                        # "uri": "http://purl.org/dc/terms/title",   
-                        "uri": AGIMAGE+"cameraName",
-                        "parent_uri": "http://purl.org/dc/terms/title",
-                           },
+        json_schema_extra={
+            "example": "0010",
+            # "uri": "http://purl.org/dc/terms/title",
+            "uri": AGIMAGE + "cameraName",
+            "parent_uri": "http://purl.org/dc/terms/title",
+        },
     )
 
     cameraID: str = Field(
@@ -112,7 +121,7 @@ class CameraMetadata(RDFModel):
         json_schema_extra={
             "example": "4110035082",
             # "@id": "http://ns.adobe.com/exif/1.0/SerialNumber",
-            "uri": EXIF+"SerialNumber",
+            "uri": EXIF + "SerialNumber",
             # "@tag": "Exif.Image.SerialNumber",
         },
     )
@@ -123,12 +132,12 @@ class CameraMetadata(RDFModel):
         json_schema_extra={
             "example": "IDS GV-5280FA-C-HQ Rev 1.2",  ## IDS example
             # "@id": "http://ns.adobe.com/exif/1.0/Model",
-            "uri": EXIF+"Model",
+            "uri": EXIF + "Model",
             "@tag": "Exif.Image.Model",
             "@owl": "exif:model\n\t"
             "a owl:DatatypeProperty ;\n\t"
             "rdfs:domain ex:Camera ;\n\t"
-            "rdfs:range xsd:string ."
+            "rdfs:range xsd:string .",
         },
     )
 
@@ -137,12 +146,12 @@ class CameraMetadata(RDFModel):
         description="Model name/number of the lens",
         json_schema_extra={
             "example": "IDS 6mm 1:2.8 C2/3",
-            "uri": EXIF+"LensModel",
+            "uri": EXIF + "LensModel",
             "@tag": "Exif.Image.LensModel",
             "@owl": "exif:PixelXDimension\n\t"
             "a owl:DatatypeProperty ;\n\t"
             "rdfs:domain ex:Camera ;\n\t"
-            "rdfs:range xsd:integer ."
+            "rdfs:range xsd:integer .",
         },
     )
 
@@ -153,7 +162,7 @@ class CameraMetadata(RDFModel):
         "NOT actual image size (downscaling/binning)",
         json_schema_extra={
             "example": 2464,
-            "uri": EXIF+"PixelXDimension",
+            "uri": EXIF + "PixelXDimension",
             "@tag": "Exif.Image.PixelXDimension",
         },
     )
@@ -164,7 +173,7 @@ class CameraMetadata(RDFModel):
         "NOT actual image size (downscaling/binning)",
         json_schema_extra={
             "example": 2056,
-            "uri": EXIF+"PixelYDimension",
+            "uri": EXIF + "PixelYDimension",
             "@tag": "Exif.Image.PixelYDimension",
         },
     )
@@ -174,14 +183,14 @@ class CameraMetadata(RDFModel):
         description="Pixel size of sensor in [um]",
         json_schema_extra={
             "example": 3.45,
-            "uri": AGIMAGE+"pixelSize",
+            "uri": AGIMAGE + "pixelSize",
             # "uri": EXIF+"FocalLength",
             "unit": "http://qudt.org/vocab/unit/MicroM",
             "@owl": "ex:pixelSize\n\t"
-                "a owl:DatatypeProperty ;\n\t"
-                "rdfs:domain ex:Camera ;\n\t"
-                "rdfs:range xsd:decimal ;\n\t"
-                "qudt:unit unit:MicroM ."
+            "a owl:DatatypeProperty ;\n\t"
+            "rdfs:domain ex:Camera ;\n\t"
+            "rdfs:range xsd:decimal ;\n\t"
+            "qudt:unit unit:MicroM .",
         },
     )
 
@@ -192,7 +201,7 @@ class CameraMetadata(RDFModel):
         json_schema_extra={
             "example": 6.0,
             # "@id": "http://ns.adobe.com/exif/1.0/FocalLength",
-            "uri": EXIF+"FocalLength",
+            "uri": EXIF + "FocalLength",
             "@tag": "Exif.Photo.FocalLength",
             "unit": "http://qudt.org/vocab/unit/MilliM",
         },
@@ -205,7 +214,7 @@ class CameraMetadata(RDFModel):
         json_schema_extra={
             "example": 400.0,
             # "@id": "http://ns.adobe.com/exif/1.0/SubjectDistance",
-            "uri": EXIF+"SubjectDistance",
+            "uri": EXIF + "SubjectDistance",
             "@tag": "Exif.Image.SubjectDistance",
             "unit": "https://qudt.org/vocab/unit/M",
         },
@@ -215,12 +224,12 @@ class CameraMetadata(RDFModel):
     spectralBand: SpectralBand = Field(
         SpectralBand.RGB,
         description="Spectral band captured by the camera (e.g., RGB, BGR, NIR, Thermal)",
-        json_schema_extra={"example": SpectralBand.RGB.name,
-                        # "@tag": "ex.spectralBand",
-                        "uri": "http://sweetontology.net/propOrdinal/SpectralBand"
+        json_schema_extra={
+            "example": SpectralBand.RGB.name,
+            # "@tag": "ex.spectralBand",
+            "uri": "http://sweetontology.net/propOrdinal/SpectralBand",
         },
     )
-
 
     cameraBox: Optional[bool] = Field(
         None,
@@ -228,7 +237,7 @@ class CameraMetadata(RDFModel):
         description="Is the product shielded with a camera box [True, False]",
         json_schema_extra={
             "example": True,
-            "uri": AGIMAGE+"cameraBox",
+            "uri": AGIMAGE + "cameraBox",
             # "@tag": "Exif.Image.SubjectDistance",
         },
     )
@@ -240,8 +249,7 @@ class CameraMetadata(RDFModel):
         json_schema_extra={
             "example": LightSource.FLASH.name,
             "@tag": "Exif.Image.LightSource",
-            "uri": EXIF+"LightSource"
-
+            "uri": EXIF + "LightSource",
         },
     )
 
@@ -250,10 +258,9 @@ class CameraMetadata(RDFModel):
         # meters because of Exif standard
         description="If additional light is used, indicate model",
         json_schema_extra={
-            "example":"Luxalight LF-24-5700K-24.2X16-PU",
-            "uri":   AGIMAGE+"lightModel"          
+            "example": "Luxalight LF-24-5700K-24.2X16-PU",
+            "uri": AGIMAGE + "lightModel",
             # "uri": EXIF+"Model"
-
         },
     )
 
@@ -266,22 +273,22 @@ class CameraMetadata(RDFModel):
     # Calibration
     intrinsics: Optional[List[List[float]]] = Field(
         default=None,
-        description="3x3 camera Matrix K=[[fx, s, cx],[0, fy, cy],[0,0,1]]," \
+        description="3x3 camera Matrix K=[[fx, s, cx],[0, fy, cy],[0,0,1]],"
         "corresponding with images recorded NOT MaxPixelX",
         json_schema_extra={
             "@id": "https://docs.opencv.org/4.x/d9/intrind0c/group__calib3d.html",
-            "uri": AGIMAGE+"intrinsics",
+            "uri": AGIMAGE + "intrinsics",
         },
     )
 
     hasDistortionModel: Optional[DistortionModel] = Field(
         default=None,
-        description="Distortion model used. OPENCV uses dist_coeffs =[k1,k2,p1,p2,k3,k4,k5,k6]," \
-        "with k4 , k5, k6 optional. K123 = radial distortion, p12 tangetial distortion, " \
+        description="Distortion model used. OPENCV uses dist_coeffs =[k1,k2,p1,p2,k3,k4,k5,k6],"
+        "with k4 , k5, k6 optional. K123 = radial distortion, p12 tangetial distortion, "
         "k456 higher order radial distortion coefficicients for complex distortion",
         json_schema_extra={
             "@id": "https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html",
-            "uri": AGIMAGE+"hasDistortionModel",
+            "uri": AGIMAGE + "hasDistortionModel",
             "example": extract(DistortionModel),
         },
     )
@@ -302,7 +309,7 @@ class CameraMetadata(RDFModel):
     @field_validator("intrinsics")
     @classmethod
     def validate_intrinsics(cls, v):
-        """"Validate intrinsics as 3x3 matrix"""
+        """ "Validate intrinsics as 3x3 matrix"""
         if v is None:
             return v
         if len(v) != 3 or any(len(row) != 3 for row in v):
@@ -322,6 +329,7 @@ class CameraMetadata(RDFModel):
     #             raise ValueError("OPENCV distortion expects 4–8 coefficients")
     #     return v
 
+
 def get_value_by_cameraName(camera_list: List[CameraMetadata], cameraName: str, field_name: str):
     """
     Utility function to get a specific field value from a list of CameraMetadata
@@ -340,15 +348,14 @@ def get_value_by_cameraName(camera_list: List[CameraMetadata], cameraName: str, 
             return getattr(camera, field_name, None)
     return None
 
-if __name__ == "__main__":
-    import json
 
+if __name__ == "__main__":
     # print(json.dumps(CameraMetadata.model_json_schema(), indent=2))
-    
+
     # Export fields with @owl annotation
     print("\n--- Fields with @owl annotation ---")
     schema = CameraMetadata.model_json_schema()
-    
+
     for field_name, field_info in schema.get("properties", {}).items():
         if "@owl" in field_info:
             print(f"\n{field_name}:")

@@ -4,14 +4,12 @@ Test suite for ontology generation, dataset creation, RDF graph population, and 
 
 import pytest
 from rdflib import Graph
-from pyshacl import validate
 
 from metadata_vision.schemas.images import ImageMetadata
 from metadata_vision.schemas.field import FieldMetadata, PlotMetadata
 from metadata_vision.schemas.camera import CameraMetadata
-from metadata_vision.schemas.crop import CropMetadata, CropHandling
+from metadata_vision.schemas.crop import CropMetadata
 from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.schemas.sensor import SensorMetadata
 from metadata_vision.schemas.dataset import DatasetMetadata
 from metadata_vision.ontology.generator import (
     generate_ontology,
@@ -27,12 +25,8 @@ from metadata_vision.utils.sparql_queries import (
 )
 from metadata_vision.data.example_data import (
     dummy_dataset,
-    dummy_crop,
-    dummy_plot,
-    dummy_field,
-    dummy_platform,
-    dummy_image,
 )
+
 
 class TestOntologyGeneration:
     """Tests for OWL ontology generation from Pydantic models."""
@@ -53,7 +47,7 @@ class TestOntologyGeneration:
 
         assert len(g) > 0
         assert g is not None
-        
+
         # Check that ontology contains classes
         query = """
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -115,7 +109,6 @@ class TestRDFGraphPopulation:
         assert len(g) > 0
 
 
-
 class TestSPARQLQueries:
     """Tests for SPARQL query functions."""
 
@@ -129,7 +122,7 @@ class TestSPARQLQueries:
     def test_query_find_all_images(self, populated_graph):
         """Test finding all images in the graph."""
         query_find_all_images(populated_graph)
-        
+
         # Verify query returns results
         query = """
         PREFIX agimage: <https://w3id.org/agri-image/>
@@ -173,7 +166,15 @@ class TestCompleteWorkflow:
     def test_complete_workflow(self):
         """Test the complete workflow: generate ontology, populate graph, and query."""
         # Step 1: Generate ontology
-        models = [ImageMetadata, CameraMetadata, PlatformMetadata, FieldMetadata, PlotMetadata, CropMetadata, DatasetMetadata]
+        models = [
+            ImageMetadata,
+            CameraMetadata,
+            PlatformMetadata,
+            FieldMetadata,
+            PlotMetadata,
+            CropMetadata,
+            DatasetMetadata,
+        ]
         ontology_graph = generate_ontology(models)
         assert len(ontology_graph) > 0
 

@@ -4,10 +4,10 @@ Pydantic models for agricultural field and plot metadata.
 Defines data structures for fields, plots crops, weather conditions,
 and surface cover types used in agricultural image datasets.
 """
-from typing import List, Optional
+
+from typing import Optional
 import uuid
-from enum import Enum
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import Field, model_validator
 from metadata_vision.old_code.generate_example_json import extract
 from metadata_vision.schemas.plot import PlotMetadata
 
@@ -22,41 +22,40 @@ class FieldMetadata(RDFModel):
         fieldID: Unique identifier for the field.
         plots: Optional list of plot metadata or single plot metadata within the field.
     """
+
     rdf_type: str = "agimage:Field"
     # rdf_type: str = "agimage:Plot"
-
-
 
     fieldName: str = Field(
         ...,
         description="Name of the field",
-        json_schema_extra={"example": "field_001",
-                        #    "@tag": "ex:fieldName",
-                            # "uri": "http://purl.org/dc/terms/title",
-                            "uri": AGIMAGE+"fieldName",
-                            "parent_uri": "http://purl.org/dc/terms/title",
-
-                           },
+        json_schema_extra={
+            "example": "field_001",
+            #    "@tag": "ex:fieldName",
+            # "uri": "http://purl.org/dc/terms/title",
+            "uri": AGIMAGE + "fieldName",
+            "parent_uri": "http://purl.org/dc/terms/title",
+        },
     )
 
     fieldID: Optional[str] = Field(
         None,
         description="Unique identifier for the field based on field + uuid",
-        json_schema_extra={"example": "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb", 
-                           "@tag": "ex:fieldID",
-                            "uri": AGIMAGE+"fieldID",
-                            "parent_uri": "http://purl.org/dc/terms/identifier"
-                            },
+        json_schema_extra={
+            "example": "field_001_5de48942-0c39-411f-8f4a-756b0c20f7bb",
+            "@tag": "ex:fieldID",
+            "uri": AGIMAGE + "fieldID",
+            "parent_uri": "http://purl.org/dc/terms/identifier",
+        },
     )
 
     bbox: str = Field(
         ...,
         description="Field polygon as WKT literal (dcterms:Location) long, lat",
         json_schema_extra={
-            "example": 
-                "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+            "example": "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
             "@tag": "dcat:bbox",
-            "uri": AGIMAGE+"fieldBbox",
+            "uri": AGIMAGE + "fieldBbox",
             "parent_uri": "https://www.w3.org/ns/dcat#bbox",
         },
     )
@@ -67,11 +66,10 @@ class FieldMetadata(RDFModel):
         json_schema_extra={
             "example": extract(PlotMetadata),
             "@tag": "ex:plots",
-            "uri": AGIMAGE+"hasPlot"
+            "uri": AGIMAGE + "hasPlot",
         },
     )
     # Field	hasPlot	https://w3id.org/agri-image/hasplot	object	agimage:plot	0	*	List of plots in the field
-
 
     # @field_validator("plot", mode="before")
     # @classmethod
@@ -80,48 +78,46 @@ class FieldMetadata(RDFModel):
     #     if isinstance(v, list):
     #         return v
     #     return [v]
-    
+
     @model_validator(mode="after")
     def set_id(self):
         if self.fieldID is None:
             self.fieldID = f"{self.fieldName}_{uuid.uuid4()}"
         return self
 
-if __name__ == "__main__":
-    import json
 
-    
-    
-    print(json.dumps(PlotMetadata.model_json_schema(), indent=4))
+# if __name__ == "__main__":
+#     import json
 
+#     print(json.dumps(PlotMetadata.model_json_schema(), indent=4))
 
-    # Create an example instance
-    example = PlotMetadata(
-        plotName="plot123",
-        bbox="POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
-        crops=[
-            CropMetadata(
-                cropName="cucumber",
-                cropCultivar="Hi Power",
-                cropHandling=CropHandling.CROP_OBSERVATION,
-                cropGrowthStageMin=60,
-                cropGrowthStageMax=65,
-            )
-        ],
-        weeds=[
-            CropMetadata(
-                cropName="dandelion",
-                cropCultivar=None,
-                cropHandling=None,
-                cropGrowthStageMin=None,
-                cropGrowthStageMax=None,
-            )
-        ],
-        soil_type="clay loam",
-        weather_conditions=WeatherConditions.SUNNY,
-        external_conditions=ExternalConditions.LED,
-        surface_cover=[SurfaceLayer.LOOSE_LEAVES, SurfaceLayer.WHITE_CANVAS],
-    )
+#     # Create an example instance
+#     example = PlotMetadata(
+#         plotName="plot123",
+#         bbox="POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+#         crops=[
+#             CropMetadata(
+#                 cropName="cucumber",
+#                 cropCultivar="Hi Power",
+#                 cropHandling=CropHandling.CROP_OBSERVATION,
+#                 cropGrowthStageMin=60,
+#                 cropGrowthStageMax=65,
+#             )
+#         ],
+#         weeds=[
+#             CropMetadata(
+#                 cropName="dandelion",
+#                 cropCultivar=None,
+#                 cropHandling=None,
+#                 cropGrowthStageMin=None,
+#                 cropGrowthStageMax=None,
+#             )
+#         ],
+#         soil_type="clay loam",
+#         weather_conditions=WeatherConditions.SUNNY,
+#         external_conditions=ExternalConditions.LED,
+#         surface_cover=[SurfaceLayer.LOOSE_LEAVES, SurfaceLayer.WHITE_CANVAS],
+#     )
 
-    print("\nExample instance:")
-    print(example.model_dump_json(indent=2))
+#     print("\nExample instance:")
+#     print(example.model_dump_json(indent=2))

@@ -1,11 +1,11 @@
-
 """Crop/weed related metadata representing crop-related metadata,
 including crop handling operations, growth stages, and cultivar information.
 It uses the AgroconnectCL291 classification for crop operations and BBCH scale"""
+
 from typing import List, Optional
 from enum import Enum
 import datetime
-from pydantic import BaseModel, Field, field_validator
+from pydantic import Field, field_validator
 from metadata_vision.old_code.generate_example_json import extract
 from metadata_vision.schemas.base import RDFModel
 from metadata_vision.utils.namespaces import AGIMAGE
@@ -14,6 +14,7 @@ from metadata_vision.utils.file_system import get_strptime
 
 class CropHandling(str, Enum):
     """Activity related to the dataset. Based on AgroconnectCL291 level1."""
+
     ## based on AgroconnectCL291 level1
     PROFILE_IMPROVEMENT = "Profile Improvement"
     TILLAGE = "Tillage"
@@ -28,7 +29,6 @@ class CropHandling(str, Enum):
     FIELD_WATERWAY_MAINTENANCE = "Field&Waterway maintencance"
     REPAIR_AND_MAINTENANCE = "repair and maintenance"
     ADMINISTRATION = "Administration"
-
 
 
 class CropTimingType(str, Enum):
@@ -51,7 +51,7 @@ class CropTiming(RDFModel):
         json_schema_extra={
             "example": CropTimingType.PLANTING_DATE.name,
             "@tag": "ex:cropTimingType",
-            "uri": "https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779"
+            "uri": "https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779",
         },
     )
     date: Optional[datetime.datetime | str] = Field(
@@ -74,6 +74,7 @@ class CropMetadata(RDFModel):
     """
     Metadata model for crop-related information.
     """
+
     rdf_type: str = "agimage:Crop"
 
     # ---------------------
@@ -82,11 +83,12 @@ class CropMetadata(RDFModel):
     cropName: str = Field(
         ...,
         description="Name of the crop, please search in following database: https://gd.eppo.int/",
-        json_schema_extra={"example": "cucumber",
-                           "@tag": "ex:cropName",
-                            "uri": AGIMAGE+"cropName",
-                            "parent_uri": "http://purl.org/dc/terms/title",
-                           },
+        json_schema_extra={
+            "example": "cucumber",
+            "@tag": "ex:cropName",
+            "uri": AGIMAGE + "cropName",
+            "parent_uri": "http://purl.org/dc/terms/title",
+        },
     )
 
     cropCode: str = Field(
@@ -95,52 +97,53 @@ class CropMetadata(RDFModel):
         json_schema_extra={
             "example": "CUMSA",
             "@tag": "ex:cropCode",
-            "uri": "https://gd.eppo.int/taxon/"
+            "uri": "https://gd.eppo.int/taxon/",
         },
     )
-
 
     cropCultivar: Optional[str | List[str]] = Field(
         None,
         description="Variety of the crop; Have a look at and download the list https://ec.europa.eu/food/plant-variety-portal/#. Cucuber example has Hi power variety",
-        json_schema_extra={"example": ["Hi power"],
-                           "@tag": "ex:cropCultivar",
-                           "controlledVocabulary": "https://ec.europa.eu/food/plant-variety-portal/#",
-                           "uri": "https://w3id.org/agri-image/cropCultivar"
-                           },
+        json_schema_extra={
+            "example": ["Hi power"],
+            "@tag": "ex:cropCultivar",
+            "controlledVocabulary": "https://ec.europa.eu/food/plant-variety-portal/#",
+            "uri": "https://w3id.org/agri-image/cropCultivar",
+        },
     )
 
     cropHandling: Optional[CropHandling] = Field(
         None,
-        description="Activity related to the dataset. Choose from predefined crop operations " \
+        description="Activity related to the dataset. Choose from predefined crop operations "
         "based on AgroconnectCL291 level1",
         json_schema_extra={
             "example": CropHandling.CROP_OBSERVATION.name,
             "@tag": "ex:cropHandling",
             "controlledVocabulary": "AgroconnectCL291",
-            "uri": "https://w3id.org/agri-image/cropHandling"
-
+            "uri": "https://w3id.org/agri-image/cropHandling",
         },
     )
 
     cropGrowthStageMin: Optional[int] = Field(
         None,
         description="BBCH minimum growth stage of the main crop (0-100)",
-        json_schema_extra={"example": "60", 
-                           "@tag": "ex:growthStageMin",
-                           "uri": "https://opendata.inrae.fr/ppd-def#GrowthStage"
-                           },
+        json_schema_extra={
+            "example": "60",
+            "@tag": "ex:growthStageMin",
+            "uri": "https://opendata.inrae.fr/ppd-def#GrowthStage",
+        },
     )
 
     cropGrowthStageMax: Optional[int] = Field(
         None,
         description="BBCH maximum growth stage of the main crop (0-100)",
-        json_schema_extra={"example": "65",
-                           "@tag": "ex:growthStageMax",
-                           "uri": "https://opendata.inrae.fr/ppd-def#GrowthStage"
-                           },
+        json_schema_extra={
+            "example": "65",
+            "@tag": "ex:growthStageMax",
+            "uri": "https://opendata.inrae.fr/ppd-def#GrowthStage",
+        },
     )
-    
+
     cropTiming: Optional[CropTiming | List[CropTiming]] = Field(
         None,
         description="List of crop timing events (e.g., planting, harvesting, flowering, etc.)",
@@ -148,7 +151,7 @@ class CropMetadata(RDFModel):
             "example": extract(CropTiming),
             "@tag": "ex:cropTiming",
             "uri": "https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779",
-            "cardinalityMax": "*"
+            "cardinalityMax": "*",
         },
     )
 

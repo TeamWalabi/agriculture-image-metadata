@@ -1,11 +1,11 @@
 # platform_and_sensors.py
 
-from typing import Optional, List
+from typing import Optional
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import Field, field_validator, model_validator
 import sys
+
 sys.path.append("")
-from metadata_vision.schemas.camera import CameraMetadata
 from metadata_vision.schemas.sensor import SensorMetadata
 
 from metadata_vision.old_code.generate_example_json import extract
@@ -13,6 +13,7 @@ from metadata_vision.old_code.generate_example_json import extract
 import uuid
 from metadata_vision.utils.namespaces import AGIMAGE
 from metadata_vision.schemas.base import RDFModel
+
 
 class PlatformMetadata(RDFModel):
     """
@@ -22,9 +23,8 @@ class PlatformMetadata(RDFModel):
         sensors: Optional list of camera sensors mounted on the Platform/platform.
     https://www.w3.org/TR/vocab-ssn/#SOSAPlatform
     """
+
     rdf_type: str = "agimage:Platform"
-
-
 
     # ---------------------
     # Image-specific fields
@@ -32,20 +32,21 @@ class PlatformMetadata(RDFModel):
     platformName: str = Field(
         ...,
         description="Name of the Platform/platform",
-        json_schema_extra={"example": "demo_platform1", 
-                            "uri": AGIMAGE+"platformName",
-                            "parent_uri": "http://purl.org/dc/terms/title",
-                           },
+        json_schema_extra={
+            "example": "demo_platform1",
+            "uri": AGIMAGE + "platformName",
+            "parent_uri": "http://purl.org/dc/terms/title",
+        },
     )
-    
+
     platformID: Optional[str] = Field(
         None,
         description="Unique identifier for the Platform/platform based on PlatformName + uuid",
         json_schema_extra={
             "example": "demo_platform1_09cbf6ae-8dc1-43dc-96ef-4675b71039c3",
             # "@tag": "ex:PlatformId",
-            "uri": AGIMAGE+"platformID",
-            "parent_uri": "http://purl.org/dc/terms/identifier"
+            "uri": AGIMAGE + "platformID",
+            "parent_uri": "http://purl.org/dc/terms/identifier",
         },
     )
 
@@ -54,8 +55,8 @@ class PlatformMetadata(RDFModel):
         description="List of sensors mounted on the Platform/platform",
         json_schema_extra={
             "example": [extract(SensorMetadata)],
-            "uri": AGIMAGE+"hasSensor",
-            "cardinalityMax": "*"
+            "uri": AGIMAGE + "hasSensor",
+            "cardinalityMax": "*",
         },
     )
 
@@ -66,7 +67,6 @@ class PlatformMetadata(RDFModel):
         if isinstance(v, list):
             return v
         return [v]
-    
 
     @model_validator(mode="after")
     def set_id(self):

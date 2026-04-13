@@ -5,11 +5,12 @@ This module defines Pydantic models for structuring metadata of agricultural
 datasets, including information about datasets, machines, sensors, fields,
 plots, and images.
 """
+
 import datetime
 import uuid
 from typing import Optional, List
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from metadata_vision.schemas.base import RDFModel
 from metadata_vision.schemas.agent import AgentMetadata
@@ -18,8 +19,7 @@ from metadata_vision.schemas.field import FieldMetadata
 from metadata_vision.schemas.platform import PlatformMetadata
 from metadata_vision.utils.namespaces import AGIMAGE
 from metadata_vision.old_code.generate_example_json import extract
-from pydantic import BaseModel, Field, field_validator
-from metadata_vision.utils.namespaces import AGIMAGE
+from pydantic import field_validator
 from metadata_vision.utils.file_system import get_strptime
 
 
@@ -28,8 +28,8 @@ class DatasetMetadata(RDFModel):
     Metadata model for vision based datasets in agriculture.
     http://www.w3.org/ns/dcat#Dataset
     """
-    rdf_type: str = "dcat:Dataset"
 
+    rdf_type: str = "dcat:Dataset"
 
     # ---------------------
     # General dataset info
@@ -48,7 +48,7 @@ class DatasetMetadata(RDFModel):
         description="unique ID of the dataset",
         json_schema_extra={
             "example": "7265f151-2ffe-4ab5-a3b7-47ec39ca8c40",
-            "uri": "http://purl.org/dc/terms/identifier"
+            "uri": "http://purl.org/dc/terms/identifier",
         },
     )
 
@@ -62,7 +62,6 @@ class DatasetMetadata(RDFModel):
             ),
             "entity": "DatasetMetadata",
             "uri": "http://purl.org/dc/terms/description",
-
         },
     )
 
@@ -120,7 +119,7 @@ class DatasetMetadata(RDFModel):
         json_schema_extra={
             "example": "20251014T093000Z",
             "uri": "http://www.w3.org/ns/dcat#endDate",
-            "@type": "xsd:dateTime"
+            "@type": "xsd:dateTime",
         },
     )
 
@@ -138,8 +137,7 @@ class DatasetMetadata(RDFModel):
     identifier: str = Field(
         ...,
         description=(
-            "Unique identifier of the dataset, preferably in the format "
-            "projectnumber_datasetname"
+            "Unique identifier of the dataset, preferably in the format projectnumber_datasetname"
         ),
         json_schema_extra={
             "example": "3742355900_agros2_komkommer",
@@ -156,12 +154,12 @@ class DatasetMetadata(RDFModel):
     #     },
     # )
     creator: AgentMetadata = Field(
-    ...,
-    json_schema_extra={
-        "example": extract(AgentMetadata),
-        "uri": "http://purl.org/dc/terms/creator",
-        "cardinalityMax": "*"
-        }
+        ...,
+        json_schema_extra={
+            "example": extract(AgentMetadata),
+            "uri": "http://purl.org/dc/terms/creator",
+            "cardinalityMax": "*",
+        },
     )
 
     contributor: Optional[AgentMetadata | list[AgentMetadata]] = Field(
@@ -170,7 +168,7 @@ class DatasetMetadata(RDFModel):
         json_schema_extra={
             "example": extract(AgentMetadata),
             "uri": "http://purl.org/dc/terms/contributor",
-            "cardinalityMax": "*"
+            "cardinalityMax": "*",
         },
     )
 
@@ -195,33 +193,24 @@ class DatasetMetadata(RDFModel):
     numberOfImages: int = Field(
         None,
         description="Total number of images in the dataset (auto-filled)",
-        json_schema_extra={
-            "example": -1,
-            "uri": AGIMAGE+"numberOfImages"
-        },
+        json_schema_extra={"example": -1, "uri": AGIMAGE + "numberOfImages"},
     )
 
     numberOfAnnotatedImages: int = Field(
         None,
         description="Total number of annotated images (auto-filled)",
-        json_schema_extra={
-            "example": -1,
-            "uri": AGIMAGE+"numberOfAnnotatedImages"
-        },
+        json_schema_extra={"example": -1, "uri": AGIMAGE + "numberOfAnnotatedImages"},
     )
     hasField: FieldMetadata | list[FieldMetadata] = Field(
-        ...,
-        json_schema_extra={"uri": AGIMAGE+"hasField"}
+        ..., json_schema_extra={"uri": AGIMAGE + "hasField"}
     )
 
     hasPlatform: PlatformMetadata | list[PlatformMetadata] = Field(
-        ...,
-        json_schema_extra={"uri": AGIMAGE+"hasPlatform"}
+        ..., json_schema_extra={"uri": AGIMAGE + "hasPlatform"}
     )
 
     hasImage: Optional[ImageMetadata | List[ImageMetadata]] = Field(
-        default=None,
-        json_schema_extra={"uri": AGIMAGE+"hasImage"}
+        default=None, json_schema_extra={"uri": AGIMAGE + "hasImage"}
     )
 
     @field_validator("issued", "modified", "startDate", "endDate", mode="before")
@@ -230,10 +219,7 @@ class DatasetMetadata(RDFModel):
         return get_strptime(v)
 
 
-
-
 if __name__ == "__main__":
-
     # Export all "id" fields from the dummy_package
     def extract_ids(obj, key="@id"):
         if isinstance(obj, dict):
@@ -261,7 +247,6 @@ if __name__ == "__main__":
     # print(json.dumps(ids, indent=4))
     # with open("tag.json", "w", encoding="utf-8") as f:
     #     json.dump(ids, f, indent=4)
-
 
     # a=dummy_package.to_jsonld()
 

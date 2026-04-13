@@ -10,11 +10,10 @@ This example combines functionality from chatgpt.py and example_with_ontology.py
 6. Performs SPARQL queries
 7. Serializes results
 """
+
 import json
 
-from rdflib import Graph, Namespace
 from pathlib import Path
-from pyshacl import validate
 
 from metadata_vision.schemas.images import ImageMetadata
 from metadata_vision.schemas.field import FieldMetadata
@@ -28,7 +27,6 @@ from metadata_vision.schemas.agent import AgentMetadata
 from metadata_vision.schemas.dataset import DatasetMetadata
 from metadata_vision.ontology import (
     generate_ontology,
-    generate_shacl,
     add_model_to_graph,
 )
 from metadata_vision.data import (
@@ -46,7 +44,7 @@ from metadata_vision.data import (
 )
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     output_dir = Path(__file__).parent.parent / "ontology"
     output_dir.mkdir(exist_ok=True)
 
@@ -69,7 +67,6 @@ if __name__=="__main__":
     # print("=" * 70)
     # print("STEP 1: GENERATING SHACL SHAPES FILE")
     # print("=" * 70)
-
 
     # shapes_graph = generate_shacl(models_for_shapes)
     # print(f"✓ Generated {len(shapes_graph)} shape triples")
@@ -108,9 +105,9 @@ if __name__=="__main__":
     print("=" * 70)
     print("STEP 3: CREATING METADATA INSTANCES")
     print("=" * 70)
-    
+
     print(f"✓ Created camera: {dummy_camera.cameraName} ({dummy_camera.cameraID})")
-    print(f"✓ Created sensor with camera")
+    print("✓ Created sensor with camera")
     print(f"✓ Created platform: {dummy_platform.platformName} ({dummy_platform.platformID})")
     print(f"✓ Created plot: {dummy_plot.plotName} ({dummy_plot.plotID})")
     print(f"✓ Created field: {dummy_field.fieldName} ({dummy_field.fieldID})")
@@ -123,7 +120,7 @@ if __name__=="__main__":
     # -----------------------
     # 4. Add metadata to graph
     # -----------------------
-    print("="*70)
+    print("=" * 70)
     print("STEP 4: ADDING METADATA TO RDF GRAPH")
     print("=" * 70)
 
@@ -134,7 +131,7 @@ if __name__=="__main__":
     # add_model_to_graph(g, dummy_image)
     add_model_to_graph(g, dummy_dataset)
 
-    print(f"✓ Added all metadata to graph")
+    print("✓ Added all metadata to graph")
     print(f"✓ Total triples in graph: {len(g)}")
     print()
 
@@ -148,7 +145,7 @@ if __name__=="__main__":
     # try:
 
     #     is_valid, report_graph, report_text = validate(g, shacl_graph=shapes_graph)
-        
+
     #     if is_valid:
     #         print("✅ SHACL Validation PASSED!")
     #         print("   All data conforms to defined shapes and constraints.")
@@ -166,11 +163,16 @@ if __name__=="__main__":
     # -----------------------
     # 6. SPARQL queries
     # -----------------------
-    print("="*70)
+    print("=" * 70)
     print("STEP 6: SPARQL QUERIES")
     print("=" * 70)
 
-    from metadata_vision.utils.sparql_queries import query_find_all_fields, query_find_all_images, query_find_platforms
+    from metadata_vision.utils.sparql_queries import (
+        query_find_all_fields,
+        query_find_all_images,
+        query_find_platforms,
+    )
+
     query_find_all_images(g)
     query_find_all_fields(g)
     query_find_platforms(g)
@@ -179,7 +181,7 @@ if __name__=="__main__":
     # -----------------------
     # 7. Serialize to files
     # -----------------------
-    print("="*70)
+    print("=" * 70)
     print("STEP 7: SERIALIZING OUTPUT")
     print("=" * 70)
 
@@ -206,9 +208,9 @@ if __name__=="__main__":
     # Load the unified_output.json file
     with open(json_path, "r") as f:
         loaded_data = json.load(f)
-    
+
     loaded_dataset = DatasetMetadata(**loaded_data["dataset"])
-    
+
     print()
     print("=" * 70)
     print("✅ UNIFIED EXAMPLE COMPLETE!")

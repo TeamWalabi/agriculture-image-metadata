@@ -23,14 +23,14 @@ hasField:
 - rdf_type: agimage:Field
   fieldName: field_001
   fieldID: field_001_c0e639ba-ba1b-4215-96d3-7649491e6931
-  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
+  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
     47.975))
   hasPlot:
     rdf_type: agimage:Plot
     plotName: plot123
     plotID: plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5
     bbox:
-    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
+    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
       47.975))
     hasPlotState:
     - rdf_type: agimage:PlotState
@@ -56,14 +56,14 @@ hasField:
 - rdf_type: agimage:Field
   fieldName: field_002
   fieldID: field_002_a2cff6a7-b39c-4c66-b733-d6cde3183dbb
-  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
+  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
     47.975))
   hasPlot:
     rdf_type: agimage:Plot
     plotName: plot123
     plotID: plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5
     bbox:
-    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
+    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
       47.975))
     hasPlotState:
     - rdf_type: agimage:PlotState
@@ -112,7 +112,7 @@ hasPlatform:
 hasImage:
   rdf_type: agimage:Image
   imageName: 20251014T093010Z857_camid9_trigger1000_rgb.png
-  imageID: 
+  imageID:
     20251014T093010Z857_camid9_trigger1000_rgb.png_eedc28e1-2868-4967-b2ac-dc1e6b0f202f
   imageTimestamp: '2025-10-14T09:30:10.857Z'
   cameraID: '4110035082'
