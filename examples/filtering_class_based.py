@@ -4,8 +4,8 @@ Example script to load a set of images and apply some class based filtering
 
 import json
 from pathlib import Path
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.utils.file_system import get_strptime
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.utils.file_system import get_strptime
 import numpy as np
 from typing import Iterable, Sequence, Optional
 import datetime
@@ -221,8 +221,8 @@ if __name__ == "__main__":
     )
 
     list_of_paths = main_folder.rglob("*metadata.json")
-    from metadata_vision.utils.dataset_loading import load_metadata
-    from metadata_vision.schemas.images import ImageMetadata
+    from agri_image_meta.utils.dataset_loading import load_metadata
+    from agri_image_meta.schemas.images import ImageMetadata
 
     mapping = {
         "image_name": "imageName",

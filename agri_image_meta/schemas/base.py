@@ -1,8 +1,8 @@
 from pydantic import BaseModel, ConfigDict
-from metadata_vision.utils.namespaces import JSONLD_CONTEXT
+from agri_image_meta.utils.namespaces import JSONLD_CONTEXT
 from typing import Any
 import datetime
-from metadata_vision.utils.file_system import get_strftime
+from agri_image_meta.utils.file_system import get_strftime
 
 
 class RDFModel(BaseModel):

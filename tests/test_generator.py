@@ -7,7 +7,7 @@ import datetime
 import pytest
 from rdflib import OWL, RDF, RDFS, XSD, Graph, Literal, Namespace, URIRef
 
-from metadata_vision.ontology.generator import (
+from agri_image_meta.ontology.generator import (
     add_model_to_graph,
     add_property_shapes,
     generate_class,
@@ -16,17 +16,17 @@ from metadata_vision.ontology.generator import (
     get_model_class_uri,
     get_model_shape_uri,
 )
-from metadata_vision.schemas.agent import AgentMetadata
-from metadata_vision.schemas.camera import CameraMetadata
-from metadata_vision.schemas.crop import CropMetadata
-from metadata_vision.schemas.dataset import DatasetMetadata
-from metadata_vision.schemas.field import FieldMetadata
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.schemas.plot import PlotMetadata
-from metadata_vision.schemas.plotstate import PlotStateMetadata
-from metadata_vision.schemas.sensor import SensorMetadata
-from metadata_vision.utils.namespaces import AGIMAGE, DCT, FOAF, SOSA
+from agri_image_meta.schemas.agent import AgentMetadata
+from agri_image_meta.schemas.camera import CameraMetadata
+from agri_image_meta.schemas.crop import CropMetadata
+from agri_image_meta.schemas.dataset import DatasetMetadata
+from agri_image_meta.schemas.field import FieldMetadata
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.platform import PlatformMetadata
+from agri_image_meta.schemas.plot import PlotMetadata
+from agri_image_meta.schemas.plotstate import PlotStateMetadata
+from agri_image_meta.schemas.sensor import SensorMetadata
+from agri_image_meta.utils.namespaces import AGIMAGE, DCT, FOAF, SOSA
 
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
@@ -367,7 +367,7 @@ class TestAddModelToGraph:
         g = Graph()
         uri = add_model_to_graph(g, cam)
         from rdflib.namespace import XSD as RDF_XSD
-        from metadata_vision.utils.namespaces import EXIF
+        from agri_image_meta.utils.namespaces import EXIF
         values = list(g.objects(uri, URIRef(str(EXIF) + "PixelXDimension")))
         assert len(values) == 1
         assert values[0].datatype == XSD.integer
@@ -376,7 +376,7 @@ class TestAddModelToGraph:
         cam = _make_camera(focalLength=8.0)
         g = Graph()
         uri = add_model_to_graph(g, cam)
-        from metadata_vision.utils.namespaces import EXIF
+        from agri_image_meta.utils.namespaces import EXIF
         values = list(g.objects(uri, URIRef(str(EXIF) + "FocalLength")))
         assert len(values) == 1
         assert values[0].datatype == XSD.double
@@ -393,7 +393,7 @@ class TestAddModelToGraph:
         cam = _make_camera(lightSource=None)
         g = Graph()
         uri = add_model_to_graph(g, cam)
-        from metadata_vision.utils.namespaces import EXIF
+        from agri_image_meta.utils.namespaces import EXIF
         values = list(g.objects(uri, URIRef(str(EXIF) + "LightSource")))
         assert len(values) == 0
 

@@ -12,15 +12,15 @@ from typing import Optional, List
 
 from pydantic import Field
 
-from metadata_vision.schemas.base import RDFModel
-from metadata_vision.schemas.agent import AgentMetadata
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.field import FieldMetadata
-from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.utils.namespaces import AGIMAGE
-from metadata_vision.generate_example_json import extract
+from agri_image_meta.schemas.base import RDFModel
+from agri_image_meta.schemas.agent import AgentMetadata
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.field import FieldMetadata
+from agri_image_meta.schemas.platform import PlatformMetadata
+from agri_image_meta.utils.namespaces import AGIMAGE
+from agri_image_meta.generate_example_json import extract
 from pydantic import field_validator
-from metadata_vision.utils.file_system import get_strptime
+from agri_image_meta.utils.file_system import get_strptime
 
 
 class DatasetMetadata(RDFModel):

@@ -11,22 +11,22 @@ from typing import List, Optional, Union
 import pytest
 from rdflib import Graph, XSD
 
-from metadata_vision.utils.type_mapping import python_to_xsd, unwrap_type
-from metadata_vision.utils.file_system import (
+from agri_image_meta.utils.type_mapping import python_to_xsd, unwrap_type
+from agri_image_meta.utils.file_system import (
     create_sensor_dir,
     get_image_name,
     get_strftime,
     get_strptime,
 )
-from metadata_vision.utils.dataset_loading import load_dataset, load_metadata
-from metadata_vision.utils.sparql_queries import (
+from agri_image_meta.utils.dataset_loading import load_dataset, load_metadata
+from agri_image_meta.utils.sparql_queries import (
     query_find_all_fields,
     query_find_all_images,
     query_find_platforms,
     query_images_by_location_and_properties,
 )
-from metadata_vision.ontology.generator import add_model_to_graph
-from metadata_vision.data.example_data import dummy_dataset
+from agri_image_meta.ontology.generator import add_model_to_graph
+from agri_image_meta.data.example_data import dummy_dataset
 
 
 # ── unwrap_type ──────────────────────────────────────────────────────────────
@@ -208,7 +208,7 @@ class TestLoadDataset:
     def test_load_from_json(self):
         json_path = Path(__file__).parent.parent / "examples" / "your_custom_dataset.json"
         if json_path.exists():
-            from metadata_vision.schemas.dataset import DatasetMetadata
+            from agri_image_meta.schemas.dataset import DatasetMetadata
 
             ds = load_dataset(json_path)
             assert isinstance(ds, DatasetMetadata)
@@ -217,7 +217,7 @@ class TestLoadDataset:
     def test_load_from_yaml(self):
         yaml_path = Path(__file__).parent.parent / "examples" / "your_custom_dataset.yaml"
         if yaml_path.exists():
-            from metadata_vision.schemas.dataset import DatasetMetadata
+            from agri_image_meta.schemas.dataset import DatasetMetadata
 
             ds = load_dataset(yaml_path)
             assert isinstance(ds, DatasetMetadata)

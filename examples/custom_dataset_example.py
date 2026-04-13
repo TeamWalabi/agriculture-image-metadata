@@ -5,21 +5,21 @@ Sample to create your own custom_dataset yaml file
 import datetime
 import json
 from ruamel.yaml import YAML
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.field import FieldMetadata
-from metadata_vision.schemas.plot import PlotMetadata
-from metadata_vision.schemas.plotstate import (
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.field import FieldMetadata
+from agri_image_meta.schemas.plot import PlotMetadata
+from agri_image_meta.schemas.plotstate import (
     PlotStateMetadata,
     WeatherConditions,
     SurfaceLayer,
     SoilType,
 )
-from metadata_vision.schemas.camera import CameraMetadata, SpectralBand
-from metadata_vision.schemas.crop import CropMetadata, CropHandling
-from metadata_vision.schemas.platform import PlatformMetadata, SensorMetadata
-from metadata_vision.schemas.agent import AgentMetadata
-from metadata_vision.schemas.dataset import DatasetMetadata
-from metadata_vision.utils.dataset_loading import load_dataset
+from agri_image_meta.schemas.camera import CameraMetadata, SpectralBand
+from agri_image_meta.schemas.crop import CropMetadata, CropHandling
+from agri_image_meta.schemas.platform import PlatformMetadata, SensorMetadata
+from agri_image_meta.schemas.agent import AgentMetadata
+from agri_image_meta.schemas.dataset import DatasetMetadata
+from agri_image_meta.utils.dataset_loading import load_dataset
 
 
 # Create camera

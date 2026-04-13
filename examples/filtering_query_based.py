@@ -6,10 +6,10 @@ from pathlib import Path
 
 
 if __name__ == "__main__":
-    from metadata_vision.utils.dataset_loading import load_dataset, load_metadata
-    from metadata_vision.schemas.images import ImageMetadata
-    from metadata_vision.ontology.generator import load_ontology_graph, add_model_to_graph
-    from metadata_vision.utils import sparql_queries
+    from agri_image_meta.utils.dataset_loading import load_dataset, load_metadata
+    from agri_image_meta.schemas.images import ImageMetadata
+    from agri_image_meta.ontology.generator import load_ontology_graph, add_model_to_graph
+    from agri_image_meta.utils import sparql_queries
 
     # 2. load ontology
     g = load_ontology_graph(Path("metadata_vision") / "ontology" / "ontology.ttl")

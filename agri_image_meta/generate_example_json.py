@@ -151,7 +151,7 @@ def lookp_loop(
 
 
 if __name__ == "__main__":
-    from metadata_vision.main import DatasetPackage
+    from agri_image_meta.main import DatasetPackage
 
     ### save as yaml
     generate_example(

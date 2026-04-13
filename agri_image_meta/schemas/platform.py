@@ -6,13 +6,13 @@ from pydantic import Field, field_validator, model_validator
 import sys
 
 sys.path.append("")
-from metadata_vision.schemas.sensor import SensorMetadata
+from agri_image_meta.schemas.sensor import SensorMetadata
 
-from metadata_vision.generate_example_json import extract
+from agri_image_meta.generate_example_json import extract
 
 import uuid
-from metadata_vision.utils.namespaces import AGIMAGE
-from metadata_vision.schemas.base import RDFModel
+from agri_image_meta.utils.namespaces import AGIMAGE
+from agri_image_meta.schemas.base import RDFModel
 
 
 class PlatformMetadata(RDFModel):
