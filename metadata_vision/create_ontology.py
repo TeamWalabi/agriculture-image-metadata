@@ -50,13 +50,6 @@ if __name__=="__main__":
     output_dir = Path(__file__).parent.parent / "ontology"
     output_dir.mkdir(exist_ok=True)
 
-    # -----------------------
-    # 1. Generate SHACL shapes
-    # -----------------------
-    print("=" * 70)
-    print("STEP 1: GENERATING SHACL SHAPES FILE")
-    print("=" * 70)
-
     models_for_shapes = [
         AgentMetadata,
         CropMetadata,
@@ -70,11 +63,19 @@ if __name__=="__main__":
         DatasetMetadata,
     ]
 
-    shapes_graph = generate_shacl(models_for_shapes)
-    print(f"✓ Generated {len(shapes_graph)} shape triples")
-    print(f"✓ Shapes file saved to: shapes.ttl")
-    shapes_graph.serialize("shapes.ttl", format="turtle")
-    print()
+    # # -----------------------
+    # # 1. Generate SHACL shapes
+    # # -----------------------
+    # print("=" * 70)
+    # print("STEP 1: GENERATING SHACL SHAPES FILE")
+    # print("=" * 70)
+
+
+    # shapes_graph = generate_shacl(models_for_shapes)
+    # print(f"✓ Generated {len(shapes_graph)} shape triples")
+    # print(f"✓ Shapes file saved to: shapes.ttl")
+    # shapes_graph.serialize("shapes.ttl", format="turtle")
+    # print()
 
     # -----------------------
     # 2. Generate ontology
@@ -137,30 +138,30 @@ if __name__=="__main__":
     print(f"✓ Total triples in graph: {len(g)}")
     print()
 
-    # -----------------------
-    # 5. Validate with SHACL
-    # -----------------------
-    print("="*70)
-    print("STEP 5: VALIDATING WITH SHACL")
-    print("="*70)
+    # # -----------------------
+    # # 5. Validate with SHACL
+    # # -----------------------
+    # print("="*70)
+    # print("STEP 5: VALIDATING WITH SHACL")
+    # print("="*70)
 
-    try:
+    # try:
 
-        is_valid, report_graph, report_text = validate(g, shacl_graph=shapes_graph)
+    #     is_valid, report_graph, report_text = validate(g, shacl_graph=shapes_graph)
         
-        if is_valid:
-            print("✅ SHACL Validation PASSED!")
-            print("   All data conforms to defined shapes and constraints.")
-        else:
-            print("❌ SHACL Validation FAILED:")
-            print(report_text)
-    except ImportError:
-        print("⚠️  pySHACL not installed. Install with: pip install pyshacl")
-        print("   Skipping SHACL validation...")
-    except Exception as e:
-        print(f"⚠️  SHACL validation error: {e}")
+    #     if is_valid:
+    #         print("✅ SHACL Validation PASSED!")
+    #         print("   All data conforms to defined shapes and constraints.")
+    #     else:
+    #         print("❌ SHACL Validation FAILED:")
+    #         print(report_text)
+    # except ImportError:
+    #     print("⚠️  pySHACL not installed. Install with: pip install pyshacl")
+    #     print("   Skipping SHACL validation...")
+    # except Exception as e:
+    #     print(f"⚠️  SHACL validation error: {e}")
 
-    print()
+    # print()
 
     # -----------------------
     # 6. SPARQL queries
@@ -183,13 +184,13 @@ if __name__=="__main__":
     print("=" * 70)
 
     # Save RDF graph as Turtle
-    shapes_path = output_dir / "shapes.ttl"
-    ontology_path = output_dir / "testing.ttl"
-    graph_path = output_dir / "unified_output.ttl"
-    json_path = output_dir / "unified_output.json"
+    # shapes_path = output_dir / "shapes.ttl"
+    ontology_path = output_dir / "ontology.ttl"
+    graph_path = output_dir / "dummy_dataset_output.ttl"
+    json_path = output_dir / "dummy_dataset_output.json"
 
-    shapes_graph.serialize(shapes_path, format="turtle")
-    print(f"✓ Serialized to: {shapes_path}")
+    # shapes_graph.serialize(shapes_path, format="turtle")
+    # print(f"✓ Serialized to: {shapes_path}")
 
     g.serialize(graph_path, format="turtle")
     print(f"✓ Serialized to: {graph_path}")
@@ -213,7 +214,7 @@ if __name__=="__main__":
     print("✅ UNIFIED EXAMPLE COMPLETE!")
     print("=" * 70)
     print("\nGenerated files:")
-    print(f"  📄 {shapes_path}          (SHACL shapes for validation)")
+    # print(f"  📄 {shapes_path}          (SHACL shapes for validation)")
     print(f"  📄 {ontology_path}         (Generated OWL ontology)")
     print(f"  🔗 {graph_path}  (RDF graph with instances)")
     print(f"  📋 {json_path} (Metadata as JSON)")

@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools-scm[toml]>=6.2", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metadata_vision"
+authors = [
+    { name = "Bart van Marrewijk", email = "bart.vanmarrewijk@wur.nl" },
+    { name = "Joep Tummers", email = "joep.tummers@wur.nl" },
+    { name = "Toon Tielen", email = "toon.tielen@wur.nl" },
+]
+description = "set of functions for common deeplearning tasks."
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["metadata", "vision", "images"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Development Status :: 3 - Alpha",
+]
+
+dependencies = [
+    "pydantic>=2.11.4",
+    "ruamel-yaml>=0.18.14",
+    "rdflib>=7.6.0",
+    "pyshacl>=0.31.0",
+    "numpy",
+]
+
+dynamic = ["version"]
+
+[project.urls]
+GitHub = "https://git.wur.nl/camera_classes_metadata_calib/metadata/metadata_vision.git"
+
+[project.optional-dependencies]
+test = [
+    "pylint",
+    "pylint-pydantic",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+    "types-tqdm",
+    "pre-commit>=3.5.0"
+]
+
+[tool.setuptools.packages.find]
+include = ["metadata_vision"]
+
+[tool.setuptools.dynamic]
+version = {attr = "metadata_vision.__version__"}
+
+[tool.pylint.'MASTER']
+ignore-patterns="_version.py"
+load-plugins = "pylint_pydantic"
+disable = ["R0801"]
+
+[tool.pylint.'VARIABLES']
+max-line-length=100
+
+[tool.ruff]
+exclude = ["_version.py", "ui_files"]
+line-length = 100
+
+[tool.bandit]
+target = ["metadata_vision", "tests"]
+tests = [
+    "B101",  # Use of assert
+    "B301",  # Pickle usage
+    "B303",  # MD5 usage
+    "B304",  # Insecure cipher modes
+    "B310",  # Audit URL open
+    "B318",  # Insecure XML processing
+    "B314",  # Insecure SSL/TLS settings
+    "B403",  # subprocess import
+    "B404",  # os.system usage
+    "B413",  # requests with verify=False
+    "B504",  # SSL with insecure settings
+    "B605",  # start_process_with_a_shell
+    "B607"   # start_process_as_root
+]
+
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']
+
+[tool.mypy]
+disable_error_code = ["import-untyped"]

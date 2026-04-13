@@ -1,0 +1,35 @@
+ci:
+  autofix_prs: true
+  autoupdate_schedule: weekly
+  autofix_commit_msg: "fix(pre_commit): 🎨 auto format pre-commit hooks"
+  autoupdate_commit_msg: "chore(pre_commit): ⬆ pre_commit autoupdate"
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: no-commit-to-branch
+        args: ['--branch', 'main']
+      - id: trailing-whitespace
+        exclude: test/.*\.py
+      - id: check-toml
+      - id: check-case-conflict
+      - id: check-added-large-files
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+  # scan code for common security vulnerabilities
+  -   repo: https://github.com/PyCQA/bandit
+      rev: '1.8.3'
+      hooks:
+      -   id: bandit
+          args: ["-c", "pyproject.toml"]
+          additional_dependencies: ["bandit[toml]"]
+  # Fast style and formatting checks
+  -   repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.11.8
+      hooks:
+      -   id: ruff
+          args: [--fix, --exit-non-zero-on-fix]
+      -   id: ruff-format
+          types_or: [ python, pyi, jupyter ]

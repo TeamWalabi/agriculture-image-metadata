@@ -1,6 +1,6 @@
 @prefix agimage: <https://w3id.org/agri-image/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -20,7 +20,7 @@
     rdfs:domain agimage:PlotState ;
     rdfs:range xsd:string .
 
-dcterms:Location a owl:DatatypeProperty ;
+dct:Location a owl:DatatypeProperty ;
     rdfs:label "baseXYZ",
         "imageXYZ" ;
     rdfs:comment "Camera location XYZ coordinates in meters relative to platform base",
@@ -28,24 +28,24 @@ dcterms:Location a owl:DatatypeProperty ;
     rdfs:domain agimage:Image ;
     rdfs:range xsd:string .
 
-dcterms:contributor a owl:ObjectProperty ;
+dct:contributor a owl:ObjectProperty ;
     rdfs:label "contributor" ;
     rdfs:comment "Contributors to the dataset" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range agimage:Agent .
 
-dcterms:creator a owl:ObjectProperty ;
+dct:creator a owl:ObjectProperty ;
     rdfs:label "creator" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range agimage:Agent .
 
-dcterms:description a owl:DatatypeProperty ;
+dct:description a owl:DatatypeProperty ;
     rdfs:label "description" ;
     rdfs:comment "General description of the dataset" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dcterms:identifier a owl:DatatypeProperty ;
+dct:identifier a owl:DatatypeProperty ;
     rdfs:label "ID",
         "identifier" ;
     rdfs:comment "Unique identifier of the dataset, preferably in the format projectnumber_datasetname",
@@ -53,25 +53,25 @@ dcterms:identifier a owl:DatatypeProperty ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dcterms:issued a owl:DatatypeProperty ;
+dct:issued a owl:DatatypeProperty ;
     rdfs:label "issued" ;
     rdfs:comment "Date this dataset version was created or uploaded" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dcterms:license a owl:DatatypeProperty ;
+dct:license a owl:DatatypeProperty ;
     rdfs:label "license" ;
     rdfs:comment "Type of license (see https://creativecommons.org/share-your-work/cclicenses/)" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dcterms:modified a owl:DatatypeProperty ;
+dct:modified a owl:DatatypeProperty ;
     rdfs:label "modified" ;
     rdfs:comment "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dcterms:title a owl:DatatypeProperty ;
+dct:title a owl:DatatypeProperty ;
     rdfs:label "title" ;
     rdfs:comment "Name of the dataset" ;
     rdfs:domain agimage:Dataset ;
@@ -225,7 +225,9 @@ foaf:name a owl:DatatypeProperty ;
     rdfs:domain agimage:Crop ;
     rdfs:range xsd:integer .
 
-agimage: a owl:Ontology .
+agimage: a owl:Ontology ;
+    dct:created "2026-04-13"^^xsd:date ;
+    owl:versionInfo "1.0.0" .
 
 agimage:cameraBox a owl:DatatypeProperty ;
     rdfs:label "cameraBox" ;

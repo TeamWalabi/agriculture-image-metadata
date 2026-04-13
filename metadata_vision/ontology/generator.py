@@ -5,9 +5,11 @@ from Pydantic models.
 
 import inspect
 import uuid
+from datetime import date
 from rdflib import Graph, Namespace, RDF, RDFS, OWL, URIRef, Literal, BNode
 from pydantic import BaseModel
 
+from metadata_vision import __version__
 from metadata_vision.utils.namespaces import (
     AGIMAGE, SH, DCT, FOAF, SOSA, EXIF, XSD
 )
@@ -104,7 +106,11 @@ def generate_ontology(root_models):
     g.bind("rdfs", RDFS)
     g.bind("xsd", XSD)
 
+    g.bind("dct", DCT)
+
     g.add((AGIMAGE[""], RDF.type, OWL.Ontology))
+    g.add((AGIMAGE[""], OWL.versionInfo, Literal(__version__)))
+    g.add((AGIMAGE[""], DCT.created, Literal(date.today().isoformat(), datatype=XSD.date)))
 
     for model in root_models:
         generate_class(g, model)

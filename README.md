@@ -2,7 +2,7 @@
 
 A Linked Data–based metadata model for agricultural image data.
 
-This repository provides an **application profile** and supporting resources for describing **images**, **observations**, and **contextual metadata** across agricultural domains (greenhouse, open field, arable crops, horticulture, phenotyping).
+This repository provides an **ontology** for image dataset in agricultural domains (greenhouse, open field, arable crops, horticulture, phenotyping).
 
 The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema that leverages existing ontologies and codelists, while adding only minimal project‑specific extensions where necessary.
 
@@ -11,70 +11,93 @@ The goal is to offer a **lightweight, interoperable, FAIR‑friendly** schema th
 - **Namespace**: `https://w3id.org/agri-image/`
 - **Ontology**: `ontology/ontology.ttl` will be hosted at `https://w3id.org/agri-image`
 
-## Objectives
-
-- **Define consistent metadata** for agricultural image datasets.
-- **Reference existing ontologies** (e.g., PROV‑O, SOSA/SSN, ENVO, schema.org) rather than duplicating concepts.
-- **Structure metadata using Linked Data principles** with URIs, relationships, and reusable concepts.
-- **Provide a clear hierarchy** connecting plants, observations, images, equipment, and context.
-- **Support FAIR, reusable, traceable datasets** for research and machine‑learning workflows.
-- **Allow lightweight project extensions** when no suitable ontology concept exists.
 
 ## Repository structure
 
 ```text
-application-profile/
-  application_profile.xlsx
-  generate_shacl_ontology.py
-  shapes.ttl
-
-ontology/
-  ontology.ttl
-
-ontology-extension/
-  agriculture-image-extension.ttl
-
-examples/
-  (examples to be added)
-
-docs/
-  (documentation to be added)
-
+## examples
+├── examples 
+│   ├── custom_dataset_example.py
+│   ├── filtering_class_based.py
+│   ├── filtering_query_based.py
+│   ├── your_custom_dataset.json
+│   └── your_custom_dataset.yaml
+├── metadata_vision ## Package for loading etc
+...
+├── ontology
+│   ├── dummy_dataset_output.json
+│   ├── dummy_dataset_output.ttl
+│   └── ontology.ttl
 LICENSE
 ```
 
-## Ontologies & vocabularies used
+# Metadata Structure
+The idea is to create a dataset that can consist of:
+- fields: consisting of
+    -  plots/rows
+        - which have crops and weeds
+        - properties of:
+            - soilType
+            - surfaceLayer
+            - weatherConditions
+Data is collected by a machine/platform
+- platform: has sensors:
+    - Camera: unique cam_id and properties
+    - Lidar: *To be implemented in near future*
+    - GPS: *To be implemented in near future*
+- images: list of images which links to field, plot, platform and sensors
 
-This project does **not** create new codelists. It references established vocabularies such as:
 
-- **PROV‑O** (provenance)
-- **SOSA/SSN** (sensors, observations)
-- **ENVO** (environment, locations)
-- **schema.org** (general metadata)
-- **External authoritative codelists** for varieties, growth stages, etc.
+```python
+# DatasetMetadata(RDFModel)
+#     hasField: list[FieldMetadata] | FieldMetadata
+    # hasPlot: PlotMetadata
+    # plot.hasCrop: CropMetadata | list[CropMetadata]
+    # plot.hasWeed: CropMetadata | list[CropMetadata]
+    # platform: PlatformMetadata list[PlatformMetadata] 
+    # platform.hasSensor: list[CameraMetadata] | CameraMetadata]
+    # images: ImageMetadata | list[ImageMetadata]
+```
 
-Missing concepts are added only as **minimal local extensions**.
+## Install for deployment
+```python
+pip install .
+```
 
-## What this model describes
+## Folder structure for deployment
+We recommend following folder structure:
+```bash
+dataset_name / raw_data / field_id / plot_id / platform_id / cam_id / optional[YYYYMMDD]
+# although for some projects it make sense to use:
+dataset_name / raw_data / field_id / plot_id / platform_id / YYYYMMDD / cam_id
+## inside the folder cam_id you have
+## XXX.png files and XXX.metadata.json files describing ImageMetadata
+# to facilitate with the folder structure have a look at utils.file_system.py
+```
 
-- **Image capture events**
-- **Plant, plot, or object** being imaged
-- **Locations** (greenhouse compartments, field sections, coordinates)
-- **Camera, lens, and operator** identifiers
-- **Experimental or observational context**
-- Links to **external identifiers** (varieties, treatments, genotypes, etc.)
+This looks complicated but this make is ideal for:
+- Timeseries
+- Drone data with field and plots
+- Multiple machines on a field.
+- Machine is flexibile can be a:
+    - harvesting robot
+    - data platform
+    - or in a greenhouse an device which has multiple camera's sensors
 
-## Examples
+# Recreate ontology
+To recreate the ontology:
+```bash
+python3 metadata_vision/create_ontology.py
+```
 
-See the `examples/` folder for JSON-LD and Turtle examples that show how an image and its context can be expressed.
+## Commit / validating:
+Install aditional packages
+```bash
 
-## How to use
-
-- Reuse the fields from the **application profile** (`application-profile/`).
-- Represent metadata using **JSON-LD** or **RDF Turtle**.
-- Refer to **external ontologies** wherever possible.
-- Use terms from the **local extension** (`ontology-extension/`) only if no external concept fits.
-- Validate data using **SHACL** (see `application-profile/shapes.ttl`).
+pip install -e .[test]
+## validate if everything is working correctly with
+pytest tests/
+```
 
 ## License
 
@@ -90,4 +113,4 @@ Suggestions and pull requests are welcome, especially for improving ontology map
 
 - **Bart van Marrewijk & Joep Tummers**
 - **Wageningen Research**
-- **Email**: walabi.wser@wur.nl
+- **Email**: bart.vanmarrewijk@wur.nl
