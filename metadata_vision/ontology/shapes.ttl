@@ -1,0 +1,309 @@
+@prefix agimage: <https://w3id.org/agri-image/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix exif: <https://exiftool.org/TagNames/EXIF.html#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+owl:Class rdfs:subClassOf rdfs:Class .
+
+owl:DatatypeProperty rdfs:subClassOf rdf:Property .
+
+agimage:DatasetShape a sh:NodeShape ;
+    sh:description """Metadata model for vision based datasets in agriculture.
+    http://www.w3.org/ns/dcat#Dataset""" ;
+    sh:name "Dataset shape" ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:issued ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 0 ;
+            sh:path agimage:numberOfImages ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:license ],
+        [ sh:minCount 1 ;
+            sh:node agimage:AgentShape ;
+            sh:path dct:creator ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dcat:endDate ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path dct:identifier ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dcat:startDate ],
+        [ sh:minCount 0 ;
+            sh:node agimage:AgentShape ;
+            sh:path dct:contributor ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dcat:accessURL ],
+        [ sh:minCount 1 ;
+            sh:node agimage:FieldShape ;
+            sh:path agimage:hasField ],
+        [ sh:minCount 1 ;
+            sh:node agimage:PlatformShape ;
+            sh:path agimage:hasPlatform ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:modified ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dcat:version ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:identifier ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 0 ;
+            sh:path agimage:numberOfAnnotatedImages ],
+        [ sh:minCount 0 ;
+            sh:node agimage:ImageShape ;
+            sh:path agimage:hasImage ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path dct:title ] ;
+    sh:targetClass agimage:Dataset .
+
+agimage:CameraShape a sh:NodeShape ;
+    sh:description "Metadata model for camera/sensor-related information." ;
+    sh:name "Camera shape" ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <http://sweetontology.net/propOrdinal/SpectralBand> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path exif:Model ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:lightModel ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path exif:LightSource ],
+        [ sh:minCount 0 ;
+            sh:node agimage:DistortionModelShape ;
+            sh:path agimage:hasDistortionModel ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path exif:LensModel ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 1 ;
+            sh:path exif:PixelXDimension ],
+        [ sh:datatype xsd:boolean ;
+            sh:minCount 0 ;
+            sh:path agimage:cameraBox ],
+        [ sh:datatype xsd:double ;
+            sh:minCount 1 ;
+            sh:path exif:FocalLength ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:intrinsics ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 1 ;
+            sh:path exif:PixelYDimension ],
+        [ sh:datatype xsd:double ;
+            sh:minCount 1 ;
+            sh:path agimage:pixelSize ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:cameraName ],
+        [ sh:datatype xsd:double ;
+            sh:minCount 1 ;
+            sh:path exif:SubjectDistance ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path exif:SerialNumber ] ;
+    sh:targetClass agimage:Camera .
+
+agimage:FieldShape a sh:NodeShape ;
+    sh:description """Metadata model for agricultural field information.
+    Attributes:
+        fieldID: Unique identifier for the field.
+        plots: Optional list of plot metadata or single plot metadata within the field.""" ;
+    sh:name "Field shape" ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:fieldName ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:fieldID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:fieldBbox ],
+        [ sh:minCount 0 ;
+            sh:node agimage:PlotShape ;
+            sh:path agimage:hasPlot ] ;
+    sh:targetClass agimage:Field .
+
+agimage:ImageShape a sh:NodeShape ;
+    sh:description "Basic metadata for every image captured" ;
+    sh:name "Image shape" ;
+    sh:property [ sh:datatype xsd:double ;
+            sh:minCount 1 ;
+            sh:path agimage:platformOrientation ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <https://dbpedia.org/page/Quaternion> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:imagePath ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:imageID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:plotID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/TR/xmlschema11-2/#dateTime> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:Location ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path dct:Location ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:platformID ],
+        [ sh:datatype xsd:double ;
+            sh:minCount 0 ;
+            sh:path exif:ExposureTime ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <http://dbpedia.org/resource/NMEA_0183> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path exif:SerialNumber ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 0 ;
+            sh:path exif:ImageNumber ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:fieldID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:imageName ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <http://dbpedia.org/resource/NMEA_0183> ] ;
+    sh:targetClass agimage:Image .
+
+agimage:PlatformShape a sh:NodeShape ;
+    sh:description """Metadata model for machine/platform information.
+    Attributes:
+        PlatformID: Unique identifier or name of the Platform/platform.
+        sensors: Optional list of camera sensors mounted on the Platform/platform.
+    https://www.w3.org/TR/vocab-ssn/#SOSAPlatform""" ;
+    sh:name "Platform shape" ;
+    sh:property [ sh:minCount 0 ;
+            sh:node agimage:SensorShape ;
+            sh:path agimage:hasSensor ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:platformID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:platformName ] ;
+    sh:targetClass agimage:Platform .
+
+agimage:PlotShape a sh:NodeShape ;
+    sh:description """Metadata model on plot level. Contains information about plotID location
+    And related crops, weeds, soil type, weather conditions, external conditions and surface cover.""" ;
+    sh:name "Plot shape" ;
+    sh:property [ sh:minCount 1 ;
+            sh:node agimage:PlotStateShape ;
+            sh:path agimage:hasPlotState ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:plotName ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:plotBbox ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:plotID ] ;
+    sh:targetClass agimage:Plot .
+
+agimage:PlotStateShape a sh:NodeShape ;
+    sh:description """Metadata model on plot level. Contains information about plotID location
+    And related crops, weeds, soil type, weather conditions, external conditions and surface cover.""" ;
+    sh:name "PlotState shape" ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:validTo ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:stateID ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:validFrom ],
+        [ sh:minCount 1 ;
+            sh:node agimage:CropShape ;
+            sh:path agimage:crop ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:stateNae ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <https://dbpedia.org/page/Weather> ],
+        [ sh:minCount 0 ;
+            sh:node agimage:CropShape ;
+            sh:path agimage:weed ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <http://purl.obolibrary.org/obo/ENVO_00010504> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path <https://aims.fao.org/aos/agrovoc/c_7156.html> ] ;
+    sh:targetClass agimage:PlotState .
+
+agimage:SensorShape a sh:NodeShape ;
+    sh:description """Metadata model for sensors/cameras mounted on a platform.
+    https://www.w3.org/TR/vocab-ssn/#SOSASensor""" ;
+    sh:name "Sensor shape" ;
+    sh:property [ sh:minCount 0 ;
+            sh:node agimage:CameraShape ;
+            sh:path agimage:hasCamera ] ;
+    sh:targetClass agimage:Sensor .
+
+agimage:AgentShape a sh:NodeShape ;
+    sh:name "Agent shape" ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path foaf:name ] ;
+    sh:targetClass agimage:Agent .
+
+agimage:CropShape a sh:NodeShape ;
+    sh:description "Metadata model for crop-related information." ;
+    sh:name "Crop shape" ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:minCount 0 ;
+            sh:path <https://opendata.inrae.fr/ppd-def#GrowthStage> ],
+        [ sh:datatype xsd:integer ;
+            sh:minCount 0 ;
+            sh:path <https://opendata.inrae.fr/ppd-def#GrowthStage> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path <https://gd.eppo.int/taxon/> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:path agimage:cropName ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:cropHandling ],
+        [ sh:minCount 0 ;
+            sh:node agimage:CropTimingShape ;
+            sh:path <https://agrovoc.fao.org/browse/agrovoc/en/page/c_7779> ],
+        [ sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:path agimage:cropCultivar ] ;
+    sh:targetClass agimage:Crop .
+
