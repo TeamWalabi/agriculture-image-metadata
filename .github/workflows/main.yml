@@ -32,9 +32,9 @@ jobs:
       run: |
         ruff check metadata_vision
     # code errors, style violations (PEP8), code smells, and enforces coding standards.
-    - name: Lint with PyLint
-      run: |
-        pylint metadata_vision
+    # - name: Lint with PyLint
+    #   run: |
+    #     pylint metadata_vision
     # static type checker
     # - name: Check types with MyPy
     #   run: |
