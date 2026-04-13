@@ -4,6 +4,7 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://dbpedia.org/resource/NMEA_0183> a owl:DatatypeProperty ;
@@ -16,7 +17,7 @@
 
 <http://purl.obolibrary.org/obo/ENVO_00010504> a owl:DatatypeProperty ;
     rdfs:label "surfaceLayer" ;
-    rdfs:comment "Non-crop surface cover visible in the images" ;
+    rdfs:comment "Non-crop surface cover visible in the images, for example shells, straw" ;
     rdfs:domain agimage:PlotState ;
     rdfs:range xsd:string .
 
@@ -45,14 +46,6 @@ dct:description a owl:DatatypeProperty ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
-dct:identifier a owl:DatatypeProperty ;
-    rdfs:label "ID",
-        "identifier" ;
-    rdfs:comment "Unique identifier of the dataset, preferably in the format projectnumber_datasetname",
-        "unique ID of the dataset" ;
-    rdfs:domain agimage:Dataset ;
-    rdfs:range xsd:string .
-
 dct:issued a owl:DatatypeProperty ;
     rdfs:label "issued" ;
     rdfs:comment "Date this dataset version was created or uploaded" ;
@@ -68,12 +61,6 @@ dct:license a owl:DatatypeProperty ;
 dct:modified a owl:DatatypeProperty ;
     rdfs:label "modified" ;
     rdfs:comment "Date this dataset version was last modified YYYYMMDDTHHMMSSZ" ;
-    rdfs:domain agimage:Dataset ;
-    rdfs:range xsd:string .
-
-dct:title a owl:DatatypeProperty ;
-    rdfs:label "title" ;
-    rdfs:comment "Name of the dataset" ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
@@ -116,6 +103,12 @@ dcat:version a owl:DatatypeProperty ;
     rdfs:domain agimage:Dataset ;
     rdfs:range xsd:string .
 
+sosa:hosts a owl:ObjectProperty ;
+    rdfs:label "hasSensor" ;
+    rdfs:comment "List of sensors hosted on the platform" ;
+    rdfs:domain agimage:Platform ;
+    rdfs:range agimage:Sensor .
+
 foaf:name a owl:DatatypeProperty ;
     rdfs:label "name" ;
     rdfs:domain agimage:Agent ;
@@ -134,7 +127,7 @@ foaf:name a owl:DatatypeProperty ;
 
 <https://aims.fao.org/aos/agrovoc/c_7156.html> a owl:DatatypeProperty ;
     rdfs:label "soilType" ;
-    rdfs:comment "Soil type based on USDA soil conditions" ;
+    rdfs:comment "Soil type based Soil Texture Trianglehttps://serc.carleton.edu/details/images/343276.html" ;
     rdfs:domain agimage:PlotState ;
     rdfs:range xsd:string .
 
@@ -239,13 +232,8 @@ agimage:cameraName a owl:DatatypeProperty ;
     rdfs:label "cameraName" ;
     rdfs:comment "Simple identifier for the camera" ;
     rdfs:domain agimage:Camera ;
-    rdfs:range xsd:string .
-
-agimage:crop a owl:ObjectProperty ;
-    rdfs:label "hasCrop" ;
-    rdfs:comment "List of crops planted in the plot" ;
-    rdfs:domain agimage:PlotState ;
-    rdfs:range agimage:Crop .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:cropCultivar a owl:DatatypeProperty ;
     rdfs:label "cropCultivar" ;
@@ -263,7 +251,8 @@ agimage:cropName a owl:DatatypeProperty ;
     rdfs:label "cropName" ;
     rdfs:comment "Name of the crop, please search in following database: https://gd.eppo.int/" ;
     rdfs:domain agimage:Crop ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:distortionModelCoefficients a owl:DatatypeProperty ;
     rdfs:label "coefficients" ;
@@ -281,7 +270,8 @@ agimage:fieldBbox a owl:DatatypeProperty ;
     rdfs:label "bbox" ;
     rdfs:comment "Field polygon as WKT literal (dcterms:Location) long, lat" ;
     rdfs:domain agimage:Field ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <https://www.w3.org/ns/dcat#bbox> .
 
 agimage:fieldID a owl:DatatypeProperty ;
     rdfs:label "fieldID" ;
@@ -289,13 +279,15 @@ agimage:fieldID a owl:DatatypeProperty ;
         "Unique identifier for the field based on field + uuid" ;
     rdfs:domain agimage:Field,
         agimage:Image ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:fieldName a owl:DatatypeProperty ;
     rdfs:label "fieldName" ;
     rdfs:comment "Name of the field" ;
     rdfs:domain agimage:Field ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:hasCamera a owl:ObjectProperty ;
     rdfs:label "hasCamera" ;
@@ -332,33 +324,30 @@ agimage:hasPlot a owl:ObjectProperty ;
 
 agimage:hasPlotState a owl:ObjectProperty ;
     rdfs:label "hasPlotState" ;
-    rdfs:comment "Defining the state of the plot, so crops/weed growth stage environmental conditions at certain time" ;
+    rdfs:comment "Defining the state of the plot, so crops/weed growth stage,environmental conditions at certain timestamp" ;
     rdfs:domain agimage:Plot ;
     rdfs:range agimage:PlotState .
-
-agimage:hasSensor a owl:ObjectProperty ;
-    rdfs:label "hasSensor" ;
-    rdfs:comment "List of sensors mounted on the Platform/platform" ;
-    rdfs:domain agimage:Platform ;
-    rdfs:range agimage:Sensor .
 
 agimage:imageID a owl:DatatypeProperty ;
     rdfs:label "imageID" ;
     rdfs:comment "Unique identifier for the image based on image + uuid" ;
     rdfs:domain agimage:Image ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:imageName a owl:DatatypeProperty ;
     rdfs:label "imageName" ;
     rdfs:comment "Name of the image, follow the format: timestamp_camid_trigger_channel.png" ;
     rdfs:domain agimage:Image ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:imagePath a owl:DatatypeProperty ;
     rdfs:label "imagePath" ;
     rdfs:comment "Full path of the image" ;
     rdfs:domain agimage:Image ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:intrinsics a owl:DatatypeProperty ;
     rdfs:label "intrinsics" ;
@@ -396,13 +385,15 @@ agimage:platformID a owl:DatatypeProperty ;
         "Unique identifier for the Platform/platform based on PlatformName + uuid" ;
     rdfs:domain agimage:Image,
         agimage:Platform ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:platformName a owl:DatatypeProperty ;
     rdfs:label "platformName" ;
     rdfs:comment "Name of the Platform/platform" ;
     rdfs:domain agimage:Platform ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:platformOrientation a owl:DatatypeProperty ;
     rdfs:label "baseQuaternionXYZW" ;
@@ -414,7 +405,8 @@ agimage:plotBbox a owl:DatatypeProperty ;
     rdfs:label "bbox" ;
     rdfs:comment "Plot polygon as WKT literal (dcterms:Location)" ;
     rdfs:domain agimage:Plot ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <https://www.w3.org/ns/dcat#bbox> .
 
 agimage:plotID a owl:DatatypeProperty ;
     rdfs:label "plotID" ;
@@ -422,25 +414,29 @@ agimage:plotID a owl:DatatypeProperty ;
         "Unique identifier for the maplot based on plot + uuid" ;
     rdfs:domain agimage:Image,
         agimage:Plot ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:plotName a owl:DatatypeProperty ;
     rdfs:label "plotName" ;
-    rdfs:comment "Plot or greenhouse identifier" ;
+    rdfs:comment "Plot or Greenhouse identifier" ;
     rdfs:domain agimage:Plot ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:title .
 
 agimage:stateID a owl:DatatypeProperty ;
     rdfs:label "stateID" ;
     rdfs:comment "Unique identifier for the state of the plot, used if timestamp changes" ;
     rdfs:domain agimage:PlotState ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:stateNae a owl:DatatypeProperty ;
     rdfs:label "stateName" ;
     rdfs:comment "Name of the state of plot, used plotName_state_1" ;
     rdfs:domain agimage:PlotState ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dct:identifier .
 
 agimage:validFrom a owl:DatatypeProperty ;
     rdfs:label "validFrom" ;
@@ -458,21 +454,45 @@ agimage:weed a owl:ObjectProperty ;
     rdfs:label "hasWeed" ;
     rdfs:comment "List of weeds present in the plot" ;
     rdfs:domain agimage:PlotState ;
+    rdfs:range agimage:Crop ;
+    rdfs:subPropertyOf agimage:crop .
+
+agimage:crop a owl:ObjectProperty ;
+    rdfs:label "hasCrop" ;
+    rdfs:comment "List of crops planted in the plot" ;
+    rdfs:domain agimage:PlotState ;
     rdfs:range agimage:Crop .
 
-agimage:Sensor a owl:Class .
+agimage:Sensor a owl:Class ;
+    rdfs:subClassOf sosa:Sensor .
 
-agimage:Agent a owl:Class .
+agimage:Agent a owl:Class ;
+    rdfs:subClassOf foaf:Agent .
 
 agimage:CropTiming a owl:Class .
 
 agimage:DistortionModel a owl:Class .
 
-agimage:Platform a owl:Class .
+agimage:Platform a owl:Class ;
+    rdfs:subClassOf sosa:Platform .
 
 agimage:Field a owl:Class .
 
 agimage:Plot a owl:Class .
+
+dct:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "Name of the dataset" ;
+    rdfs:domain agimage:Dataset ;
+    rdfs:range xsd:string .
+
+dct:identifier a owl:DatatypeProperty ;
+    rdfs:label "ID",
+        "identifier" ;
+    rdfs:comment "Unique identifier of the dataset, preferably in the format projectnumber_datasetname",
+        "unique ID of the dataset" ;
+    rdfs:domain agimage:Dataset ;
+    rdfs:range xsd:string .
 
 agimage:Crop a owl:Class .
 
@@ -482,4 +502,6 @@ agimage:Image a owl:Class .
 
 agimage:Camera a owl:Class .
 
-agimage:Dataset a owl:Class .
+agimage:Dataset a owl:Class ;
+    rdfs:subClassOf dcat:Dataset .
+
