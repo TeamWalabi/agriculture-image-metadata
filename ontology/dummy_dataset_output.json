@@ -1,0 +1,187 @@
+{
+  "dataset": {
+    "rdf_type": "dcat:Dataset",
+    "title": "Cucumber phenotyping dataset",
+    "ID": "71225012-e79e-4ac7-952a-26ef3b5b4f10",
+    "description": "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower.",
+    "accessURL": "https://example.org/datasets/cucumber-phenotyping",
+    "version": "1.0",
+    "issued": "2025-10-14T09:30:00.000Z",
+    "modified": "2025-10-14T09:30:00.000Z",
+    "startDate": "2025-10-14T09:30:00.000Z",
+    "endDate": "2025-10-14T17:30:00.000Z",
+    "identifier": "3742355900_agros2_komkommer",
+    "creator": {
+      "rdf_type": "foaf:Agent",
+      "name": "Jane Doe"
+    },
+    "contributor": {
+      "rdf_type": "foaf:Agent",
+      "name": "John Doe"
+    },
+    "license": "CC BY-NC-SA",
+    "numberOfImages": 15000,
+    "numberOfAnnotatedImages": 12500,
+    "hasField": [
+      {
+        "rdf_type": "agimage:Field",
+        "fieldName": "field_001",
+        "fieldID": "field_001_d35cce35-513d-4902-b392-1657c0d8a64d",
+        "bbox": "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+        "hasPlot": {
+          "rdf_type": "agimage:Plot",
+          "plotName": "plot123",
+          "plotID": "plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035",
+          "bbox": [
+            "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"
+          ],
+          "hasPlotState": [
+            {
+              "rdf_type": "agimage:PlotState",
+              "stateName": "plot123_state_1",
+              "stateID": "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035",
+              "validFrom": "2026-08-18T00:00:00.000Z",
+              "validTo": "2026-08-20T00:00:00.000Z",
+              "hasCrop": [
+                {
+                  "rdf_type": "agimage:Crop",
+                  "cropName": "cucumber",
+                  "cropCode": "CUMSA",
+                  "cropCultivar": "Hi Power",
+                  "cropHandling": "Crop observation",
+                  "cropGrowthStageMin": 65,
+                  "cropGrowthStageMax": 85,
+                  "cropTiming": {
+                    "rdf_type": "agimage:CropTiming",
+                    "type": "planting_date",
+                    "date": "2026-01-10T00:00:00.000Z"
+                  }
+                }
+              ],
+              "hasWeed": null,
+              "soilType": null,
+              "weatherConditions": "sunny",
+              "surfaceLayer": [
+                "white canvas",
+                "loose leaves"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "rdf_type": "agimage:Field",
+        "fieldName": "field_002",
+        "fieldID": "field_002_362f6026-28a0-4bc0-b8b5-a3ef9c81ca7e",
+        "bbox": "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+        "hasPlot": {
+          "rdf_type": "agimage:Plot",
+          "plotName": "plot123",
+          "plotID": "plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035",
+          "bbox": [
+            "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"
+          ],
+          "hasPlotState": [
+            {
+              "rdf_type": "agimage:PlotState",
+              "stateName": "plot123_state_1",
+              "stateID": "plot123_state_1_12345678-c9fb-4cf7-8766-c28077b2c035",
+              "validFrom": "2026-08-18T00:00:00.000Z",
+              "validTo": "2026-08-20T00:00:00.000Z",
+              "hasCrop": [
+                {
+                  "rdf_type": "agimage:Crop",
+                  "cropName": "cucumber",
+                  "cropCode": "CUMSA",
+                  "cropCultivar": "Hi Power",
+                  "cropHandling": "Crop observation",
+                  "cropGrowthStageMin": 65,
+                  "cropGrowthStageMax": 85,
+                  "cropTiming": {
+                    "rdf_type": "agimage:CropTiming",
+                    "type": "planting_date",
+                    "date": "2026-01-10T00:00:00.000Z"
+                  }
+                }
+              ],
+              "hasWeed": null,
+              "soilType": null,
+              "weatherConditions": "sunny",
+              "surfaceLayer": [
+                "white canvas",
+                "loose leaves"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "hasPlatform": {
+      "rdf_type": "agimage:Platform",
+      "platformName": "demo_platform1",
+      "platformID": "demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035",
+      "hasSensor": [
+        {
+          "rdf_type": "agimage:Sensor",
+          "hasCamera": [
+            {
+              "rdf_type": "agimage:Camera",
+              "cameraName": "camid050",
+              "cameraID": "4110035082",
+              "cameraModel": "IDS GV-5280FA-C-HQ Rev 1.2",
+              "cameraLensModel": "IDS 6mm 1:2.8 C2/3",
+              "maxPixelX": 2464,
+              "maxPixelY": 2056,
+              "pixelSize": 4.39,
+              "focalLength": 6.0,
+              "subjectDistance": 400.0,
+              "spectralBand": "rgb",
+              "cameraBox": null,
+              "lightSource": null,
+              "lightModel": null,
+              "intrinsics": null,
+              "hasDistortionModel": null
+            }
+          ]
+        }
+      ]
+    },
+    "hasImage": {
+      "rdf_type": "agimage:Image",
+      "imageName": "20251014T093010Z857_camid9_trigger1000_rgb.png",
+      "imagePath": null,
+      "imageID": "20251014T093010Z857_camid9_trigger1000_rgb.png_a0022262-947e-4823-b5c7-3749ffdfabfb",
+      "imageTimestamp": "2025-10-14T09:30:10.857Z",
+      "cameraID": "4110035082",
+      "fieldID": "field_001_d35cce35-513d-4902-b392-1657c0d8a64d",
+      "plotID": "plot123_7415bf0b-c9fb-4cf7-8766-c28077b2c035",
+      "platformID": "demo_platform1_65b8590f-463b-4b40-8ab1-cb6984d49035",
+      "exposureTime": null,
+      "imageNumber": 1000,
+      "imageXYZ": [
+        1.0,
+        2.0,
+        2.5
+      ],
+      "imageQuaternionXYZW": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "imageGNSS": null,
+      "baseXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "baseQuaternionXYZW": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "baseGNSS": null
+    }
+  }
+}

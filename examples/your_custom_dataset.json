@@ -1,0 +1,176 @@
+{
+    "rdf_type": "dcat:Dataset",
+    "title": "Cucumber phenotyping dataset",
+    "ID": "cfb556ee-9a29-4866-9d95-2956cf2d3dec",
+    "description": "This dataset is recorded in a commercial cucumber greenhouse. Four classes are annotated: cucumbers, leaves, open flower and closed flower.",
+    "accessURL": "https://example.org/datasets/cucumber-phenotyping",
+    "version": "1.0",
+    "issued": "2025-10-14T09:30:00.000Z",
+    "modified": "2025-10-14T09:30:00.000Z",
+    "startDate": "2025-10-14T09:30:00.000Z",
+    "endDate": "2025-10-14T17:30:00.000Z",
+    "identifier": "3742355900_agros2_komkommer",
+    "creator": {
+        "rdf_type": "foaf:Agent",
+        "name": "Jane Doe"
+    },
+    "contributor": {
+        "rdf_type": "foaf:Agent",
+        "name": "John Doe"
+    },
+    "license": "CC BY-NC-SA",
+    "numberOfImages": -1,
+    "numberOfAnnotatedImages": -1,
+    "hasField": [
+        {
+            "rdf_type": "agimage:Field",
+            "fieldName": "field_001",
+            "fieldID": "field_001_c0e639ba-ba1b-4215-96d3-7649491e6931",
+            "bbox": "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+            "hasPlot": {
+                "rdf_type": "agimage:Plot",
+                "plotName": "plot123",
+                "plotID": "plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5",
+                "bbox": [
+                    "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"
+                ],
+                "hasPlotState": [
+                    {
+                        "rdf_type": "agimage:PlotState",
+                        "stateName": "plot123_state_1",
+                        "stateID": "plot123_state_1_6ba28e9c-6010-45f3-ad01-32b0c03e17f0",
+                        "validFrom": "2026-08-18T00:00:00.000Z",
+                        "validTo": "2026-08-20T00:00:00.000Z",
+                        "hasCrop": [
+                            {
+                                "rdf_type": "agimage:Crop",
+                                "cropName": "cucumber",
+                                "cropCode": "CUMSA",
+                                "cropCultivar": "Hi Power",
+                                "cropHandling": "Crop observation",
+                                "cropGrowthStageMin": 65,
+                                "cropGrowthStageMax": 85,
+                                "cropTiming": null
+                            }
+                        ],
+                        "hasWeed": null,
+                        "soilType": "clay",
+                        "weatherConditions": "sunny",
+                        "surfaceLayer": [
+                            "white canvas",
+                            "loose leaves"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "rdf_type": "agimage:Field",
+            "fieldName": "field_002",
+            "fieldID": "field_002_a2cff6a7-b39c-4c66-b733-d6cde3183dbb",
+            "bbox": "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))",
+            "hasPlot": {
+                "rdf_type": "agimage:Plot",
+                "plotName": "plot123",
+                "plotID": "plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5",
+                "bbox": [
+                    "POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 47.975))"
+                ],
+                "hasPlotState": [
+                    {
+                        "rdf_type": "agimage:PlotState",
+                        "stateName": "plot123_state_1",
+                        "stateID": "plot123_state_1_6ba28e9c-6010-45f3-ad01-32b0c03e17f0",
+                        "validFrom": "2026-08-18T00:00:00.000Z",
+                        "validTo": "2026-08-20T00:00:00.000Z",
+                        "hasCrop": [
+                            {
+                                "rdf_type": "agimage:Crop",
+                                "cropName": "cucumber",
+                                "cropCode": "CUMSA",
+                                "cropCultivar": "Hi Power",
+                                "cropHandling": "Crop observation",
+                                "cropGrowthStageMin": 65,
+                                "cropGrowthStageMax": 85,
+                                "cropTiming": null
+                            }
+                        ],
+                        "hasWeed": null,
+                        "soilType": "clay",
+                        "weatherConditions": "sunny",
+                        "surfaceLayer": [
+                            "white canvas",
+                            "loose leaves"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "hasPlatform": {
+        "rdf_type": "agimage:Platform",
+        "platformName": "demo_platform_1",
+        "platformID": "demo_platform_1_d427f490-fb71-42bc-9230-3e7ea50eff07",
+        "hasSensor": [
+            {
+                "rdf_type": "agimage:Sensor",
+                "hasCamera": [
+                    {
+                        "rdf_type": "agimage:Camera",
+                        "cameraName": "camid050",
+                        "cameraID": "4110035082",
+                        "cameraModel": "IDS GV-5280FA-C-HQ Rev 1.2",
+                        "cameraLensModel": "IDS,12M23-C0628,6mm,2/3",
+                        "maxPixelX": 2464,
+                        "maxPixelY": 2056,
+                        "pixelSize": 3.45,
+                        "focalLength": 6.0,
+                        "subjectDistance": 400.0,
+                        "spectralBand": "rgb",
+                        "cameraBox": null,
+                        "lightSource": null,
+                        "lightModel": null,
+                        "intrinsics": null,
+                        "hasDistortionModel": null
+                    }
+                ]
+            }
+        ]
+    },
+    "hasImage": {
+        "rdf_type": "agimage:Image",
+        "imageName": "20251014T093010Z857_camid9_trigger1000_rgb.png",
+        "imageID": "20251014T093010Z857_camid9_trigger1000_rgb.png_eedc28e1-2868-4967-b2ac-dc1e6b0f202f",
+        "imageTimestamp": "2025-10-14T09:30:10.857Z",
+        "cameraID": "4110035082",
+        "fieldID": "field_001_c0e639ba-ba1b-4215-96d3-7649491e6931",
+        "plotID": "plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5",
+        "platformID": "demo_platform_1_d427f490-fb71-42bc-9230-3e7ea50eff07",
+        "exposureTime": null,
+        "imageNumber": 1000,
+        "imageXYZ": [
+            1.0,
+            2.0,
+            2.5
+        ],
+        "imageQuaternionXYZW": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ],
+        "imageGNSS": null,
+        "baseXYZ": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "baseQuaternionXYZW": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ],
+        "baseGNSS": null
+    }
+}
