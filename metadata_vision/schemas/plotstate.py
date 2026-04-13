@@ -10,7 +10,7 @@ import uuid
 from enum import Enum
 import datetime
 from pydantic import Field, field_validator, model_validator
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 from metadata_vision.schemas.crop import CropMetadata, CropHandling
 from metadata_vision.utils.namespaces import AGIMAGE
 from metadata_vision.utils.file_system import get_strptime

@@ -18,7 +18,7 @@ from metadata_vision.schemas.images import ImageMetadata
 from metadata_vision.schemas.field import FieldMetadata
 from metadata_vision.schemas.platform import PlatformMetadata
 from metadata_vision.utils.namespaces import AGIMAGE
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 from pydantic import field_validator
 from metadata_vision.utils.file_system import get_strptime
 

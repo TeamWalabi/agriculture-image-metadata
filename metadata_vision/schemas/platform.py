@@ -8,7 +8,7 @@ import sys
 sys.path.append("")
 from metadata_vision.schemas.sensor import SensorMetadata
 
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 
 import uuid
 from metadata_vision.utils.namespaces import AGIMAGE

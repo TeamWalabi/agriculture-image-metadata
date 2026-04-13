@@ -9,7 +9,7 @@ from pydantic import Field, field_validator
 import sys
 
 sys.path.append("")
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 from metadata_vision.schemas.base import RDFModel
 from metadata_vision.utils.namespaces import AGIMAGE, EXIF
 # better -> https://exiftool.org/TagNames/EXIF.html

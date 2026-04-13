@@ -8,7 +8,7 @@ and surface cover types used in agricultural image datasets.
 from typing import Optional
 import uuid
 from pydantic import Field, model_validator
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 from metadata_vision.schemas.plot import PlotMetadata
 
 from metadata_vision.utils.namespaces import AGIMAGE
