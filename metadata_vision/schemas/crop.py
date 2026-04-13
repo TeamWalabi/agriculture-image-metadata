@@ -6,7 +6,7 @@ from typing import List, Optional
 from enum import Enum
 import datetime
 from pydantic import Field, field_validator
-from metadata_vision.old_code.generate_example_json import extract
+from metadata_vision.generate_example_json import extract
 from metadata_vision.schemas.base import RDFModel
 from metadata_vision.utils.namespaces import AGIMAGE
 from metadata_vision.utils.file_system import get_strptime
