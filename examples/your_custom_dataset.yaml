@@ -1,6 +1,6 @@
 rdf_type: dcat:Dataset
 title: Cucumber phenotyping dataset
-ID: cfb556ee-9a29-4866-9d95-2956cf2d3dec
+ID: 74bf9d00-43c7-4f6d-b538-39e233083f25
 description: 'This dataset is recorded in a commercial cucumber greenhouse. Four classes
   are annotated: cucumbers, leaves, open flower and closed flower.'
 accessURL: https://example.org/datasets/cucumber-phenotyping
@@ -22,20 +22,20 @@ numberOfAnnotatedImages: -1
 hasField:
 - rdf_type: agimage:Field
   fieldName: field_001
-  fieldID: field_001_c0e639ba-ba1b-4215-96d3-7649491e6931
-  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
+  fieldID: field_001_06a65641-e2fa-4cb8-bcc0-1ffd6c851969
+  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
     47.975))
   hasPlot:
     rdf_type: agimage:Plot
     plotName: plot123
-    plotID: plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5
+    plotID: plot123_6e4f205b-3ff5-41e1-8115-41af1da407b1
     bbox:
-    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
+    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
       47.975))
     hasPlotState:
     - rdf_type: agimage:PlotState
       stateName: plot123_state_1
-      stateID: plot123_state_1_6ba28e9c-6010-45f3-ad01-32b0c03e17f0
+      stateID: plot123_state_1_d6454478-1b16-4f95-b7e1-5851aebae507
       validFrom: '2026-08-18T00:00:00.000Z'
       validTo: '2026-08-20T00:00:00.000Z'
       hasCrop:
@@ -55,20 +55,20 @@ hasField:
       - loose leaves
 - rdf_type: agimage:Field
   fieldName: field_002
-  fieldID: field_002_a2cff6a7-b39c-4c66-b733-d6cde3183dbb
-  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
+  fieldID: field_002_58502d27-c851-48f8-a656-383eec185e8e
+  bbox: POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
     47.975))
   hasPlot:
     rdf_type: agimage:Plot
     plotName: plot123
-    plotID: plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5
+    plotID: plot123_6e4f205b-3ff5-41e1-8115-41af1da407b1
     bbox:
-    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053
+    - POLYGON((3.053 47.975, 7.24 47.975, 7.24 53.504, 3.053 53.504, 3.053 
       47.975))
     hasPlotState:
     - rdf_type: agimage:PlotState
       stateName: plot123_state_1
-      stateID: plot123_state_1_6ba28e9c-6010-45f3-ad01-32b0c03e17f0
+      stateID: plot123_state_1_d6454478-1b16-4f95-b7e1-5851aebae507
       validFrom: '2026-08-18T00:00:00.000Z'
       validTo: '2026-08-20T00:00:00.000Z'
       hasCrop:
@@ -87,11 +87,11 @@ hasField:
       - white canvas
       - loose leaves
 hasPlatform:
-  rdf_type: agimage:Platform
+  rdf_type: sosa:Platform
   platformName: demo_platform_1
-  platformID: demo_platform_1_d427f490-fb71-42bc-9230-3e7ea50eff07
+  platformID: demo_platform_1_37bfb567-6a1d-4985-83f5-c50d3b7f28cc
   hasSensor:
-  - rdf_type: agimage:Sensor
+  - rdf_type: sosa:Sensor
     hasCamera:
     - rdf_type: agimage:Camera
       cameraName: camid050
@@ -112,13 +112,14 @@ hasPlatform:
 hasImage:
   rdf_type: agimage:Image
   imageName: 20251014T093010Z857_camid9_trigger1000_rgb.png
-  imageID:
-    20251014T093010Z857_camid9_trigger1000_rgb.png_eedc28e1-2868-4967-b2ac-dc1e6b0f202f
+  imagePath:
+  imageID: 
+    20251014T093010Z857_camid9_trigger1000_rgb.png_c54e5d7a-6c34-4fcd-bf21-e7b1e2d78e5c
   imageTimestamp: '2025-10-14T09:30:10.857Z'
   cameraID: '4110035082'
-  fieldID: field_001_c0e639ba-ba1b-4215-96d3-7649491e6931
-  plotID: plot123_b507df2d-5473-4602-94d7-45ffa55aa9f5
-  platformID: demo_platform_1_d427f490-fb71-42bc-9230-3e7ea50eff07
+  fieldID: field_001_06a65641-e2fa-4cb8-bcc0-1ffd6c851969
+  plotID: plot123_6e4f205b-3ff5-41e1-8115-41af1da407b1
+  platformID: demo_platform_1_37bfb567-6a1d-4985-83f5-c50d3b7f28cc
   exposureTime:
   imageNumber: 1000
   imageXYZ:

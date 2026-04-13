@@ -6,11 +6,11 @@ from Pydantic models.
 import inspect
 import uuid
 from datetime import date
-from rdflib import Graph, RDF, RDFS, OWL, URIRef, Literal, BNode
+from rdflib import Graph, RDF, RDFS, OWL, URIRef, Literal, BNode, XSD
 from pydantic import BaseModel
 
 from metadata_vision import __version__
-from metadata_vision.utils.namespaces import AGIMAGE, SH, DCT, FOAF, SOSA, EXIF, XSD
+from metadata_vision.utils.namespaces import AGIMAGE, SH, DCT, FOAF, SOSA, EXIF
 from metadata_vision.utils.type_mapping import unwrap_type, python_to_xsd
 
 
@@ -46,9 +46,32 @@ def load_ontology_graph(ontology_file_path: str) -> Graph:
 # =============================================================================
 
 
+def _resolve_rdf_type_uri(rdf_type_str):
+    """
+    Resolve a prefixed rdf_type string (e.g. 'sosa:Sensor') to a URIRef.
+
+    Returns None if it resolves to the agimage namespace.
+    """
+    if not rdf_type_str or ":" not in rdf_type_str:
+        return None
+    prefix, local = rdf_type_str.split(":", 1)
+    ns_map = {
+        "sosa": SOSA,
+        "foaf": FOAF,
+        "dcat": URIRef("http://www.w3.org/ns/dcat#"),
+    }
+    ns = ns_map.get(prefix)
+    if ns is None:
+        return None
+    return URIRef(str(ns) + local)
+
+
 def generate_class(g, model):
     """
     Generate OWL class definition from Pydantic model.
+
+    If the model's rdf_type maps to an external vocabulary (sosa, foaf, dcat),
+    emits an rdfs:subClassOf triple linking the agimage class to the external class.
 
     Args:
         g (Graph): RDF graph to add triples to
@@ -58,6 +81,13 @@ def generate_class(g, model):
     class_uri = AGIMAGE[class_name]
 
     g.add((class_uri, RDF.type, OWL.Class))
+
+    # Add rdfs:subClassOf when rdf_type points to an external vocabulary
+    rdf_type_default = model.model_fields.get("rdf_type")
+    if rdf_type_default is not None:
+        external_uri = _resolve_rdf_type_uri(rdf_type_default.default)
+        if external_uri is not None:
+            g.add((class_uri, RDFS.subClassOf, external_uri))
 
     for field_name, field in model.model_fields.items():
         extra = field.json_schema_extra or {}
@@ -87,6 +117,11 @@ def generate_class(g, model):
         if field.description:
             g.add((prop, RDFS.comment, Literal(field.description)))
 
+        # Add rdfs:subPropertyOf when parent_uri is specified
+        parent_uri = extra.get("parent_uri")
+        if parent_uri:
+            g.add((prop, RDFS.subPropertyOf, URIRef(parent_uri)))
+
 
 def generate_ontology(root_models):
     """
@@ -104,8 +139,10 @@ def generate_ontology(root_models):
     g.bind("owl", OWL)
     g.bind("rdfs", RDFS)
     g.bind("xsd", XSD)
-
     g.bind("dct", DCT)
+    g.bind("sosa", SOSA)
+    g.bind("foaf", FOAF)
+    g.bind("dcat", URIRef("http://www.w3.org/ns/dcat#"))
 
     g.add((AGIMAGE[""], RDF.type, OWL.Ontology))
     g.add((AGIMAGE[""], OWL.versionInfo, Literal(__version__)))

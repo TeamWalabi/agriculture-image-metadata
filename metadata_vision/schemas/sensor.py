@@ -18,7 +18,9 @@ class SensorMetadata(RDFModel):
     https://www.w3.org/TR/vocab-ssn/#SOSASensor
     """
 
-    rdf_type: str = "agimage:Sensor"
+    # rdf_type: str = "agimage:Sensor"
+    rdf_type: str = "sosa:Sensor"
+
 
     hasCamera: CameraMetadata | list[CameraMetadata] = Field(
         None,

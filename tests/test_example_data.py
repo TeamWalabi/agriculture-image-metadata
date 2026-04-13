@@ -46,6 +46,7 @@ class TestCreateDummyData:
             "platform",
             "crop",
             "plot",
+            "plotstate",
             "field",
             "field2",
             "image",
@@ -108,9 +109,9 @@ class TestCreateDummyData:
 
         assert isinstance(plot, PlotMetadata)
         assert plot.plotName == "plot123"
-        assert isinstance(plot.hasCrop, list)
-        assert len(plot.hasCrop) > 0
-        assert isinstance(plot.hasCrop[0], CropMetadata)
+        assert isinstance(plot.hasPlotState, list)
+        assert len(plot.hasPlotState[0].hasCrop) > 0
+        assert isinstance(plot.hasPlotState[0].hasCrop[0], CropMetadata)
 
     def test_create_dummy_data_field(self):
         """Test that create_dummy_data creates valid FieldMetadata."""
