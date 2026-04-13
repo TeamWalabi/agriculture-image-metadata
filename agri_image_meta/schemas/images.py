@@ -9,9 +9,9 @@ import datetime
 from pathlib import Path
 from pydantic import Field, field_validator, model_validator
 from typing import Optional, List
-from metadata_vision.utils.file_system import get_strptime
-from metadata_vision.utils.namespaces import AGIMAGE, EXIF
-from metadata_vision.schemas.base import RDFModel
+from agri_image_meta.utils.file_system import get_strptime
+from agri_image_meta.utils.namespaces import AGIMAGE, EXIF
+from agri_image_meta.schemas.base import RDFModel
 
 
 class ImageMetadata(RDFModel):

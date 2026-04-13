@@ -10,11 +10,11 @@ import uuid
 from enum import Enum
 import datetime
 from pydantic import Field, field_validator, model_validator
-from metadata_vision.generate_example_json import extract
-from metadata_vision.schemas.crop import CropMetadata, CropHandling
-from metadata_vision.utils.namespaces import AGIMAGE
-from metadata_vision.utils.file_system import get_strptime
-from metadata_vision.schemas.base import RDFModel
+from agri_image_meta.generate_example_json import extract
+from agri_image_meta.schemas.crop import CropMetadata, CropHandling
+from agri_image_meta.utils.namespaces import AGIMAGE
+from agri_image_meta.utils.file_system import get_strptime
+from agri_image_meta.schemas.base import RDFModel
 
 
 class WeatherConditions(str, Enum):

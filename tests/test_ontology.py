@@ -5,25 +5,25 @@ Test suite for ontology generation, dataset creation, RDF graph population, and 
 import pytest
 from rdflib import Graph
 
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.field import FieldMetadata, PlotMetadata
-from metadata_vision.schemas.camera import CameraMetadata
-from metadata_vision.schemas.crop import CropMetadata
-from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.schemas.dataset import DatasetMetadata
-from metadata_vision.ontology.generator import (
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.field import FieldMetadata, PlotMetadata
+from agri_image_meta.schemas.camera import CameraMetadata
+from agri_image_meta.schemas.crop import CropMetadata
+from agri_image_meta.schemas.platform import PlatformMetadata
+from agri_image_meta.schemas.dataset import DatasetMetadata
+from agri_image_meta.ontology.generator import (
     generate_ontology,
     generate_shacl,
     add_model_to_graph,
 )
-from metadata_vision.utils.sparql_queries import (
+from agri_image_meta.utils.sparql_queries import (
     query_find_all_images,
     query_find_all_fields,
     query_find_platforms,
     # query_images_by_location_and_properties,
     # query_images_in_location_box,
 )
-from metadata_vision.data.example_data import (
+from agri_image_meta.data.example_data import (
     dummy_dataset,
 )
 

@@ -15,21 +15,21 @@ import json
 
 from pathlib import Path
 
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.field import FieldMetadata
-from metadata_vision.schemas.plot import PlotMetadata
-from metadata_vision.schemas.plotstate import PlotStateMetadata
-from metadata_vision.schemas.camera import CameraMetadata
-from metadata_vision.schemas.crop import CropMetadata
-from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.schemas.sensor import SensorMetadata
-from metadata_vision.schemas.agent import AgentMetadata
-from metadata_vision.schemas.dataset import DatasetMetadata
-from metadata_vision.ontology import (
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.field import FieldMetadata
+from agri_image_meta.schemas.plot import PlotMetadata
+from agri_image_meta.schemas.plotstate import PlotStateMetadata
+from agri_image_meta.schemas.camera import CameraMetadata
+from agri_image_meta.schemas.crop import CropMetadata
+from agri_image_meta.schemas.platform import PlatformMetadata
+from agri_image_meta.schemas.sensor import SensorMetadata
+from agri_image_meta.schemas.agent import AgentMetadata
+from agri_image_meta.schemas.dataset import DatasetMetadata
+from agri_image_meta.ontology import (
     generate_ontology,
     add_model_to_graph,
 )
-from metadata_vision.data import (
+from agri_image_meta.data import (
     dummy_camera,
     # dummy_sensor,
     dummy_platform,
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     print("STEP 6: SPARQL QUERIES")
     print("=" * 70)
 
-    from metadata_vision.utils.sparql_queries import (
+    from agri_image_meta.utils.sparql_queries import (
         query_find_all_fields,
         query_find_all_images,
         query_find_platforms,

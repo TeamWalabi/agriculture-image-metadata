@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 from pydantic import BaseModel
 
-from metadata_vision.schemas.dataset import DatasetMetadata
+from agri_image_meta.schemas.dataset import DatasetMetadata
 from ruamel.yaml import YAML
 
 T = TypeVar("T", bound=BaseModel)

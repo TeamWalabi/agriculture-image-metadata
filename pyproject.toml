@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "setuptools-scm[toml]>=6.2", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "metadata_vision"
+name = "agri_image_meta"
 authors = [
     { name = "Bart van Marrewijk", email = "bart.vanmarrewijk@wur.nl" },
     { name = "Joep Tummers", email = "joep.tummers@wur.nl" },
@@ -33,7 +33,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-GitHub = "https://git.wur.nl/camera_classes_metadata_calib/metadata/metadata_vision.git"
+GitHub = "https://github.com/TeamWalabi/agriculture-image-metadata.git"
 
 [project.optional-dependencies]
 test = [
@@ -48,10 +48,10 @@ test = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["metadata_vision"]
+include = ["agri_image_meta"]
 
 [tool.setuptools.dynamic]
-version = {attr = "metadata_vision.__version__"}
+version = {attr = "agri_image_meta.__version__"}
 
 [tool.pylint.'MASTER']
 ignore-patterns="_version.py"
@@ -66,7 +66,7 @@ exclude = ["_version.py", "ui_files"]
 line-length = 100
 
 [tool.bandit]
-target = ["metadata_vision", "tests"]
+target = ["agri_image_meta", "tests"]
 tests = [
     "B101",  # Use of assert
     "B301",  # Pickle usage

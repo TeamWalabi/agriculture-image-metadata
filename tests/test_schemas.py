@@ -9,33 +9,33 @@ import uuid
 import pytest
 from pydantic import ValidationError
 
-from metadata_vision.schemas.agent import AgentMetadata
-from metadata_vision.schemas.base import RDFModel
-from metadata_vision.schemas.camera import (
+from agri_image_meta.schemas.agent import AgentMetadata
+from agri_image_meta.schemas.base import RDFModel
+from agri_image_meta.schemas.camera import (
     CameraMetadata,
     DistortionModel,
     DistortionModelName,
     LightSource,
     SpectralBand,
 )
-from metadata_vision.schemas.crop import (
+from agri_image_meta.schemas.crop import (
     CropHandling,
     CropMetadata,
     CropTiming,
     CropTimingType,
 )
-from metadata_vision.schemas.dataset import DatasetMetadata
-from metadata_vision.schemas.field import FieldMetadata
-from metadata_vision.schemas.images import ImageMetadata
-from metadata_vision.schemas.platform import PlatformMetadata
-from metadata_vision.schemas.plot import PlotMetadata
-from metadata_vision.schemas.plotstate import (
+from agri_image_meta.schemas.dataset import DatasetMetadata
+from agri_image_meta.schemas.field import FieldMetadata
+from agri_image_meta.schemas.images import ImageMetadata
+from agri_image_meta.schemas.platform import PlatformMetadata
+from agri_image_meta.schemas.plot import PlotMetadata
+from agri_image_meta.schemas.plotstate import (
     PlotStateMetadata,
     SoilType,
     SurfaceLayer,
     WeatherConditions,
 )
-from metadata_vision.schemas.sensor import SensorMetadata
+from agri_image_meta.schemas.sensor import SensorMetadata
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────

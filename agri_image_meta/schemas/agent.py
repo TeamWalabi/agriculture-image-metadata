@@ -11,8 +11,8 @@ import sys
 
 sys.path.append("")
 
-from metadata_vision.schemas.base import RDFModel
-from metadata_vision.utils.namespaces import FOAF
+from agri_image_meta.schemas.base import RDFModel
+from agri_image_meta.utils.namespaces import FOAF
 
 
 class AgentMetadata(RDFModel):

@@ -30,15 +30,15 @@ jobs:
     #  code style, formatting issues, unused imports, complexity
     - name: Lint with Ruff
       run: |
-        ruff check metadata_vision
+        ruff check agri_image_meta
     # code errors, style violations (PEP8), code smells, and enforces coding standards.
     # - name: Lint with PyLint
     #   run: |
-    #     pylint metadata_vision
+    #     pylint agri_image_meta
     # static type checker
     # - name: Check types with MyPy
     #   run: |
-    #       mypy metadata_vision
+    #       mypy agri_image_meta
     # unit and integration tests
     - name: Test with pytest
       run: |
