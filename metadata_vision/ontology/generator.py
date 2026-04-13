@@ -6,11 +6,11 @@ from Pydantic models.
 import inspect
 import uuid
 from datetime import date
-from rdflib import Graph, RDF, RDFS, OWL, URIRef, Literal, BNode
+from rdflib import Graph, RDF, RDFS, OWL, URIRef, Literal, BNode, XSD
 from pydantic import BaseModel
 
 from metadata_vision import __version__
-from metadata_vision.utils.namespaces import AGIMAGE, SH, DCT, FOAF, SOSA, EXIF, XSD
+from metadata_vision.utils.namespaces import AGIMAGE, SH, DCT, FOAF, SOSA, EXIF
 from metadata_vision.utils.type_mapping import unwrap_type, python_to_xsd
 
 

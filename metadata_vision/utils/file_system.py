@@ -60,13 +60,14 @@ def get_strftime(image_timestamp: datetime | str, bool_filename=False):
                 + f"{image_timestamp.microsecond // 1000:03d}"
                 + "Z"
             )
+            #  YYYYMMDDTHHMMSSmillisecondsZ
         else:
             timestamp_str = (
                 image_timestamp.strftime("%Y-%m-%dT%H:%M:%S.")
                 + f"{image_timestamp.microsecond // 1000:03d}"
                 + "Z"
             )
-        # timestamp_str = image_timestamp.strftime("%Y-%m-%dT%H:%M:%SZ")# + f"{image_timestamp.microsecond // 1000:03d}"+"Z"
+            # YYYY-MM-DD-THH:MM:SS.millisecondsZ
     else:
         timestamp_str = str(image_timestamp)
     return timestamp_str
@@ -77,7 +78,7 @@ def get_strptime(image_timestamp: str | datetime.datetime, from_filename=False):
     Convert string to datetime
     args:
     image_timstamp: (str): "20250620150820111Z
-    from_filename: (bool) if true will use "%Y%m%dT%H%M%SZ"
+    from_filename: (bool) if true will use "%Y%m%dT%H%M%SZ without the -,: and ."
     """
     if isinstance(image_timestamp, datetime.datetime):
         return image_timestamp
@@ -92,24 +93,12 @@ def get_strptime(image_timestamp: str | datetime.datetime, from_filename=False):
             fmt = "%Y-%m-%dT%H:%M:%S.%fZ"
             return datetime.datetime.strptime(image_timestamp, fmt)
             # YYYY-MM-DD-THH:MM:SS.millisecondsZ
-            # indexi = image_timestamp.index(".")
-
-            # base, millis = image_timestamp[:-4], image_timestamp[-4:-1]
-            # return datetime.datetime.strptime(base, fmt).replace(microsecond=int(millis) * 1000)
         except Exception:
             image_timestamp = image_timestamp[::-1].zfill(19)[::-1]
             base, millis = image_timestamp[:-3], image_timestamp[-3:]
             fmt = "%Y%m%dT%H%M%SZ"
             return datetime.datetime.strptime(base, fmt).replace(microsecond=int(millis) * 1000)
 
-    # # if isinstance(image_timestamp, datetime):
-    # #     return image_timestamp
-
-    # index = image_timestamp.index("Z")+1
-
-    # base, millis = image_timestamp[:index], image_timestamp[index:]
-    # fmt = "%Y%m%dT%H%M%SZ"
-    # return datetime.datetime.strptime(base, fmt).replace(microsecond=int(millis) * 1000)
 
 
 def get_image_name(image_timestamp, camid, trigger_number, channel="rgb", extension=".png"):

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from rdflib import Namespace
 
-
 AGIMAGE = Namespace("https://w3id.org/agri-image/")
 DCT = Namespace("http://purl.org/dc/terms/")
 SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
